@@ -1,0 +1,76 @@
+# ---------------------------------------------------------------------------
+# Neovim plugin / Lua
+# ---------------------------------------------------------------------------
+doc/tags
+.tests/
+luac.out
+*.rock
+*.luac
+.luarc.json
+
+# ---------------------------------------------------------------------------
+# Simulation and analysis (GHDL, NVC, VUnit, OSVVM, VSG)
+# ---------------------------------------------------------------------------
+work-obj*.cf
+*.cf
+*.o
+*.ghw
+*.fst
+*.vcd
+*.wlf
+transcript
+vunit_out/
+.vsg_cache/
+*.osvvm/
+
+# Rendered fixtures are committed under tests/golden/ on purpose;
+# scratch renders are not.
+tests/scratch/
+
+# ---------------------------------------------------------------------------
+# AMD / Xilinx (Vivado, Vitis, ISE)
+# ---------------------------------------------------------------------------
+.Xil/
+.jobs/
+*.jou
+*.log
+*.str
+*.pb
+*.rpx
+*.wdb
+*.bit
+*.bin
+*.ltx
+xsim.dir/
+webtalk*.jou
+webtalk*.log
+vivado*.backup*
+*.cache/
+*.hw/
+*.ip_user_files/
+*.runs/
+*.sim/
+*.gen/
+
+# ---------------------------------------------------------------------------
+# Intel / Altera (Quartus)
+# ---------------------------------------------------------------------------
+db/
+incremental_db/
+output_files/
+simulation/
+greybox_tmp/
+*.qws
+*.rpt
+*.smsg
+*.sof
+*.pof
+
+# ---------------------------------------------------------------------------
+# Editor / OS
+# ---------------------------------------------------------------------------
+*.swp
+*~
+.DS_Store
+.idea/
+.vscode/
