@@ -22,9 +22,7 @@ return {
     "  use ieee.std_logic_1164.all;",
     "",
     "package {{name}} is",
-    "",
     "  {{cursor}}",
-    "",
     "end package {{name}};",
   }, "\n"),
 }
