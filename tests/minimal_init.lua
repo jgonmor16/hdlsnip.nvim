@@ -15,4 +15,7 @@ vim.opt.runtimepath:prepend(root)
 vim.opt.runtimepath:prepend(plenary)
 vim.opt.swapfile = false
 
+-- Lets spec files require shared helpers by name.
+package.path = root .. "/tests/?.lua;" .. package.path
+
 vim.cmd("runtime plugin/plenary.vim")
