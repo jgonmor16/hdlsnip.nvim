@@ -1,0 +1,13 @@
+# VHDL Style Guide configuration for the golden fixtures.
+#
+# The fixtures are generated, so any finding here is a bug in a template
+# rather than in a hand-written file. Kept deliberately small for now: the
+# rule set is tuned as templates land, not guessed at up front.
+rule:
+  global:
+    indentSize: 2
+
+  # Generated files carry a two-line provenance header before the library
+  # clause; the header rules expect a different shape.
+  header_lines_of_code_rules:
+    disable: true
