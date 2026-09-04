@@ -12,6 +12,7 @@
 --- values mode. A tabstop cannot drive a loop, so those are prompted for
 --- first and inserted fully formed.
 local template = require("hdlsnip.template")
+local style = require("hdlsnip.style")
 
 local M = {}
 
@@ -102,7 +103,7 @@ function M.values(tpl, given, cfg)
     return result, {}
   end
 
-  local text = M.substitute(tpl.body, function(marker)
+  local text = M.substitute(style.apply_case(tpl.body, cfg), function(marker)
     if marker == "cursor" then
       return ""
     end
@@ -119,9 +120,10 @@ end
 --- declaration order, so tabbing through the snippet moves down the page.
 --- Repeated parameters become mirrors of their first occurrence.
 ---@param tpl table
+---@param cfg table
 ---@return string? body
 ---@return string[] errors
-function M.placeholders(tpl)
+function M.placeholders(tpl, cfg)
   if tpl.dynamic then
     return nil,
       {
@@ -135,7 +137,8 @@ function M.placeholders(tpl)
   end
 
   local assigned, next_index = {}, 0
-  local body = M.substitute(M.escape_literal(tpl.body), function(marker)
+  local cased = style.apply_case(tpl.body, cfg)
+  local body = M.substitute(M.escape_literal(cased), function(marker)
     if marker == "cursor" then
       return "$0"
     end
@@ -186,7 +189,7 @@ end
 ---@return string[] errors
 function M.render(tpl, mode, given, cfg)
   if mode == "placeholders" then
-    return M.placeholders(tpl)
+    return M.placeholders(tpl, cfg)
   end
   return M.values(tpl, given, cfg)
 end

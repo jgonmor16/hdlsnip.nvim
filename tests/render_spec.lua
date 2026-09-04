@@ -81,7 +81,7 @@ end)
 
 describe("render.placeholders", function()
   it("numbers tabstops by first appearance, not declaration order", function()
-    local body = render.placeholders(static)
+    local body = render.placeholders(static, cfg)
     assert.are.equal(
       "signal ${1:data}_r : ${2|std_logic_vector,unsigned|}(${3:8} - 1 downto 0);\n"
         .. "$1_o <= $1_r;$0",
@@ -90,18 +90,18 @@ describe("render.placeholders", function()
   end)
 
   it("mirrors repeated parameters", function()
-    local body = render.placeholders(static)
+    local body = render.placeholders(static, cfg)
     assert.are.equal(2, select(2, body:gsub("%$1", "")))
   end)
 
   it("appends a final tabstop when the body has no cursor marker", function()
     local tpl = vim.deepcopy(static)
     tpl.body = "signal {{sig}}_r : {{kind}}({{width}} - 1 downto 0);"
-    assert.matches("%$0$", (render.placeholders(tpl)))
+    assert.matches("%$0$", (render.placeholders(tpl, cfg)))
   end)
 
   it("refuses dynamic templates", function()
-    local body, errs = render.placeholders(dynamic)
+    local body, errs = render.placeholders(dynamic, cfg)
     assert.is_nil(body)
     assert.matches("values mode only", errs[1])
   end)
@@ -114,7 +114,10 @@ describe("render.placeholders", function()
       params = { { name = "a", type = "string", default = "x$y", desc = "a" } },
       body = "cost $5 -- {{a}}",
     }
-    assert.are.equal("cost \\$5 -- ${1:x\\$y}$0", (render.placeholders(tpl)))
+    assert.are.equal(
+      "cost \\$5 -- ${1:x\\$y}$0",
+      (render.placeholders(tpl, cfg))
+    )
   end)
 end)
 

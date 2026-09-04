@@ -124,4 +124,58 @@ function M.is_legal_identifier(cfg, word)
   return not keywords.is_reserved(word, cfg.vhdl_std)
 end
 
+--- Apply the configured keyword case to a block of VHDL.
+---
+--- Static template bodies are literal text, so they cannot call `kw()` the
+--- way a render function does. They are authored in lower case and passed
+--- through here instead, which is what lets a static body honour
+--- `keyword_case` at all.
+---
+--- The scan skips the four places a reserved word is not a keyword: comments,
+--- string literals, character literals such as `'0'`, and `{{marker}}` names,
+--- which are parameter names rather than VHDL. Attribute names survive
+--- because `x'high` opens no character literal -- the quote is not followed
+--- by a closing one two characters later.
+---@param text string
+---@param cfg table
+---@return string
+function M.apply_case(text, cfg)
+  local transform = M.kw(cfg)
+  local out, i, n = {}, 1, #text
+
+  while i <= n do
+    local two = text:sub(i, i + 1)
+    local c = text:sub(i, i)
+
+    if two == "--" then
+      local stop = text:find("\n", i) or (n + 1)
+      out[#out + 1] = text:sub(i, stop - 1)
+      i = stop
+    elseif two == "{{" then
+      local stop = text:find("}}", i, true)
+      stop = stop and (stop + 1) or n
+      out[#out + 1] = text:sub(i, stop)
+      i = stop + 1
+    elseif c == '"' then
+      local stop = text:find('"', i + 1, true) or n
+      out[#out + 1] = text:sub(i, stop)
+      i = stop + 1
+    elseif c == "'" and text:sub(i + 2, i + 2) == "'" then
+      out[#out + 1] = text:sub(i, i + 2)
+      i = i + 3
+    elseif c:match("%a") then
+      local word = text:match("^%a[%w_]*", i)
+      out[#out + 1] = keywords.is_reserved(word, cfg.vhdl_std)
+          and transform(word)
+        or word
+      i = i + #word
+    else
+      out[#out + 1] = c
+      i = i + 1
+    end
+  end
+
+  return table.concat(out)
+end
+
 return M
