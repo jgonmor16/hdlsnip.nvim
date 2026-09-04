@@ -15,4 +15,4 @@ vim.opt.runtimepath:prepend(root)
 vim.opt.runtimepath:prepend(plenary)
 vim.opt.swapfile = false
 
-vim.cmd("runtime plugin/plenary.nvim")
+vim.cmd("runtime plugin/plenary.vim")
