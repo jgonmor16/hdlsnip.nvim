@@ -113,3 +113,53 @@ describe("style.is_legal_identifier", function()
     assert.is_false(style.is_legal_identifier(cfg({}), "Signal"))
   end)
 end)
+
+describe("style.apply_case", function()
+  local upper = cfg({ keyword_case = "upper" })
+
+  it("cases reserved words only", function()
+    assert.are.equal(
+      "SIGNAL count_r : std_logic;",
+      style.apply_case("signal count_r : std_logic;", upper)
+    )
+  end)
+
+  it("leaves comments alone", function()
+    assert.are.equal(
+      "-- end of signal\nSIGNAL x",
+      style.apply_case("-- end of signal\nsignal x", upper)
+    )
+  end)
+
+  it("leaves string literals alone", function()
+    assert.are.equal(
+      'REPORT "end is near" SEVERITY note;',
+      style.apply_case('report "end is near" severity note;', upper)
+    )
+  end)
+
+  it("leaves character literals alone", function()
+    assert.are.equal("x <= '0';", style.apply_case("x <= '0';", upper))
+  end)
+
+  it("does not mistake an attribute for a character literal", function()
+    assert.are.equal(
+      "y'high DOWNTO 0",
+      style.apply_case("y'high downto 0", upper)
+    )
+  end)
+
+  it("leaves marker names alone", function()
+    assert.are.equal(
+      "SIGNAL {{signal}} : std_logic;",
+      style.apply_case("signal {{signal}} : std_logic;", upper)
+    )
+  end)
+
+  it("normalises to lower case as well", function()
+    assert.are.equal(
+      "signal X : STD_LOGIC;",
+      style.apply_case("SIGNAL X : STD_LOGIC;", cfg({}))
+    )
+  end)
+end)
