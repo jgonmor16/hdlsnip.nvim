@@ -5,6 +5,19 @@ local function fresh()
   return require("hdlsnip.config")
 end
 
+--- Run `fn` with `vim.notify` replaced, returning whatever it emitted.
+local function captured_notify(fn)
+  local original = vim.notify
+  local messages = {}
+  vim.notify = function(msg, level)
+    messages[#messages + 1] = { msg = msg, level = level }
+  end
+  local ok, err = pcall(fn)
+  vim.notify = original
+  assert(ok, err)
+  return messages
+end
+
 describe("config defaults", function()
   it("validate cleanly", function()
     local cfg = config.resolve(vim.deepcopy(config.defaults))
@@ -111,12 +124,22 @@ describe("config validation", function()
     assert.matches("identifier", errors_for({ clock = { name = "clk_" } }))
     assert.matches("identifier", errors_for({ clock = { name = "a__b" } }))
   end)
+end)
 
-  it("keeps the previous configuration when setup is invalid", function()
+describe("config setup rejection", function()
+  it("keeps the previous configuration and reports why", function()
     local c = fresh()
     c.setup({ clock = { name = "aclk" } })
-    local kept = c.setup({ reset = { polarity = "sideways" } })
+
+    local kept
+    local notifications = captured_notify(function()
+      kept = c.setup({ reset = { polarity = "sideways" } })
+    end)
+
     assert.are.equal("aclk", kept.clock.name)
     assert.are.equal("low", kept.reset.polarity)
+    assert.are.equal(1, #notifications)
+    assert.matches("reset%.polarity", notifications[1].msg)
+    assert.are.equal(vim.log.levels.ERROR, notifications[1].level)
   end)
 end)
