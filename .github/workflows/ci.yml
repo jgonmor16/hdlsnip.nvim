@@ -1,0 +1,72 @@
+name: ci
+
+on:
+  push:
+    branches: [main, devel]
+  pull_request:
+  
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+  
+jobs:
+  lua:
+    name: lua (${{ matrix.nvim }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        nvim: [stable, nightly]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: rhysd/action-setup-vim@v1
+        with:
+          neovim: true
+          version: ${{ matrix.nvim }}
+
+      - name: Check formatting
+        uses: JohnnyMorganz/stylua-action@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          version: latest
+          args: --check lua tests scripts
+
+      - name: Run the spec suite
+        run: make test
+
+  vhdl:
+    name: vhdl
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: rhysd/action-setup-vim@v1
+        with:
+          neovim: true
+          version: stable
+
+      - name: Install GHDL
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y ghdl
+          ghdl --version
+
+      # A template change that alters generated VHDL must come with the
+      # regenerated fixtures, so the diff is reviewable rather than hidden
+      # inside a Lua change.
+      - name: Golden fixtures are up to date
+        run: make golden-check
+
+      - name: Analyse every fixture with GHDL
+        run: make ghdl
+
+      - name: Install VSG
+        run: pipx install vsg
+
+      # Advisory for now. The rule set is tuned as templates land; failing
+      # the build on a rule nobody has reviewed yet would train people to
+      # ignore the job.
+      - name: Lint every fixture with VSG
+        run: make vsg
+        continue-on-error: true
