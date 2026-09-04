@@ -1,21 +1,9 @@
+local helpers = require("helpers")
 local config = require("hdlsnip.config")
 
 local function fresh()
   package.loaded["hdlsnip.config"] = nil
   return require("hdlsnip.config")
-end
-
---- Run `fn` with `vim.notify` replaced, returning whatever it emitted.
-local function captured_notify(fn)
-  local original = vim.notify
-  local messages = {}
-  vim.notify = function(msg, level)
-    messages[#messages + 1] = { msg = msg, level = level }
-  end
-  local ok, err = pcall(fn)
-  vim.notify = original
-  assert(ok, err)
-  return messages
 end
 
 describe("config defaults", function()
@@ -132,7 +120,7 @@ describe("config setup rejection", function()
     c.setup({ clock = { name = "aclk" } })
 
     local kept
-    local notifications = captured_notify(function()
+    local notifications = helpers.captured_notify(function()
       kept = c.setup({ reset = { polarity = "sideways" } })
     end)
 
