@@ -5,6 +5,7 @@
 --- once fills all three occurrences through tabstop mirroring.
 return {
   name = "package",
+  trig = "pkg",
   kind = "skeleton",
   desc = "Package declaration",
 

@@ -8,6 +8,7 @@ local style = require("hdlsnip.style")
 
 return {
   name = "entity",
+  trig = "ent",
   kind = "skeleton",
   desc = "Entity with matching architecture",
   dynamic = true,
