@@ -31,6 +31,7 @@ local PATTERN = "lua/hdlsnip/templates/*/*/*.lua"
 local state = {
   loaded = false,
   index = {}, ---@type table<string, table<string, table>>
+  triggers = {}, ---@type table<string, table<string, string>>
   problems = {}, ---@type string[]
 }
 
@@ -77,10 +78,32 @@ function M.register(tpl, source)
     return false, errors
   end
 
+  -- Triggers must be unique: two templates firing on the same word would
+  -- make expansion depend on load order, which is invisible to the user.
+  -- Checked before anything is indexed, so a rejected template leaves no
+  -- trace behind.
+  if tpl.trig then
+    local owner = (state.triggers[lang] or {})[tpl.trig]
+    if owner and owner ~= tpl.name then
+      return false,
+        {
+          ("%s: trigger %q is already used by %s"):format(
+            source,
+            tpl.trig,
+            owner
+          ),
+        }
+    end
+  end
+
   tpl.lang = lang
   tpl.source = source
   state.index[lang] = state.index[lang] or {}
   state.index[lang][tpl.name] = tpl
+  if tpl.trig then
+    state.triggers[lang] = state.triggers[lang] or {}
+    state.triggers[lang][tpl.trig] = tpl.name
+  end
   return true, {}
 end
 
@@ -159,7 +182,7 @@ function M.load(opts)
     return state.index
   end
 
-  state.index, state.problems = {}, {}
+  state.index, state.triggers, state.problems = {}, {}, {}
   for _, path in ipairs(vim.api.nvim_get_runtime_file(PATTERN, true)) do
     load_file(path)
   end
@@ -192,6 +215,17 @@ end
 function M.get(name, lang)
   M.load()
   return (state.index[lang or M.default_language] or {})[name]
+end
+
+--- Look up one template by its trigger word.
+---@param trig string
+---@param lang string? defaults to vhdl
+---@return table?
+function M.by_trigger(trig, lang)
+  M.load()
+  lang = lang or M.default_language
+  local name = (state.triggers[lang] or {})[trig]
+  return name and state.index[lang][name] or nil
 end
 
 --- Every template, sorted by kind then name so the picker and the tests both

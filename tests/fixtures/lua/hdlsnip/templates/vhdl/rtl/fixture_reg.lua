@@ -1,6 +1,7 @@
 --- Fixture: a minimal valid static template.
 return {
   name = "fixture_reg",
+  trig = "fxr",
   kind = "rtl",
   desc = "Fixture registered signal",
   params = {

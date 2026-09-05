@@ -29,6 +29,18 @@ describe("shipped templates", function()
       assert.matches("templates/vhdl/" .. tpl.kind .. "/", tpl.source)
     end
   end)
+
+  it("have unique, non-reserved triggers", function()
+    local seen = {}
+    for _, tpl in ipairs(registry.list()) do
+      if tpl.trig then
+        assert.is_nil(seen[tpl.trig], ("duplicate trigger %s"):format(tpl.trig))
+        seen[tpl.trig] = tpl.name
+      end
+    end
+    assert.are.equal("entity", registry.by_trigger("ent").name)
+    assert.are.equal("package", registry.by_trigger("pkg").name)
+  end)
 end)
 
 describe("template: entity", function()

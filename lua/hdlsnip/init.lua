@@ -108,6 +108,44 @@ function M.expand(name)
   ui.select_template(nil, go)
 end
 
+--- Expand the trigger word before the cursor, for an insert-mode mapping.
+---
+--- Returns false when there is nothing to expand, so a mapping can fall
+--- through to whatever it would otherwise have done rather than swallowing
+--- the key.
+---@return boolean expanded
+function M.expand_at_cursor()
+  local win = vim.api.nvim_get_current_win()
+  local row, col = unpack(vim.api.nvim_win_get_cursor(win))
+  local before = vim.api.nvim_get_current_line():sub(1, col)
+  local word = before:match("[%w_]+$")
+  if not word then
+    return false
+  end
+
+  local tpl = registry.by_trigger(word)
+  if not tpl then
+    return false
+  end
+
+  -- Remove the trigger before anything takes its place, so an undo returns
+  -- the buffer to the word the user typed.
+  local bufnr = vim.api.nvim_get_current_buf()
+  vim.api.nvim_buf_set_text(bufnr, row - 1, col - #word, row - 1, col, { "" })
+  vim.api.nvim_win_set_cursor(win, { row, col - #word })
+
+  if tpl.dynamic then
+    -- Prompting cannot happen from inside insert mode.
+    vim.cmd.stopinsert()
+    vim.schedule(function()
+      M.insert(tpl.name)
+    end)
+  else
+    M.expand(tpl.name)
+  end
+  return true
+end
+
 --- Rescan the runtimepath for templates.
 function M.reload()
   registry.reload()
