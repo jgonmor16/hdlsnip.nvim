@@ -19,6 +19,23 @@ M.types = {
   choice = true,
 }
 
+--- Where a template's output belongs in a VHDL file.
+---
+--- Needed because most templates are fragments: a clocked process is not a
+--- design file, so the golden fixtures have to wrap it in an entity before
+--- GHDL can analyse it. Later this is also what tells the inserter which
+--- part of the architecture a fragment should go into.
+M.scopes = {
+  --- A complete file: entity, package, context, configuration.
+  design_unit = true,
+  --- Declarations, for the part above `begin`.
+  declarative = true,
+  --- Concurrent statements, for the architecture body.
+  statement = true,
+  --- Sequential statements, for inside a process.
+  sequential = true,
+}
+
 --- Categories a template may belong to. Used for grouping in the picker.
 M.kinds = {
   skeleton = true,
@@ -154,6 +171,13 @@ end
 -- Template validation
 -- ---------------------------------------------------------------------------
 
+--- A template's scope, defaulting to a complete design unit.
+---@param tpl table
+---@return string
+function M.scope(tpl)
+  return tpl.scope or "design_unit"
+end
+
 --- Every `{{marker}}` in a body, in order of first appearance.
 ---@param body string
 ---@return string[]
@@ -224,6 +248,12 @@ function M.validate(tpl)
   end
   if type(tpl.desc) ~= "string" or tpl.desc == "" then
     errors[#errors + 1] = ("%s: needs a desc"):format(tpl.name)
+  end
+  if tpl.scope ~= nil and not M.scopes[tpl.scope] then
+    errors[#errors + 1] = ("%s: unknown scope %q"):format(
+      tpl.name,
+      tostring(tpl.scope)
+    )
   end
   if not M.kinds[tpl.kind] then
     errors[#errors + 1] = ("%s: unknown kind %q"):format(

@@ -10,6 +10,7 @@ return {
   name = "entity",
   trig = "ent",
   kind = "skeleton",
+  scope = "design_unit",
   desc = "Entity with matching architecture",
   dynamic = true,
 

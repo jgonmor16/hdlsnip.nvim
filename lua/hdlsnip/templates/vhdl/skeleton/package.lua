@@ -7,6 +7,7 @@ return {
   name = "package",
   trig = "pkg",
   kind = "skeleton",
+  scope = "design_unit",
   desc = "Package declaration",
 
   params = {
