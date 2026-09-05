@@ -86,12 +86,28 @@ describe("registry listing", function()
 
   it("sorts by kind then name", function()
     local list = registry.list()
-    local order = {}
-    for i, tpl in ipairs(list) do
-      order[i] = tpl.kind .. "/" .. tpl.name
+    -- The invariant, not a fixed first element: pinning position couples
+    -- this to whichever templates happen to ship.
+    for i = 2, #list do
+      local previous, current = list[i - 1], list[i]
+      local ordered = previous.kind < current.kind
+        or (previous.kind == current.kind and previous.name < current.name)
+      assert.is_true(
+        ordered,
+        ("%s/%s came before %s/%s"):format(
+          previous.kind,
+          previous.name,
+          current.kind,
+          current.name
+        )
+      )
     end
-    assert.are.equal("cdc/fixture_sync", order[1])
-    assert.is_true(vim.tbl_contains(order, "rtl/fixture_reg"))
+  end)
+
+  it("includes both fixture and shipped templates", function()
+    local names = registry.names()
+    assert.is_true(vim.tbl_contains(names, "fixture_reg"))
+    assert.is_true(vim.tbl_contains(names, "process"))
   end)
 
   it("filters by kind", function()
