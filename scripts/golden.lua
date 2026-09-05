@@ -17,6 +17,8 @@
 local registry = require("hdlsnip.registry")
 local render = require("hdlsnip.render")
 local config = require("hdlsnip.config")
+local template = require("hdlsnip.template")
+local style = require("hdlsnip.style")
 
 local OUT = vim.env.HDLSNIP_GOLDEN_DIR or "tests/golden"
 
@@ -31,6 +33,10 @@ local VARIANTS = {
     },
   },
   { name = "no_reset", cfg = { reset = { style = "none" } } },
+  -- Vendor attributes are a whole code path of their own, and the reason
+  -- some templates are generated rather than copied.
+  { name = "amd", cfg = { vendor = "amd" } },
+  { name = "intel", cfg = { vendor = "intel" } },
   {
     name = "long_names",
     cfg = {
@@ -85,6 +91,80 @@ local function param_cases(tpl)
     end
   end
   return cases
+end
+
+--- Wrap a fragment in enough VHDL to be analysable.
+---
+--- Most templates are not design files: a clocked process has to sit inside
+--- an architecture, with a clock and reset in scope, before GHDL will look at
+--- it. The wrapper is generated from the same configuration as the fragment,
+--- so the signal names line up with whatever the fragment refers to.
+---@param tpl table
+---@param cfg table
+---@param body string[]
+---@return string[]
+local function wrap(tpl, cfg, body)
+  local scope = template.scope(tpl)
+  if scope == "design_unit" then
+    return body
+  end
+
+  local ind = cfg.indent
+  local out = {
+    "library ieee;",
+    ind .. "use ieee.std_logic_1164.all;",
+    ind .. "use ieee.numeric_std.all;",
+    "",
+    "-- Wrapper added by scripts/golden.lua so the fragment can be analysed.",
+    "entity golden_wrapper is",
+    ind .. "port (",
+  }
+
+  local ports = { { cfg.clock.name, ": in", "std_logic" } }
+  if cfg.reset.style ~= "none" then
+    ports[#ports + 1] = { cfg.reset.name, ": in", "std_logic" }
+  end
+  local aligned = style.align(ports)
+  for index, line in ipairs(aligned) do
+    out[#out + 1] = ind:rep(2) .. line .. (index < #aligned and ";" or "")
+  end
+
+  vim.list_extend(out, {
+    ind .. ");",
+    "end entity golden_wrapper;",
+    "",
+    "architecture golden of golden_wrapper is",
+    "",
+  })
+
+  local function indented(depth)
+    local result = {}
+    for _, line in ipairs(body) do
+      result[#result + 1] = line == "" and "" or (ind:rep(depth) .. line)
+    end
+    return result
+  end
+
+  if scope == "declarative" then
+    vim.list_extend(out, indented(1))
+    vim.list_extend(out, { "", "begin", "" })
+  elseif scope == "statement" then
+    vim.list_extend(out, { "begin", "" })
+    vim.list_extend(out, indented(1))
+    out[#out + 1] = ""
+  else -- sequential
+    vim.list_extend(out, {
+      "begin",
+      "",
+      ind .. "p_golden : process is",
+      ind .. "begin",
+    })
+    vim.list_extend(out, indented(2))
+    vim.list_extend(out, { ind .. "end process p_golden;", "" })
+  end
+
+  out[#out + 1] = "end architecture golden;"
+  return out
 end
 
 --- A header naming exactly what produced the file, so a diff explains itself
@@ -147,7 +227,7 @@ local function main()
             case.label
           )
           local lines = header(tpl, variant, case)
-          vim.list_extend(lines, render.lines(text))
+          vim.list_extend(lines, wrap(tpl, cfg, render.lines(text)))
           write(("%s/%s/%s"):format(OUT, tpl.lang, name), lines)
           written = written + 1
         end
