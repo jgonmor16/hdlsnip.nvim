@@ -162,6 +162,54 @@ describe("template.validate", function()
       end)
     )
   end)
+
+  it("accepts a template with no trigger", function()
+    assert.are.equal(
+      "",
+      errors_for(function(t)
+        t.trig = nil
+      end)
+    )
+  end)
+
+  it("rejects a trigger that is too short or too long", function()
+    assert.matches(
+      "2 to 12",
+      errors_for(function(t)
+        t.trig = "e"
+      end)
+    )
+    assert.matches(
+      "2 to 12",
+      errors_for(function(t)
+        t.trig = "abcdefghijklm"
+      end)
+    )
+  end)
+
+  it("rejects an upper case trigger", function()
+    assert.matches(
+      "lower case",
+      errors_for(function(t)
+        t.trig = "Ent"
+      end)
+    )
+  end)
+
+  it("rejects a reserved word as a trigger", function()
+    assert.matches(
+      "reserved word",
+      errors_for(function(t)
+        t.trig = "entity"
+      end)
+    )
+    assert.matches(
+      "reserved word",
+      errors_for(function(t)
+        t.trig = "view"
+      end)
+    )
+  end)
 end)
 
 describe("template.resolve_params", function()

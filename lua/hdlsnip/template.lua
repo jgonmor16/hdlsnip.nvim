@@ -5,6 +5,7 @@
 --- development rather than emitting broken VHDL into a buffer, and it coerces
 --- user input (always strings, coming from `vim.ui.input`) into typed values.
 local style = require("hdlsnip.style")
+local keywords = require("hdlsnip.vhdl.keywords")
 
 local M = {}
 
@@ -229,6 +230,27 @@ function M.validate(tpl)
       tpl.name,
       tostring(tpl.kind)
     )
+  end
+
+  -- A trigger is optional: without one a template is reachable through the
+  -- picker but never fires from typing.
+  if tpl.trig ~= nil then
+    if type(tpl.trig) ~= "string" or not tpl.trig:match("^%l[%l%d_]*$") then
+      errors[#errors + 1] = ("%s: trig must be lower case letters, digits and underscores"):format(
+        tpl.name
+      )
+    elseif #tpl.trig < 2 or #tpl.trig > 12 then
+      errors[#errors + 1] = ("%s: trig %q must be 2 to 12 characters"):format(
+        tpl.name,
+        tpl.trig
+      )
+    elseif keywords.is_reserved(tpl.trig, "2019") then
+      -- Otherwise typing the word in ordinary code would fire the snippet.
+      errors[#errors + 1] = ("%s: trig %q is a VHDL reserved word"):format(
+        tpl.name,
+        tpl.trig
+      )
+    end
   end
 
   local has_body = type(tpl.body) == "string"

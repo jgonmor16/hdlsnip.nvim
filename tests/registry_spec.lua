@@ -47,6 +47,20 @@ describe("registry discovery", function()
     -- if one bad file aborts the scan.
     assert.is_not_nil(registry.get("fixture_reg"))
   end)
+
+  it("looks a template up by its trigger", function()
+    assert.are.equal("fixture_reg", registry.by_trigger("fxr").name)
+    assert.is_nil(registry.by_trigger("nope"))
+  end)
+
+  it("refuses a template that reuses a trigger", function()
+    assert.is_nil(registry.get("zz_clash"))
+    assert.are.equal("fixture_reg", registry.by_trigger("fxr").name)
+    assert.matches(
+      "already used by fixture_reg",
+      table.concat(registry.problems(), "\n")
+    )
+  end)
 end)
 
 describe("registry problem reporting", function()
