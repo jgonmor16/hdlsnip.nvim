@@ -1,0 +1,954 @@
+>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+  1
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+
+────────────────────────────────────────────────────────────────────────────────
+  1
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+
+────────────────────────────────────────────────────────────────────────────────
+  1
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+:HdlSnip bit_sync
+────────────────────────────────────────────────────────────────────────────────
+  1
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+:HdlSnip bit_sync
+────────────────────────────────────────────────────────────────────────────────
+  1
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+Entity name (name): bit_sync
+────────────────────────────────────────────────────────────────────────────────
+  1
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+Entity name (name): bit_sync
+────────────────────────────────────────────────────────────────────────────────
+  1
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+Entity name (name):
+────────────────────────────────────────────────────────────────────────────────
+  1
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+Entity name (name):
+────────────────────────────────────────────────────────────────────────────────
+  1
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+Entity name (name): flag_sync
+────────────────────────────────────────────────────────────────────────────────
+  1
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+Entity name (name): flag_sync
+────────────────────────────────────────────────────────────────────────────────
+  1
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+Default number of synchroniser stages (stages): 2
+────────────────────────────────────────────────────────────────────────────────
+  1
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+Default number of synchroniser stages (stages): 2
+────────────────────────────────────────────────────────────────────────────────
+  1
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+Default number of synchroniser stages (stages):
+────────────────────────────────────────────────────────────────────────────────
+  1
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+Default number of synchroniser stages (stages):
+────────────────────────────────────────────────────────────────────────────────
+  1
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+Default number of synchroniser stages (stages): 3
+────────────────────────────────────────────────────────────────────────────────
+  1
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+Default number of synchroniser stages (stages): 3
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;
+  3
+  4 -- Single-bit synchroniser.
+  5 --
+  6 -- Valid for one bit at a time. A bus, or several bits that must
+  7 -- stay mutually consistent, needs a handshake or a gray coded
+  8 -- pointer instead: each bit here settles independently.
+  9 --
+ 10 -- Constrain the source register with set_max_delay -datapath_only
+ 11 -- so the crossing is not timed as a normal path.
+ 12 entity flag_sync is
+ 13   generic (
+ 14     G_STAGES : positive := 3;
+ 15     G_INIT   : std_logic := '0'
+ 16   );
+ 17   port (
+ 18     clk   : in  std_logic;
+ 19     rst_n : in  std_logic;
+ 20     d_i   : in  std_logic;
+ 21     q_o   : out std_logic
+ 22   );
+ 23 end entity flag_sync;
+ 24
+ 25 architecture rtl of flag_sync is
+ 26
+ 27   signal sync_r : std_logic_vector(G_STAGES - 1 downto 0)╭─────────────────────────────╮
+ 28                                                          │ flag_sync <CR> <C-U> 3 <CR> │
+ 29 begin                                                    ╰─────────────────────────────╯
+Default number of synchroniser stages (stages): 3
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;
+  3
+  4 -- Single-bit synchroniser.
+  5 --
+  6 -- Valid for one bit at a time. A bus, or several bits that must
+  7 -- stay mutually consistent, needs a handshake or a gray coded
+  8 -- pointer instead: each bit here settles independently.
+  9 --
+ 10 -- Constrain the source register with set_max_delay -datapath_only
+ 11 -- so the crossing is not timed as a normal path.
+ 12 entity flag_sync is
+ 13   generic (
+ 14     G_STAGES : positive := 3;
+ 15     G_INIT   : std_logic := '0'
+ 16   );
+ 17   port (
+ 18     clk   : in  std_logic;
+ 19     rst_n : in  std_logic;
+ 20     d_i   : in  std_logic;
+ 21     q_o   : out std_logic
+ 22   );
+ 23 end entity flag_sync;
+ 24
+ 25 architecture rtl of flag_sync is
+ 26
+ 27   signal sync_r : std_logic_vector(G_STAGES - 1 downto 0) := (others => G_INIT);
+ 28
+ 29 begin
+Default number of synchroniser stages (stages): 3
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;
+  3
+  4 -- Single-bit synchroniser.
+  5 --
+  6 -- Valid for one bit at a time. A bus, or several bits that must
+  7 -- stay mutually consistent, needs a handshake or a gray coded
+  8 -- pointer instead: each bit here settles independently.
+  9 --
+ 10 -- Constrain the source register with set_max_delay -datapath_only
+ 11 -- so the crossing is not timed as a normal path.
+ 12 entity flag_sync is
+ 13   generic (
+ 14     G_STAGES : positive := 3;
+ 15     G_INIT   : std_logic := '0'
+ 16   );
+ 17   port (
+ 18     clk   : in  std_logic;
+ 19     rst_n : in  std_logic;
+ 20     d_i   : in  std_logic;
+ 21     q_o   : out std_logic
+ 22   );
+ 23 end entity flag_sync;
+ 24
+ 25 architecture rtl of flag_sync is
+ 26
+ 27   signal sync_r : std_logic_vector(G_STAGES - 1 downto 0) := (others => G_INIT);
+ 28
+ 29 begin
+
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;
+  3
+  4 -- Single-bit synchroniser.
+  5 --
+  6 -- Valid for one bit at a time. A bus, or several bits that must
+  7 -- stay mutually consistent, needs a handshake or a gray coded
+  8 -- pointer instead: each bit here settles independently.
+  9 --
+ 10 -- Constrain the source register with set_max_delay -datapath_only
+ 11 -- so the crossing is not timed as a normal path.
+ 12 entity flag_sync is
+ 13   generic (
+ 14     G_STAGES : positive := 3;
+ 15     G_INIT   : std_logic := '0'
+ 16   );
+ 17   port (
+ 18     clk   : in  std_logic;
+ 19     rst_n : in  std_logic;
+ 20     d_i   : in  std_logic;
+ 21     q_o   : out std_logic
+ 22   );
+ 23 end entity flag_sync;
+ 24
+ 25 architecture rtl of flag_sync is
+ 26
+ 27   signal sync_r : std_logic_vector(G_STAGES - 1 downto 0) := (others => G_INIT);
+ 28
+ 29 begin
+
+────────────────────────────────────────────────────────────────────────────────

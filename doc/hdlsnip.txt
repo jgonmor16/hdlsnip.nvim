@@ -1,0 +1,288 @@
+*hdlsnip.txt*   Parameterised VHDL templates for Neovim
+
+Author:   Javier Gonzalez Moreno
+License:  MIT
+Homepage: https://github.com/jgonmor16/hdlsnip.nvim
+
+==============================================================================
+CONTENTS                                                    *hdlsnip-contents*
+
+    1. Introduction ........................... |hdlsnip-introduction|
+    2. Requirements ........................... |hdlsnip-requirements|
+    3. Commands ............................... |hdlsnip-commands|
+    4. Mappings ............................... |hdlsnip-mappings|
+    5. Configuration .......................... |hdlsnip-configuration|
+    6. Project configuration .................. |hdlsnip-project-config|
+    7. Templates .............................. |hdlsnip-templates|
+    8. Writing a template ..................... |hdlsnip-writing-templates|
+    9. Lua API ................................ |hdlsnip-api|
+   10. Health ................................. |hdlsnip-health|
+
+==============================================================================
+1. INTRODUCTION                                         *hdlsnip-introduction*
+
+hdlsnip.nvim renders VHDL from Lua templates rather than pasting it from a
+static snippet file.
+
+The difference matters where a snippet file cannot follow: the reset branch of
+a clocked process sits outside the clock test when the reset is asynchronous
+and inside it when the reset is synchronous, port columns align against
+whichever name your clock has, and a vendor attribute differs per family.
+Those are configuration, not typing, and getting them wrong is a synthesis
+mismatch rather than a syntax error.
+
+Templates come in two forms:
+
+Static      Rendered either as plain VHDL or as an LSP snippet with tabstops.
+Dynamic     The output depends on configuration or on a parameter, so it
+            cannot be a snippet: a tabstop cannot decide whether a reset port
+            exists. These prompt for their parameters and insert finished
+            code. |hdlsnip.expand()| falls back to this automatically.
+
+==============================================================================
+2. REQUIREMENTS                                         *hdlsnip-requirements*
+
+Neovim 0.10 or newer, for |vim.snippet|.
+
+No plugins are required. Selection and prompting go through |vim.ui.select()|
+and |vim.ui.input()|, so any picker you have installed is used, and the
+built-in prompts are used if you have none.
+
+==============================================================================
+3. COMMANDS                                                 *hdlsnip-commands*
+
+                                                                    *:HdlSnip*
+:HdlSnip [{name}]       Insert a template, prompting for each parameter.
+                        Without {name}, a picker opens first. Completion
+                        offers every registered template name.
+
+                                                              *:HdlSnipExpand*
+:HdlSnipExpand [{name}]
+                        Expand a template as a snippet, so its parameters
+                        become tabstops. A dynamic template cannot be a
+                        snippet, so it prompts and inserts instead.
+
+                                                              *:HdlSnipReload*
+:HdlSnipReload          Rescan the runtimepath for templates. Useful while
+                        writing one.
+
+==============================================================================
+4. MAPPINGS                                                 *hdlsnip-mappings*
+
+No mappings are created. Insert-mode expansion and tabstop jumping are worth
+mapping: >lua
+
+    vim.keymap.set("i", "<C-s>", function()
+      require("hdlsnip").expand_at_cursor()
+    end)
+
+    vim.keymap.set({ "i", "s" }, "<C-l>", function()
+      if vim.snippet.active({ direction = 1 }) then
+        vim.snippet.jump(1)
+      end
+    end)
+
+    vim.keymap.set({ "i", "s" }, "<C-h>", function()
+      if vim.snippet.active({ direction = -1 }) then
+        vim.snippet.jump(-1)
+      end
+    end)
+<
+|hdlsnip.expand_at_cursor()| returns false when the word before the cursor
+matches no trigger, so the mapping can fall through rather than swallow the
+key.
+
+==============================================================================
+5. CONFIGURATION                                       *hdlsnip-configuration*
+
+Calling `setup()` is optional; the defaults are used otherwise. >lua
+
+    require("hdlsnip").setup({
+      vhdl_std = "2008",
+      keyword_case = "lower",
+      indent = "  ",
+      clock = { name = "clk", edge = "rising" },
+      reset = { style = "async", polarity = "low", name = nil },
+      naming = {
+        in_suffix = "_i",
+        out_suffix = "_o",
+        reg_suffix = "_r",
+        sig_prefix = "",
+        proc_prefix = "p_",
+        const_prefix = "C_",
+        generic_prefix = "G_",
+      },
+      vendor = "generic",
+      align_ports = true,
+    })
+<
+                                                       *hdlsnip-config-fields*
+vhdl_std        "93" | "2002" | "2008" | "2019"
+                Which revision's reserved words apply. A signal called
+                `context` is legal under VHDL-93 and not under VHDL-2008.
+
+keyword_case    "lower" | "upper"
+                Applies to reserved words only. Identifiers keep the case you
+                give them, and predefined types such as `positive` and
+                `std_logic` are not reserved words.
+
+indent          One indent level. Spaces or tabs, never mixed.
+
+clock.name      Identifier used for the clock.
+clock.edge      "rising" | "falling"
+
+reset.style     "async" | "sync" | "none"
+                Also decides the sensitivity list: an asynchronous reset
+                appears in it, a synchronous one must not.
+reset.polarity  "low" | "high"
+reset.name      Derived from polarity when unset: `rst_n` when active low,
+                `rst` when active high. Set it to override.
+
+naming          Prefixes and suffixes applied to generated identifiers.
+
+vendor          "generic" | "amd" | "intel" | "lattice" | "microchip"
+                Selects vendor attributes such as `async_reg` and `preserve`.
+
+align_ports     Align the columns of generated declarations.
+
+Invalid options are reported with the path that is wrong, and the previous
+configuration is kept rather than half-applied.
+
+==============================================================================
+6. PROJECT CONFIGURATION                              *hdlsnip-project-config*
+
+A `.hdlsnip.lua` at the project root overrides the global configuration for
+buffers beneath it: >lua
+
+    -- .hdlsnip.lua
+    return {
+      keyword_case = "upper",
+      clock = { name = "axi_aclk" },
+      reset = { style = "sync", polarity = "high" },
+    }
+<
+The file is arbitrary Lua from a checked-out repository, so it is read through
+|vim.secure.read()|: Neovim asks once whether to trust it and remembers the
+answer, the same model as 'exrc'. Declining leaves the global configuration in
+place.
+
+Derived values are recomputed, not inherited. A project that sets
+`reset.polarity = "high"` gets `rst`, not the `rst_n` derived globally.
+
+==============================================================================
+7. TEMPLATES                                               *hdlsnip-templates*
+
+Shipped templates:
+
+    ent     entity      skeleton    Entity with a matching architecture
+    pkg     package     skeleton    Package declaration
+    prc     process     rtl         Clocked process with the configured reset
+    cdc     bit_sync    cdc         Single-bit CDC synchroniser entity
+
+==============================================================================
+8. WRITING A TEMPLATE                              *hdlsnip-writing-templates*
+
+Templates are discovered on the 'runtimepath' at: >
+
+    lua/hdlsnip/templates/<lang>/<kind>/<name>.lua
+<
+Neovim searches your configuration before plugins, so a file at that path in
+your own config shadows the one shipped with the plugin. Overriding a template
+needs no configuration at all.
+
+The directory must match the template's `kind` and the file name its `name`.
+A template that says otherwise is rejected at load, because the picker groups
+by kind and a mismatch would file it where nobody looks.
+
+Fields:                                                *hdlsnip-template-spec*
+
+name        Required. lower_snake_case, matching the file name.
+kind        Required. skeleton | rtl | cdc | mem | bus | tb.
+desc        Required. Shown in the picker.
+trig        Optional trigger word, 2 to 12 characters, unique across
+            templates, and never a VHDL reserved word: typing `entity` in
+            ordinary code must not fire a snippet.
+scope       Where the output belongs: design_unit (default), declarative,
+            statement or sequential.
+params      List of parameters. See below.
+body        A string with `{{marker}}` substitutions, for a static template.
+render      `function(params, cfg): string`, for a dynamic one. Requires
+            `dynamic = true`. Mutually exclusive with `body`.
+
+Parameters:                                                 *hdlsnip-params*
+
+name        Required, lower_snake_case.
+type        string | identifier | integer | number | boolean | choice.
+desc        Required. Shown in the prompt.
+default     Required.
+choices     Required for `choice`; the default must be one of them.
+min, max    Bounds for `integer` and `number`.
+
+An `identifier` parameter is checked against the configured VHDL standard, so
+a template will not insert a reserved word as a signal name.
+
+In a static body, `{{cursor}}` marks the final tabstop. Every marker must be a
+declared parameter and every parameter must appear in the body; both are
+checked at load, which catches the rename that updated one and not the other.
+
+Example: >lua
+
+    return {
+      name = "counter",
+      trig = "cnt",
+      kind = "rtl",
+      scope = "declarative",
+      desc = "Counter register",
+      params = {
+        { name = "sig", type = "identifier", default = "count",
+          desc = "Signal name" },
+        { name = "width", type = "integer", default = 8, min = 1,
+          desc = "Width in bits" },
+      },
+      body = "signal {{sig}} : unsigned({{width}} - 1 downto 0);{{cursor}}",
+    }
+<
+==============================================================================
+9. LUA API                                                       *hdlsnip-api*
+
+                                                          *hdlsnip.setup()*
+require("hdlsnip").setup({opts})
+        Apply configuration. Optional.
+
+                                                         *hdlsnip.insert()*
+require("hdlsnip").insert([{name}, {params}])
+        Insert a template. Without {name}, a picker opens. Without {params},
+        each parameter is prompted for. Supplying {params} prompts for
+        nothing, which is the path for mappings.
+
+                                                         *hdlsnip.expand()*
+require("hdlsnip").expand([{name}])
+        Expand as a snippet. Falls back to |hdlsnip.insert()| for a dynamic
+        template.
+
+                                               *hdlsnip.expand_at_cursor()*
+require("hdlsnip").expand_at_cursor()
+        Expand the trigger word before the cursor. Returns false when there
+        is nothing to expand, so a mapping can fall through.
+
+                                                         *hdlsnip.reload()*
+require("hdlsnip").reload()
+        Rescan the runtimepath.
+
+                                              *hdlsnip.registry.register()*
+require("hdlsnip.registry").register({tpl})
+        Register a template built in Lua rather than discovered from a file.
+        Returns `ok, errors`.
+
+==============================================================================
+10. HEALTH                                                    *hdlsnip-health*
+
+`:checkhealth hdlsnip` reports the Neovim version, how many templates were
+found and of which kinds, the configuration in effect for the current buffer,
+and anything that failed to load, with the reason.
+
+A template that fails validation is skipped rather than aborting the load, so
+one broken file in your configuration cannot take the library down. It will be
+listed here instead of silently missing.
+
+vim:tw=78:ts=8:noet:ft=help:norl:
