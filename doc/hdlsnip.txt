@@ -69,28 +69,43 @@ built-in prompts are used if you have none.
 ==============================================================================
 4. MAPPINGS                                                 *hdlsnip-mappings*
 
-No mappings are created. Insert-mode expansion and tabstop jumping are worth
-mapping: >lua
+Nothing is mapped unless `setup()` is called with `keys`. Every entry defaults
+to `false`. >lua
 
-    vim.keymap.set("i", "<C-s>", function()
-      require("hdlsnip").expand_at_cursor()
-    end)
+    require("hdlsnip").setup({
+      keys = {
+        expand = false,
+        jump_next = false,
+        jump_prev = false,
+      },
+    })
 
-    vim.keymap.set({ "i", "s" }, "<C-l>", function()
-      if vim.snippet.active({ direction = 1 }) then
-        vim.snippet.jump(1)
-      end
-    end)
 
-    vim.keymap.set({ "i", "s" }, "<C-h>", function()
-      if vim.snippet.active({ direction = -1 }) then
-        vim.snippet.jump(-1)
-      end
-    end)
-<
-|hdlsnip.expand_at_cursor()| returns false when the word before the cursor
-matches no trigger, so the mapping can fall through rather than swallow the
-key.
+expand          Insert and select mode. Expands the trigger word before the
+                cursor, or jumps forward when a snippet is already active. One
+                key for "carry on", which is what most configurations bind.
+
+jump_next       Insert and select mode. Only needed if you want a key for
+                jumping forward that is separate from `expand`.
+
+jump_prev       Insert and select mode. Jumps to the previous tabstop.
+
+Each mapping falls through when it has nothing to do, feeding the key back so
+it does whatever it otherwise would. `<C-k>` therefore still inserts a digraph
+when there is no trigger and no active snippet.
+
+A completion plugin bound to the same key wins by definition order. Give
+hdlsnip first refusal instead, for example with blink.cmp: >lua
+
+    keymap = {
+      ["<C-k>"] = {
+        function()
+          return require("hdlsnip").expand_at_cursor()
+        end,
+        "fallback",
+      },
+    }
+
 
 ==============================================================================
 5. CONFIGURATION                                       *hdlsnip-configuration*
@@ -114,6 +129,11 @@ Calling `setup()` is optional; the defaults are used otherwise. >lua
       },
       vendor = "generic",
       align_ports = true,
+      keys = {
+        expand = false,
+        jump_next = false,
+        jump_prev = false,
+      },
     })
 <
                                                        *hdlsnip-config-fields*
@@ -144,6 +164,8 @@ vendor          "generic" | "amd" | "intel" | "lattice" | "microchip"
                 Selects vendor attributes such as `async_reg` and `preserve`.
 
 align_ports     Align the columns of generated declarations.
+
+keys            Mappings created by `setup()`. See |hdlsnip-mappings|.
 
 Invalid options are reported with the path that is wrong, and the previous
 configuration is kept rather than half-applied.
@@ -262,8 +284,9 @@ require("hdlsnip").expand([{name}])
 
                                                *hdlsnip.expand_at_cursor()*
 require("hdlsnip").expand_at_cursor()
-        Expand the trigger word before the cursor. Returns false when there
-        is nothing to expand, so a mapping can fall through.
+        Expand the trigger word before the cursor. When there is no trigger
+        but a snippet is active, jumps forward instead. Returns false when
+        neither applies, so a mapping can fall through.
 
                                                          *hdlsnip.reload()*
 require("hdlsnip").reload()
