@@ -7,12 +7,77 @@ local ui = require("hdlsnip.ui")
 
 local M = {}
 
+-- ---------------------------------------------------------------------------
+-- Mappings
+-- ---------------------------------------------------------------------------
+
+--- Mappings this module created, so `setup()` can be called again without
+--- leaving the previous ones behind.
+local mapped = {}
+
+local function clear_keymaps()
+  for _, entry in ipairs(mapped) do
+    pcall(vim.keymap.del, entry.mode, entry.lhs)
+  end
+  mapped = {}
+end
+
+--- Create a mapping that falls through when it has nothing to do.
+---
+--- `expand_at_cursor()` edits the buffer, which an expression mapping may not
+--- do under textlock, so the key is fed back rather than returned.
+---@param mode string|string[]
+---@param lhs string|false
+---@param fn fun(): boolean true when the key was consumed
+---@param desc string
+local function map(mode, lhs, fn, desc)
+  if not lhs then
+    return
+  end
+  vim.keymap.set(mode, lhs, function()
+    if not fn() then
+      vim.api.nvim_feedkeys(vim.keycode(lhs), "n", false)
+    end
+  end, { desc = desc, silent = true })
+  mapped[#mapped + 1] = { mode = mode, lhs = lhs }
+end
+
+local function set_keymaps(cfg)
+  clear_keymaps()
+  local keys = cfg.keys or {}
+
+  map({ "i", "s" }, keys.expand, function()
+    return M.expand_at_cursor()
+  end, "hdlsnip: expand the trigger before the cursor")
+
+  map({ "i", "s" }, keys.jump_next, function()
+    if not vim.snippet.active({ direction = 1 }) then
+      return false
+    end
+    vim.snippet.jump(1)
+    return true
+  end, "hdlsnip: next tabstop")
+
+  map({ "i", "s" }, keys.jump_prev, function()
+    if not vim.snippet.active({ direction = -1 }) then
+      return false
+    end
+    vim.snippet.jump(-1)
+    return true
+  end, "hdlsnip: previous tabstop")
+end
+
 --- Apply user options. Optional: the plugin works on its defaults, and the
 --- commands are defined whether or not this is ever called.
+---
+--- Mappings are created here rather than in `plugin/`, so requiring the plugin
+--- without calling `setup()` changes no keys.
 ---@param opts table?
 ---@return table cfg
 function M.setup(opts)
-  return config.setup(opts)
+  local cfg = config.setup(opts)
+  set_keymaps(cfg)
+  return cfg
 end
 
 --- Resolve a template by name, reporting rather than throwing.
@@ -125,6 +190,13 @@ function M.expand_at_cursor()
 
   local tpl = registry.by_trigger(word)
   if not tpl then
+    -- Nothing to expand. If a snippet is active, advance instead: one key for
+    -- "carry on" is what most configurations bind, and it means jump_next
+    -- only needs its own key if you want one.
+    if vim.snippet.active({ direction = 1 }) then
+      vim.snippet.jump(1)
+      return true
+    end
     return false
   end
 

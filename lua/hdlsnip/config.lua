@@ -52,6 +52,14 @@ M.defaults = {
 
   --- Optional file header. Receives a context table, returns lines.
   header = nil, ---@type fun(ctx: table): string[]|nil
+
+  --- Mappings created by `setup()`. Every entry is `false` by default: a
+  --- plugin that claims keys on install is a plugin people uninstall.
+  keys = {
+    expand = false, ---@type string|false trigger word before the cursor
+    jump_next = false, ---@type string|false next tabstop
+    jump_prev = false, ---@type string|false previous tabstop
+  },
 }
 
 -- ---------------------------------------------------------------------------
@@ -69,6 +77,16 @@ local function is_identifier(v, std)
   end
   if keywords.is_reserved(v, std) then
     return false, ("'%s' is a VHDL-%s reserved word"):format(v, std)
+  end
+  return true
+end
+
+local function keymap(v)
+  if v == false then
+    return true
+  end
+  if type(v) ~= "string" or v == "" then
+    return false, 'must be a mapping such as "<C-k>", or false'
   end
   return true
 end
@@ -120,6 +138,11 @@ local schema = {
   vendor = { one_of = { "generic", "amd", "intel", "lattice", "microchip" } },
   align_ports = { type = "boolean" },
   header = { type = "function", optional = true },
+  keys = {
+    expand = { check = keymap },
+    jump_next = { check = keymap },
+    jump_prev = { check = keymap },
+  },
 }
 
 local function is_leaf(spec)

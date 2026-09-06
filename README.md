@@ -98,32 +98,46 @@ With [lazy.nvim](https://github.com/folke/lazy.nvim):
 | `:HdlSnipReload` | Rescan the runtimepath for templates |
 | `:checkhealth hdlsnip` | Templates found, configuration in effect, anything skipped |
 
-For insert mode, map the trigger expansion and the tabstop jumps:
+Nothing is mapped by default. To expand from insert mode and move between
+tabstops:
 
 ```lua
-vim.keymap.set("i", "<C-s>", function()
-  require("hdlsnip").expand_at_cursor()
-end)
-
-vim.keymap.set({ "i", "s" }, "<C-l>", function()
-  if vim.snippet.active({ direction = 1 }) then
-    vim.snippet.jump(1)
-  end
-end)
-
-vim.keymap.set({ "i", "s" }, "<C-h>", function()
-  if vim.snippet.active({ direction = -1 }) then
-    vim.snippet.jump(-1)
-  end
-end)
+require("hdlsnip").setup({
+  keys = {
+    expand = "<C-k>",       -- expand a trigger, or jump forward in a snippet
+    jump_prev = "<C-j>",
+  },
+})
 ```
 
-Type `pkg`, press `<C-s>`, and the trigger is replaced by the template with the
+Each falls through when it has nothing to do, so `<C-k>` still inserts a
+digraph when the word before the cursor is not a trigger and no snippet is
+active. `jump_next` is only needed if you want a separate key for jumping
+forward.
+
+With a plugin manager that takes an opts table, keys goes in there alongside
+the rest of the configuration.
+
+If a completion plugin is bound to the same key, whichever mapping is defined
+last wins. With blink.cmp, give hdlsnip first refusal instead:
+
+```lua
+keymap = {
+  ["<C-k>"] = {
+    function()
+      return require("hdlsnip").expand_at_cursor()
+    end,
+    "fallback",
+  },
+}
+```
+
+Type `pkg`, press `<C-k>`, and the trigger is replaced by the template with the
 package name as the first tabstop.
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/73d8b769-8a93-43fa-9e89-04e5ed57928e" width="900"
-       alt="Typing pkg and pressing Ctrl-S expands a package template; naming it once updates both the declaration and the end clause" />
+       alt="Typing pkg and pressing Ctrl-K expands a package template; naming it once updates both the declaration and the end clause" />
 </p>
 
 ## Templates
