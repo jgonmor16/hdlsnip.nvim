@@ -251,7 +251,8 @@ make ghdl          # analyse every fixture
 ## Contributing
 
 Branches follow `feat/`, `fix/`, `doc/`, `ci/`, `test/`, `refactor/`,
-`chore/`, `release/vX.Y.Z` and `hotfix/`; pull requests target `devel`.
+`chore/` and `hotfix/`; pull requests target `devel`, which is merged into
+`main` and tagged for each release.
 Commit messages follow Conventional Commits with a 50-character subject and a
 body wrapped at 70 columns.
 
