@@ -3,7 +3,7 @@ PLENARY_URL := https://github.com/nvim-lua/plenary.nvim
 LOG := .tests/last-run.log
 GOLDEN := tests/golden
 
-.PHONY: test lint format golden golden-check ghdl vsg clean
+.PHONY: test lint format golden golden-check ghdl vsg demo clean
 
 ## test: run the spec suite headless
 test: $(PLENARY)
@@ -75,6 +75,18 @@ ghdl:
 ## vsg: style check the fixtures
 vsg:
 	vsg -c vsg_config.yaml -f $(GOLDEN)/vhdl/*.vhd
+
+## demo: re-record the GIFs (needs vhs, ttyd and ffmpeg)
+demo:
+	@command -v vhs >/dev/null || { \
+		echo "vhs not found: https://github.com/charmbracelet/vhs"; \
+		exit 1; \
+	}
+	@vhs validate demo/*.tape
+	@for tape in demo/*.tape; do \
+		echo "recording $$tape"; \
+		vhs "$$tape" || exit 1; \
+	done
 
 ## clean: remove test dependencies
 clean:

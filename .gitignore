@@ -74,3 +74,4 @@ greybox_tmp/
 .DS_Store
 .idea/
 .vscode/
+demo/*.gif
