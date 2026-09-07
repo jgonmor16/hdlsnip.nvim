@@ -805,7 +805,7 @@
 ~                                                                           ╭───────────────────────╮
 ~                                                                           │ <CR> <Esc> o <CR> prc │
 ~                                                                           ╰───────────────────────╯
-/begin                                                                                          [1/1]
+
 ────────────────────────────────────────────────────────────────────────────────
   1 library ieee;
   2   use ieee.std_logic_1164.all;
@@ -846,7 +846,7 @@
 ~                                                                           ╭───────────────────────╮
 ~                                                                           │ <CR> <Esc> o <CR> prc │
 ~                                                                           ╰───────────────────────╯
-/begin                                                                                          [1/1]
+
 ────────────────────────────────────────────────────────────────────────────────
   1 library ieee;
   2   use ieee.std_logic_1164.all;
@@ -863,7 +863,7 @@
  13
  14 begin
  15
- 16   prc
+ 16
  17
  18 end architecture rtl;
 ~
@@ -887,7 +887,7 @@
 ~                                                                           ╭───────────────────────╮
 ~                                                                           │ <CR> <Esc> o <CR> prc │
 ~                                                                           ╰───────────────────────╯
-/begin                                                                                          [1/1]
+
 ────────────────────────────────────────────────────────────────────────────────
   1 library ieee;
   2   use ieee.std_logic_1164.all;
@@ -1543,7 +1543,7 @@ Process label, without the configured prefix (label): main
 ~                                                                         ╭─────────────────────────╮
 ~                                                                         │ process <CR> o <CR> prc │
 ~                                                                         ╰─────────────────────────╯
-/end process                                                                                    [1/1]
+
 ────────────────────────────────────────────────────────────────────────────────
   1 library ieee;
   2   use ieee.std_logic_1164.all;
@@ -1584,7 +1584,7 @@ Process label, without the configured prefix (label): main
 ~                                                                         ╭─────────────────────────╮
 ~                                                                         │ process <CR> o <CR> prc │
 ~                                                                         ╰─────────────────────────╯
-/end process                                                                                    [1/1]
+
 ────────────────────────────────────────────────────────────────────────────────
   1 library ieee;
   2   use ieee.std_logic_1164.all;
@@ -1610,7 +1610,7 @@ Process label, without the configured prefix (label): main
  22     end if;
  23   end process p_main;
  24
- 25
+ 25   prc?
  26
  27 end architecture rtl;
 ~
@@ -1651,7 +1651,7 @@ Process label, without the configured prefix (label): main
  22     end if;
  23   end process p_main;
  24
- 25
+ 25   prc?
  26
  27 end architecture rtl;
 ~
@@ -1663,10 +1663,10 @@ Process label, without the configured prefix (label): main
 ~
 ~
 ~
-~
-~
-~
-Process label, without the configured prefix (label): main
+~                                                                         ╭─────────────────────────╮
+~                                                                         │ process <CR> o <CR> prc │
+~                                                                         ╰─────────────────────────╯
+
 ────────────────────────────────────────────────────────────────────────────────
   1 library ieee;
   2   use ieee.std_logic_1164.all;
@@ -1692,7 +1692,7 @@ Process label, without the configured prefix (label): main
  22     end if;
  23   end process p_main;
  24
- 25
+ 25   prc
  26
  27 end architecture rtl;
 ~
@@ -1704,10 +1704,10 @@ Process label, without the configured prefix (label): main
 ~
 ~
 ~
-~
-~
-~
-Process label, without the configured prefix (label):
+~                                                                         ╭─────────────────────────╮
+~                                                                         │ process <CR> o <CR> prc │
+~                                                                         ╰─────────────────────────╯
+
 ────────────────────────────────────────────────────────────────────────────────
   1 library ieee;
   2   use ieee.std_logic_1164.all;
@@ -1733,7 +1733,7 @@ Process label, without the configured prefix (label):
  22     end if;
  23   end process p_main;
  24
- 25
+ 25   prc
  26
  27 end architecture rtl;
 ~
@@ -1745,10 +1745,10 @@ Process label, without the configured prefix (label):
 ~
 ~
 ~
-~
-~
-~
-Process label, without the configured prefix (label):
+~                                                                         ╭─────────────────────────╮
+~                                                                         │ process <CR> o <CR> prc │
+~                                                                         ╰─────────────────────────╯
+
 ────────────────────────────────────────────────────────────────────────────────
   1 library ieee;
   2   use ieee.std_logic_1164.all;
@@ -1774,7 +1774,7 @@ Process label, without the configured prefix (label):
  22     end if;
  23   end process p_main;
  24
- 25
+ 25   prcwr_ptr
  26
  27 end architecture rtl;
 ~
@@ -1786,10 +1786,10 @@ Process label, without the configured prefix (label):
 ~
 ~
 ~
-~
-~
-~
-Process label, without the configured prefix (label): wr_ptr
+~                                                                                           ╭───────╮
+~                                                                                           │ r_ptr │
+~                                                                                           ╰───────╯
+
 ────────────────────────────────────────────────────────────────────────────────
   1 library ieee;
   2   use ieee.std_logic_1164.all;
@@ -1815,7 +1815,7 @@ Process label, without the configured prefix (label): wr_ptr
  22     end if;
  23   end process p_main;
  24
- 25
+ 25   prcwr_ptr
  26
  27 end architecture rtl;
 ~
@@ -1827,10 +1827,10 @@ Process label, without the configured prefix (label): wr_ptr
 ~
 ~
 ~
-~
-~
-~
-Process label, without the configured prefix (label): wr_ptr
+~                                                                                           ╭───────╮
+~                                                                                           │ r_ptr │
+~                                                                                           ╰───────╯
+
 ────────────────────────────────────────────────────────────────────────────────
   1 library ieee;
   2   use ieee.std_logic_1164.all;
@@ -1856,22 +1856,22 @@ Process label, without the configured prefix (label): wr_ptr
  22     end if;
  23   end process p_main;
  24
- 25   p_wr_ptr : process (clk) is
- 26   begin
- 27     if rising_edge(clk) then
- 28       if rst_n = '0' then
- 29         -- reset state
- 30       else
- 31         -- clocked logic
- 32       end if;
- 33     end if;
- 34   end process p_wr_ptr;
- 35
- 36 end architecture rtl;
-~                                                                               ╭───────────────────╮
-~                                                                               │ <C-U> wr_ptr <CR> │
-~                                                                               ╰───────────────────╯
-Process label, without the configured prefix (label): wr_ptr
+ 25   prcwr_ptr
+ 26
+ 27
+ 28 end architecture rtl;
+~
+~
+~
+~
+~
+~
+~
+~
+~                                                                                      ╭────────────╮
+~                                                                                      │ r_ptr <CR> │
+~                                                                                      ╰────────────╯
+
 ────────────────────────────────────────────────────────────────────────────────
   1 library ieee;
   2   use ieee.std_logic_1164.all;
@@ -1897,59 +1897,18 @@ Process label, without the configured prefix (label): wr_ptr
  22     end if;
  23   end process p_main;
  24
- 25   p_wr_ptr : process (clk) is
- 26   begin
- 27     if rising_edge(clk) then
- 28       if rst_n = '0' then
- 29         -- reset state
- 30       else
- 31         -- clocked logic
- 32       end if;
- 33     end if;
- 34   end process p_wr_ptr;
- 35
- 36 end architecture rtl;
+ 25   prcwr_ptr
+ 26
+ 27
+ 28 end architecture rtl;
 ~
 ~
 ~
-Process label, without the configured prefix (label): wr_ptr
-────────────────────────────────────────────────────────────────────────────────
-  1 library ieee;
-  2   use ieee.std_logic_1164.all;
-  3   use ieee.numeric_std.all;
-  4
-  5 entity fifo is
-  6   port (
-  7     clk   : in  std_logic;
-  8     rst_n : in  std_logic
-  9   );
- 10 end entity fifo;
- 11
- 12 architecture rtl of fifo is
- 13
- 14 begin
- 15
- 16   p_main : process (clk, rst_n) is
- 17   begin
- 18     if rst_n = '0' then
- 19       -- reset state
- 20     elsif rising_edge(clk) then
- 21       -- clocked logic
- 22     end if;
- 23   end process p_main;
- 24
- 25   p_wr_ptr : process (clk) is
- 26   begin
- 27     if rising_edge(clk) then
- 28       if rst_n = '0' then
- 29         -- reset state
- 30       else
- 31         -- clocked logic
- 32       end if;
- 33     end if;
- 34   end process p_wr_ptr;
- 35
- 36 end architecture rtl;
+~
+~
+~
+~
+~
 ~
 ~
 ~
@@ -1979,18 +1938,59 @@ Process label, without the configured prefix (label): wr_ptr
  22     end if;
  23   end process p_main;
  24
- 25   p_wr_ptr : process (clk) is
- 26   begin
- 27     if rising_edge(clk) then
- 28       if rst_n = '0' then
- 29         -- reset state
- 30       else
- 31         -- clocked logic
- 32       end if;
- 33     end if;
- 34   end process p_wr_ptr;
- 35
- 36 end architecture rtl;
+ 25   prcwr_ptr
+ 26
+ 27
+ 28 end architecture rtl;
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;
+  3   use ieee.numeric_std.all;
+  4
+  5 entity fifo is
+  6   port (
+  7     clk   : in  std_logic;
+  8     rst_n : in  std_logic
+  9   );
+ 10 end entity fifo;
+ 11
+ 12 architecture rtl of fifo is
+ 13
+ 14 begin
+ 15
+ 16   p_main : process (clk, rst_n) is
+ 17   begin
+ 18     if rst_n = '0' then
+ 19       -- reset state
+ 20     elsif rising_edge(clk) then
+ 21       -- clocked logic
+ 22     end if;
+ 23   end process p_main;
+ 24
+ 25   prcwr_ptr
+ 26
+ 27
+ 28 end architecture rtl;
+~
+~
+~
+~
+~
+~
+~
+~
 ~
 ~
 ~

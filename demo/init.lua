@@ -26,23 +26,29 @@ vim.cmd.colorscheme("retrobox")
 require("hdlsnip").setup({
   vhdl_std = "2008",
   reset = { style = "async", polarity = "low" },
+  keys = {
+    expand = "<C-k>",
+    jump_prev = "<C-j>",
+  },
 })
 
-vim.keymap.set("i", "<C-s>", function()
-  require("hdlsnip").expand_at_cursor()
-end, { desc = "hdlsnip: expand trigger" })
+-- Automatic completion from the built-in menu. `vim.lsp.completion.enable`
+-- needs a client id, so it runs when the client attaches rather than at
+-- startup. Neovim 0.11+.
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(ev)
+    local client = vim.lsp.get_client_by_id(ev.data.client_id)
+    if client and client:supports_method("textDocument/completion") then
+      vim.lsp.completion.enable(true, ev.data.client_id, ev.buf, {
+        autotrigger = true,
+      })
+    end
+  end,
+})
 
-vim.keymap.set({ "i", "s" }, "<C-l>", function()
-  if vim.snippet.active({ direction = 1 }) then
-    vim.snippet.jump(1)
-  end
-end)
-
-vim.keymap.set({ "i", "s" }, "<C-h>", function()
-  if vim.snippet.active({ direction = -1 }) then
-    vim.snippet.jump(-1)
-  end
-end)
+-- Do not select an entry automatically, so the menu is readable on a
+-- recording and <C-n> visibly moves.
+vim.opt.completeopt = { "menuone", "noselect", "popup" }
 
 -- ---------------------------------------------------------------------------
 -- Keystroke overlay

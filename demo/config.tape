@@ -36,7 +36,7 @@ Sleep 300ms
 # Asynchronous, active low: the reset branch sits outside the clock test.
 Type "prc"
 Sleep 800ms
-Ctrl+S
+Ctrl+K
 Sleep 1200ms
 Enter
 Sleep 3000ms
@@ -62,7 +62,7 @@ Sleep 300ms
 # leaves the sensitivity list.
 Type "prc"
 Sleep 800ms
-Ctrl+S
+Ctrl+K
 Sleep 1200ms
 Ctrl+U
 Sleep 200ms

@@ -11,12 +11,13 @@ CONTENTS                                                    *hdlsnip-contents*
     2. Requirements ........................... |hdlsnip-requirements|
     3. Commands ............................... |hdlsnip-commands|
     4. Mappings ............................... |hdlsnip-mappings|
-    5. Configuration .......................... |hdlsnip-configuration|
-    6. Project configuration .................. |hdlsnip-project-config|
-    7. Templates .............................. |hdlsnip-templates|
-    8. Writing a template ..................... |hdlsnip-writing-templates|
-    9. Lua API ................................ |hdlsnip-api|
-   10. Health ................................. |hdlsnip-health|
+    5. Completion ............................. |hdlsnip-completion|
+    6. Configuration .......................... |hdlsnip-configuration|
+    7. Project configuration .................. |hdlsnip-project-config|
+    8. Templates .............................. |hdlsnip-templates|
+    9. Writing a template ..................... |hdlsnip-writing-templates|
+   10. Lua API ................................ |hdlsnip-api|
+   11. Health ................................. |hdlsnip-health|
 
 ==============================================================================
 1. INTRODUCTION                                         *hdlsnip-introduction*
@@ -66,6 +67,11 @@ built-in prompts are used if you have none.
 :HdlSnipReload          Rescan the runtimepath for templates. Useful while
                         writing one.
 
+                                                           *:HdlSnipLspAttach*
+:HdlSnipLspAttach       Attach the completion server to the current buffer.
+                        Rarely needed: it attaches to VHDL buffers on its
+                        own. See |hdlsnip-completion|.
+
 ==============================================================================
 4. MAPPINGS                                                 *hdlsnip-mappings*
 
@@ -79,7 +85,7 @@ to `false`. >lua
         jump_prev = false,
       },
     })
-
+<
 
 expand          Insert and select mode. Expands the trigger word before the
                 cursor, or jumps forward when a snippet is already active. One
@@ -105,10 +111,47 @@ hdlsnip first refusal instead, for example with blink.cmp: >lua
         "fallback",
       },
     }
-
+<
 
 ==============================================================================
-5. CONFIGURATION                                       *hdlsnip-configuration*
+5. COMPLETION                                             *hdlsnip-completion*
+
+Templates appear in the completion menu through an in-process LSP server: a
+Lua table rather than a process, started with |vim.lsp.start()| and costing
+nothing when idle.
+
+A server rather than a completion source because every frontend consumes LSP
+already. One implementation covers the built-in menu, nvim-cmp and blink.cmp,
+instead of three sources with three sets of bugs. It also composes with
+`vhdl_ls`: both clients attach to the same buffer and the menu merges them, so
+entity completions and templates appear together.
+
+It attaches to VHDL buffers automatically. Set `lsp = false` to turn it off,
+or use |:HdlSnipLspAttach| for a buffer it missed.
+
+nvim-cmp and blink.cmp need no configuration. For the built-in menu, enable
+completion when the client attaches: >lua
+
+    vim.api.nvim_create_autocmd("LspAttach", {
+      callback = function(ev)
+        vim.lsp.completion.enable(true, ev.data.client_id, ev.buf, {
+          autotrigger = true,
+        })
+      end,
+    })
+    vim.opt.completeopt = { "menuone", "noselect", "popup" }
+<
+With `noselect`, `<C-n>` selects an entry and `<C-y>` accepts it. Accepting
+expands the snippet, so the first parameter is selected and ready to type
+over.
+
+Only static templates are offered. A completion item cannot ask a question, so
+a dynamic template stays on |hdlsnip.expand_at_cursor()| and |:HdlSnip|. The
+documentation popup previews the VHDL the template would render, cased
+according to the configuration in effect for that buffer.
+
+==============================================================================
+6. CONFIGURATION                                       *hdlsnip-configuration*
 
 Calling `setup()` is optional; the defaults are used otherwise. >lua
 
@@ -129,6 +172,7 @@ Calling `setup()` is optional; the defaults are used otherwise. >lua
       },
       vendor = "generic",
       align_ports = true,
+      lsp = true,
       keys = {
         expand = false,
         jump_next = false,
@@ -165,13 +209,16 @@ vendor          "generic" | "amd" | "intel" | "lattice" | "microchip"
 
 align_ports     Align the columns of generated declarations.
 
+lsp             Offer templates through the in-process completion server.
+                See |hdlsnip-completion|.
+
 keys            Mappings created by `setup()`. See |hdlsnip-mappings|.
 
 Invalid options are reported with the path that is wrong, and the previous
 configuration is kept rather than half-applied.
 
 ==============================================================================
-6. PROJECT CONFIGURATION                              *hdlsnip-project-config*
+7. PROJECT CONFIGURATION                              *hdlsnip-project-config*
 
 A `.hdlsnip.lua` at the project root overrides the global configuration for
 buffers beneath it: >lua
@@ -192,7 +239,7 @@ Derived values are recomputed, not inherited. A project that sets
 `reset.polarity = "high"` gets `rst`, not the `rst_n` derived globally.
 
 ==============================================================================
-7. TEMPLATES                                               *hdlsnip-templates*
+8. TEMPLATES                                               *hdlsnip-templates*
 
 Shipped templates:
 
@@ -202,7 +249,7 @@ Shipped templates:
     cdc     bit_sync    cdc         Single-bit CDC synchroniser entity
 
 ==============================================================================
-8. WRITING A TEMPLATE                              *hdlsnip-writing-templates*
+9. WRITING A TEMPLATE                              *hdlsnip-writing-templates*
 
 Templates are discovered on the 'runtimepath' at: >
 
@@ -265,7 +312,7 @@ Example: >lua
     }
 <
 ==============================================================================
-9. LUA API                                                       *hdlsnip-api*
+10. LUA API                                                      *hdlsnip-api*
 
                                                           *hdlsnip.setup()*
 require("hdlsnip").setup({opts})
@@ -298,7 +345,7 @@ require("hdlsnip.registry").register({tpl})
         Returns `ok, errors`.
 
 ==============================================================================
-10. HEALTH                                                    *hdlsnip-health*
+11. HEALTH                                                    *hdlsnip-health*
 
 `:checkhealth hdlsnip` reports the Neovim version, how many templates were
 found and of which kinds, the configuration in effect for the current buffer,

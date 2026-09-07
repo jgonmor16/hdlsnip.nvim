@@ -97,6 +97,7 @@ With [lazy.nvim](https://github.com/folke/lazy.nvim):
 | `:HdlSnipExpand [name]` | Expand as a snippet, with tabstops |
 | `:HdlSnipReload` | Rescan the runtimepath for templates |
 | `:checkhealth hdlsnip` | Templates found, configuration in effect, anything skipped |
+| `:HdlSnipLspAttach` | Attach the completion server to this buffer |
 
 Nothing is mapped by default. To expand from insert mode and move between
 tabstops:
@@ -132,13 +133,27 @@ keymap = {
 }
 ```
 
-Type `pkg`, press `<C-k>`, and the trigger is replaced by the template with the
-package name as the first tabstop.
+Templates also appear in the completion menu. hdlsnip runs an in-process LSP
+server — a Lua table, not a process — so any completion frontend picks them up.
+Type `pk`, accept `pkg`, and the snippet expands: naming it once fills the
+`end package` clause too, and `<C-k>` moves to the next tabstop.
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/73d8b769-8a93-43fa-9e89-04e5ed57928e" width="900"
-       alt="Typing pkg and pressing Ctrl-K expands a package template; naming it once updates both the declaration and the end clause" />
+  <img src="https://github.com/user-attachments/assets/e99c760f-6eb2-4ea2-893e-193db91acd52" width="900"
+       alt="Typing pk opens the completion menu; accepting pkg expands the package template, naming it updates both the declaration and the end clause, and Ctrl-K jumps into the body" />
 </p>
+
+With the built-in menu:
+
+```lua
+vim.lsp.completion.enable(true, client_id, bufnr, { autotrigger = true })
+```
+
+nvim-cmp and blink.cmp need nothing: they consume LSP sources already. Turn it
+off with `lsp = false`.
+
+Only static templates are offered. A completion item cannot ask a question, so
+`ent`, `prc` and `cdc` stay on the trigger key and `:HdlSnip`.
 
 ## Templates
 
