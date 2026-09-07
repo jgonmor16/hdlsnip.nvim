@@ -76,6 +76,11 @@ local function alternatives(param)
     end
     return out
   end
+  -- A parameter with a validator knows what a legal alternative looks like
+  -- better than this does, so it may name one.
+  if param.example then
+    return { param.example }
+  end
   -- Identifiers and free strings: something legal and obviously generated.
   return { "gold_" .. param.name }
 end
@@ -106,8 +111,9 @@ end
 ---@param cfg table
 ---@param body string[]
 ---@return string[]
-local function wrap(tpl, cfg, body)
+local function wrap(tpl, cfg, sections)
   local scope = template.scope(tpl)
+  local body = render.lines(sections.statements or "")
   if scope == "design_unit" then
     return body
   end
@@ -148,7 +154,18 @@ local function wrap(tpl, cfg, body)
     return result
   end
 
-  if scope == "declarative" then
+  if scope == "mixed" then
+    -- Declarations above `begin`, statements below: the whole reason the
+    -- render function returns two halves.
+    local declarations = {}
+    for _, line in ipairs(render.lines(sections.declarations or "")) do
+      declarations[#declarations + 1] = line == "" and "" or (ind .. line)
+    end
+    vim.list_extend(out, declarations)
+    vim.list_extend(out, { "", "begin", "" })
+    vim.list_extend(out, indented(1))
+    out[#out + 1] = ""
+  elseif scope == "declarative" then
     vim.list_extend(out, indented(1))
     vim.list_extend(out, { "", "begin", "" })
   elseif scope == "statement" then
@@ -212,8 +229,8 @@ local function main()
     for _, variant in ipairs(VARIANTS) do
       local cfg = config.resolve(config.merge(config.defaults, variant.cfg))
       for _, case in ipairs(param_cases(tpl)) do
-        local text, errors = render.values(tpl, case.params, cfg)
-        if not text then
+        local sections, errors = render.sections(tpl, case.params, cfg)
+        if not sections then
           io.stderr:write(
             ("golden: %s/%s/%s: %s\n"):format(
               tpl.name,
@@ -230,7 +247,7 @@ local function main()
             case.label
           )
           local lines = header(tpl, variant, case)
-          vim.list_extend(lines, wrap(tpl, cfg, render.lines(text)))
+          vim.list_extend(lines, wrap(tpl, cfg, sections))
           write(("%s/%s/%s"):format(OUT, tpl.lang, name), lines)
           written = written + 1
         end
