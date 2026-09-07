@@ -247,6 +247,7 @@ Shipped templates:
     pkg     package     skeleton    Package declaration
     prc     process     rtl         Clocked process with the configured reset
     cdc     bit_sync    cdc         Single-bit CDC synchroniser entity
+    tb      testbench   tb          Self-checking testbench skeleton
 
 ==============================================================================
 9. WRITING A TEMPLATE                              *hdlsnip-writing-templates*

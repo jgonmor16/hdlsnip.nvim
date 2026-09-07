@@ -163,6 +163,7 @@ Only static templates are offered. A completion item cannot ask a question, so
 | `pkg` | `package` | skeleton | Package declaration |
 | `prc` | `process` | rtl | Clocked process with the configured reset |
 | `cdc` | `bit_sync` | cdc | Single-bit CDC synchroniser entity |
+| `tb` | `testbench` | tb | Self-checking testbench skeleton |
 
 Templates are either **static**, rendering as a snippet with tabstops, or
 **dynamic**, where the output depends on configuration or on a parameter. A
@@ -254,7 +255,7 @@ anything needing logic; set `dynamic = true` alongside it.
 
 ## Correctness
 
-Every template is rendered across six configuration variants and one case per
+Every template is rendered across seven configuration variants and one case per
 parameter alternative, committed under `tests/golden/`, and analysed with GHDL
 in CI. A change to generated VHDL shows up as a reviewable diff rather than
 hiding inside a Lua change.
