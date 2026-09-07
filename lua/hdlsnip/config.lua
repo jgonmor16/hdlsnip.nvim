@@ -53,6 +53,11 @@ M.defaults = {
   --- Optional file header. Receives a context table, returns lines.
   header = nil, ---@type fun(ctx: table): string[]|nil
 
+  --- Offer templates through an in-process LSP server, so they appear in
+  --- whatever completion menu is already in use. Costs nothing when idle:
+  --- the server is a Lua table, not a process.
+  lsp = true,
+
   --- Mappings created by `setup()`. Every entry is `false` by default: a
   --- plugin that claims keys on install is a plugin people uninstall.
   keys = {
@@ -137,6 +142,7 @@ local schema = {
   },
   vendor = { one_of = { "generic", "amd", "intel", "lattice", "microchip" } },
   align_ports = { type = "boolean" },
+  lsp = { type = "boolean" },
   header = { type = "function", optional = true },
   keys = {
     expand = { check = keymap },
@@ -278,6 +284,13 @@ function M.setup(user)
   end
   raw, current = candidate_raw, candidate
   M.clear_cache() -- project overrides were merged onto the old options
+  return current
+end
+
+--- Configuration without any project override, so callers that must not
+--- trigger a trust prompt have something to read.
+---@return table
+function M.get_global()
   return current
 end
 
