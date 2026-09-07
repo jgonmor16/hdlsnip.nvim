@@ -33,6 +33,9 @@ local VARIANTS = {
     },
   },
   { name = "no_reset", cfg = { reset = { style = "none" } } },
+  -- The revision changes what a template may emit: std.env.finish does not
+  -- exist before VHDL-2008.
+  { name = "vhdl93", cfg = { vhdl_std = "93" } },
   -- Vendor attributes are a whole code path of their own, and the reason
   -- some templates are generated rather than copied.
   { name = "amd", cfg = { vendor = "amd" } },

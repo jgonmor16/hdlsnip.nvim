@@ -62,10 +62,11 @@ golden-check:
 ## is analysed into a throwaway working directory rather than a shared one.
 ghdl:
 	@for f in $(GOLDEN)/vhdl/*.vhd; do \
+		case "$$f" in *__vhdl93__*) std=93 ;; *) std=08 ;; esac; \
 		work=$$(mktemp -d); \
-		if ! ghdl -a --std=08 --workdir=$$work "$$f"; then \
+		if ! ghdl -a --std=$$std --workdir=$$work "$$f"; then \
 			rm -rf $$work; \
-			echo "FAILED to analyse: $$f"; \
+			echo "FAILED to analyse (std=$$std): $$f"; \
 			exit 1; \
 		fi; \
 		rm -rf $$work; \
