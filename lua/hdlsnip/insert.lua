@@ -25,6 +25,7 @@ end
 ---@param bufnr integer
 ---@param lines string[]
 ---@return integer first_row 1-based row of the first inserted line
+---@return integer count how many lines were written
 function M.insert_lines(bufnr, lines)
   local win = vim.api.nvim_get_current_win()
   local row = vim.api.nvim_win_get_cursor(win)[1]
@@ -43,7 +44,7 @@ function M.insert_lines(bufnr, lines)
 
   vim.api.nvim_buf_set_lines(bufnr, from, to, false, prefixed)
   vim.api.nvim_win_set_cursor(win, { from + 1, #indent })
-  return from + 1
+  return from + 1, #prefixed
 end
 
 --- Insert a rendered template, placing each half where it is legal.
@@ -56,11 +57,14 @@ end
 ---@param sections table `{ declarations = string?, statements = string }`
 ---@param cfg table
 ---@return boolean placed true when the halves went to separate places
+---@return integer? first_row when it went in as one block
+---@return integer? count
 function M.insert_sections(bufnr, sections, cfg)
   local declarations = sections.declarations or ""
   if declarations == "" then
-    M.insert_lines(bufnr, render.lines(sections.statements or ""))
-    return false
+    local first, count =
+      M.insert_lines(bufnr, render.lines(sections.statements or ""))
+    return false, first, count
   end
 
   local win = vim.api.nvim_get_current_win()
