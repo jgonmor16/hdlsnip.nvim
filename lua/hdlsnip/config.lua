@@ -317,8 +317,16 @@ local project_cache = {}
 ---@param bufnr integer?
 ---@return table? cfg nil when there is no project override
 function M.project(bufnr)
-  local root = vim.fs.root(bufnr or 0, { ".hdlsnip.lua" })
-  if not root then
+  bufnr = bufnr or 0
+
+  -- vim.fs.root needs a path to search from, and a scratch buffer has none.
+  -- Opening :HdlSnip in one is ordinary, so this must not throw.
+  if vim.api.nvim_buf_get_name(bufnr) == "" then
+    return nil
+  end
+
+  local ok, root = pcall(vim.fs.root, bufnr, { ".hdlsnip.lua" })
+  if not ok or not root then
     return nil
   end
   local path = root .. "/.hdlsnip.lua"
