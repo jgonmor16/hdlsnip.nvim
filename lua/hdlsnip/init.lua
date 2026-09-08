@@ -99,15 +99,16 @@ end
 ---@param params table
 ---@param bufnr integer
 local function render_and_insert(tpl, params, bufnr)
-  local text, errors = render.values(tpl, params, config.get(bufnr))
-  if not text then
+  local cfg = config.get(bufnr)
+  local sections, errors = render.sections(tpl, params, cfg)
+  if not sections then
     vim.notify(
       ("hdlsnip: %s\n  %s"):format(tpl.name, table.concat(errors, "\n  ")),
       vim.log.levels.ERROR
     )
     return
   end
-  insert.insert_lines(bufnr, render.lines(text))
+  insert.insert_sections(bufnr, sections, cfg)
 end
 
 --- Insert a template, prompting for anything not supplied.

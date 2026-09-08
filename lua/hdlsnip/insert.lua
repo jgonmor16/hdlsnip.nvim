@@ -1,4 +1,7 @@
 --- Putting rendered text into a buffer.
+local placement = require("hdlsnip.placement")
+local render = require("hdlsnip.render")
+
 local M = {}
 
 --- Indentation of a line, as a string.
@@ -41,6 +44,71 @@ function M.insert_lines(bufnr, lines)
   vim.api.nvim_buf_set_lines(bufnr, from, to, false, prefixed)
   vim.api.nvim_win_set_cursor(win, { from + 1, #indent })
   return from + 1
+end
+
+--- Insert a rendered template, placing each half where it is legal.
+---
+--- A `mixed` template emits declarations and statements, which go either side
+--- of the architecture's `begin`. When the enclosing architecture cannot be
+--- identified, both halves go in at the cursor as one block: wrong, but no
+--- more wrong than before, and the user can see it and move it.
+---@param bufnr integer
+---@param sections table `{ declarations = string?, statements = string }`
+---@param cfg table
+---@return boolean placed true when the halves went to separate places
+function M.insert_sections(bufnr, sections, cfg)
+  local declarations = sections.declarations or ""
+  if declarations == "" then
+    M.insert_lines(bufnr, render.lines(sections.statements or ""))
+    return false
+  end
+
+  local win = vim.api.nvim_get_current_win()
+  local row = vim.api.nvim_win_get_cursor(win)[1]
+  local found = placement.architecture(bufnr, row)
+
+  if not found then
+    local both = render.lines(declarations)
+    both[#both + 1] = ""
+    vim.list_extend(both, render.lines(sections.statements or ""))
+    M.insert_lines(bufnr, both)
+    return false
+  end
+
+  local indent = cfg and cfg.indent or "  "
+
+  local function indented(text)
+    local out = {}
+    for _, line in ipairs(render.lines(text)) do
+      out[#out + 1] = line == "" and "" or (indent .. line)
+    end
+    return out
+  end
+
+  -- Statements first: inserting the declarations would shift every row below
+  -- them, including the one the statements are measured against.
+  local statements = indented(sections.statements or "")
+  statements[#statements + 1] = ""
+  vim.api.nvim_buf_set_lines(
+    bufnr,
+    found.begin_row,
+    found.begin_row,
+    false,
+    statements
+  )
+
+  local declaration_lines = indented(declarations)
+  declaration_lines[#declaration_lines + 1] = ""
+  vim.api.nvim_buf_set_lines(
+    bufnr,
+    found.begin_row - 1,
+    found.begin_row - 1,
+    false,
+    declaration_lines
+  )
+
+  vim.api.nvim_win_set_cursor(win, { found.begin_row, #indent })
+  return true
 end
 
 return M
