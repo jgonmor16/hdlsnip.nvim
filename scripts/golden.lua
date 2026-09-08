@@ -154,6 +154,17 @@ local function wrap(tpl, cfg, sections)
     return result
   end
 
+  -- A fragment may read signals it does not declare -- an edge detector reads
+  -- the signal it watches. The template says what the wrapper must declare
+  -- for the fixture to analyse, without putting those declarations into what
+  -- a user would actually insert.
+  local extra = {}
+  if tpl.fixture_declarations then
+    for _, line in ipairs(tpl.fixture_declarations(cfg)) do
+      extra[#extra + 1] = ind .. line
+    end
+  end
+
   if scope == "mixed" then
     -- Declarations above `begin`, statements below: the whole reason the
     -- render function returns two halves.
@@ -161,6 +172,7 @@ local function wrap(tpl, cfg, sections)
     for _, line in ipairs(render.lines(sections.declarations or "")) do
       declarations[#declarations + 1] = line == "" and "" or (ind .. line)
     end
+    vim.list_extend(out, extra)
     vim.list_extend(out, declarations)
     vim.list_extend(out, { "", "begin", "" })
     vim.list_extend(out, indented(1))
@@ -169,6 +181,7 @@ local function wrap(tpl, cfg, sections)
     vim.list_extend(out, indented(1))
     vim.list_extend(out, { "", "begin", "" })
   elseif scope == "statement" then
+    vim.list_extend(out, extra)
     vim.list_extend(out, { "begin", "" })
     vim.list_extend(out, indented(1))
     out[#out + 1] = ""
