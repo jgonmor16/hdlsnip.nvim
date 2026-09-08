@@ -83,6 +83,54 @@ end
 -- Modes
 -- ---------------------------------------------------------------------------
 
+--- Render a template into its declarative and statement halves.
+---
+--- Most templates produce one block of text and it goes wherever the cursor
+--- is. A `mixed` template produces two, because an FSM's state type belongs
+--- above `begin` and its processes below: the halves are kept apart so a
+--- caller can place each correctly.
+---@param tpl table
+---@param given table<string, any>?
+---@param cfg table
+---@return table? sections `{ declarations = string?, statements = string }`
+---@return string[] errors
+function M.sections(tpl, given, cfg)
+  local params, errors = template.resolve_params(tpl, given, cfg)
+  if not params then
+    return nil, errors
+  end
+
+  if not tpl.dynamic then
+    local text = M.substitute(style.apply_case(tpl.body, cfg), function(marker)
+      if marker == "cursor" then
+        return ""
+      end
+      local value = params[marker]
+      return value ~= nil and literal(value) or nil
+    end, tpl.name)
+    return { statements = text }, {}
+  end
+
+  local ok, result = pcall(tpl.render, params, cfg)
+  if not ok then
+    return nil, { ("%s: %s"):format(tpl.name, result) }
+  end
+
+  if type(result) == "string" then
+    return { statements = result }, {}
+  end
+  if type(result) ~= "table" then
+    return nil,
+      {
+        ("%s: render returned %s, expected a string or a table"):format(
+          tpl.name,
+          type(result)
+        ),
+      }
+  end
+  return result, {}
+end
+
 --- Render concrete VHDL.
 ---@param tpl table
 ---@param given table<string, any>?
@@ -90,28 +138,18 @@ end
 ---@return string? text
 ---@return string[] errors
 function M.values(tpl, given, cfg)
-  local params, errors = template.resolve_params(tpl, given, cfg)
-  if not params then
+  local sections, errors = M.sections(tpl, given, cfg)
+  if not sections then
     return nil, errors
   end
 
-  if tpl.dynamic then
-    local ok, result = pcall(tpl.render, params, cfg)
-    if not ok then
-      return nil, { ("%s: %s"):format(tpl.name, result) }
-    end
-    return result, {}
+  -- Flattened in the order they would be written, which is what an insertion
+  -- at the cursor wants. Callers that can place the halves separately use
+  -- `sections` instead.
+  if sections.declarations and sections.declarations ~= "" then
+    return sections.declarations .. "\n\n" .. (sections.statements or ""), {}
   end
-
-  local text = M.substitute(style.apply_case(tpl.body, cfg), function(marker)
-    if marker == "cursor" then
-      return ""
-    end
-    local value = params[marker]
-    return value ~= nil and literal(value) or nil
-  end, tpl.name)
-
-  return text, {}
+  return sections.statements or "", {}
 end
 
 --- Render an LSP snippet body.

@@ -33,6 +33,9 @@ local VARIANTS = {
     },
   },
   { name = "no_reset", cfg = { reset = { style = "none" } } },
+  -- The revision changes what a template may emit: std.env.finish does not
+  -- exist before VHDL-2008.
+  { name = "vhdl93", cfg = { vhdl_std = "93" } },
   -- Vendor attributes are a whole code path of their own, and the reason
   -- some templates are generated rather than copied.
   { name = "amd", cfg = { vendor = "amd" } },
@@ -73,6 +76,11 @@ local function alternatives(param)
     end
     return out
   end
+  -- A parameter with a validator knows what a legal alternative looks like
+  -- better than this does, so it may name one.
+  if param.example then
+    return { param.example }
+  end
   -- Identifiers and free strings: something legal and obviously generated.
   return { "gold_" .. param.name }
 end
@@ -103,8 +111,9 @@ end
 ---@param cfg table
 ---@param body string[]
 ---@return string[]
-local function wrap(tpl, cfg, body)
+local function wrap(tpl, cfg, sections)
   local scope = template.scope(tpl)
+  local body = render.lines(sections.statements or "")
   if scope == "design_unit" then
     return body
   end
@@ -145,10 +154,34 @@ local function wrap(tpl, cfg, body)
     return result
   end
 
-  if scope == "declarative" then
+  -- A fragment may read signals it does not declare -- an edge detector reads
+  -- the signal it watches. The template says what the wrapper must declare
+  -- for the fixture to analyse, without putting those declarations into what
+  -- a user would actually insert.
+  local extra = {}
+  if tpl.fixture_declarations then
+    for _, line in ipairs(tpl.fixture_declarations(cfg)) do
+      extra[#extra + 1] = ind .. line
+    end
+  end
+
+  if scope == "mixed" then
+    -- Declarations above `begin`, statements below: the whole reason the
+    -- render function returns two halves.
+    local declarations = {}
+    for _, line in ipairs(render.lines(sections.declarations or "")) do
+      declarations[#declarations + 1] = line == "" and "" or (ind .. line)
+    end
+    vim.list_extend(out, extra)
+    vim.list_extend(out, declarations)
+    vim.list_extend(out, { "", "begin", "" })
+    vim.list_extend(out, indented(1))
+    out[#out + 1] = ""
+  elseif scope == "declarative" then
     vim.list_extend(out, indented(1))
     vim.list_extend(out, { "", "begin", "" })
   elseif scope == "statement" then
+    vim.list_extend(out, extra)
     vim.list_extend(out, { "begin", "" })
     vim.list_extend(out, indented(1))
     out[#out + 1] = ""
@@ -203,14 +236,15 @@ local function main()
   end
 
   vim.fn.mkdir(OUT .. "/vhdl", "p")
+  vim.fn.mkdir(OUT .. "/external", "p")
 
   local written, failed = 0, 0
   for _, tpl in ipairs(templates) do
     for _, variant in ipairs(VARIANTS) do
       local cfg = config.resolve(config.merge(config.defaults, variant.cfg))
       for _, case in ipairs(param_cases(tpl)) do
-        local text, errors = render.values(tpl, case.params, cfg)
-        if not text then
+        local sections, errors = render.sections(tpl, case.params, cfg)
+        if not sections then
           io.stderr:write(
             ("golden: %s/%s/%s: %s\n"):format(
               tpl.name,
@@ -227,8 +261,12 @@ local function main()
             case.label
           )
           local lines = header(tpl, variant, case)
-          vim.list_extend(lines, wrap(tpl, cfg, render.lines(text)))
-          write(("%s/%s/%s"):format(OUT, tpl.lang, name), lines)
+          vim.list_extend(lines, wrap(tpl, cfg, sections))
+          -- A template that needs a library CI does not have still gets
+          -- fixtures, because they diff. They just live somewhere the GHDL
+          -- step does not look.
+          local dir = tpl.external_libraries and "external" or tpl.lang
+          write(("%s/%s/%s"):format(OUT, dir, name), lines)
           written = written + 1
         end
       end
