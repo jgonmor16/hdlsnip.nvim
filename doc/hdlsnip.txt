@@ -243,11 +243,23 @@ Derived values are recomputed, not inherited. A project that sets
 
 Shipped templates:
 
-    ent     entity      skeleton    Entity with a matching architecture
-    pkg     package     skeleton    Package declaration
-    prc     process     rtl         Clocked process with the configured reset
-    cdc     bit_sync    cdc         Single-bit CDC synchroniser entity
-    tb      testbench   tb          Self-checking testbench skeleton
+    ent     entity          skeleton  Entity and matching architecture
+    pkg     package         skeleton  Package declaration
+    prc     process         rtl       Clocked process, configured reset
+    cnt     counter         rtl       Counter that wraps or saturates
+    edge    edge_detect     rtl       One-cycle pulse on an edge
+    fsm     fsm             rtl       Two-process state machine
+    mux     mux             rtl       Multiplexer, combinational or registered
+    pipe    pipeline        rtl       N-stage delay line
+    cdc     bit_sync        cdc       Single-bit CDC synchroniser
+    hs      cdc_handshake   cdc       Multi-bit CDC by handshake
+    fifo    fifo_sync       mem       Synchronous FIFO
+    ram     ram_dp          mem       Simple dual-port RAM, read-first
+    axil    axi4lite_slave  bus       AXI4-Lite slave, register file
+    axis    axis_skid       bus       AXI-Stream slice with backpressure
+    apb     apb_slave       bus       APB slave, register file
+    tb      testbench       tb        Self-checking testbench skeleton
+    vtb     tb_vunit        tb        VUnit testbench with a test suite
 
 ==============================================================================
 9. WRITING A TEMPLATE                              *hdlsnip-writing-templates*
@@ -273,7 +285,7 @@ trig        Optional trigger word, 2 to 12 characters, unique across
             templates, and never a VHDL reserved word: typing `entity` in
             ordinary code must not fire a snippet.
 scope       Where the output belongs: design_unit (default), declarative,
-            statement or sequential.
+            statement, sequential or mixed.
 params      List of parameters. See below.
 body        A string with `{{marker}}` substitutions, for a static template.
 render      `function(params, cfg): string`, for a dynamic one. Requires
@@ -312,6 +324,19 @@ Example: >lua
       body = "signal {{sig}} : unsigned({{width}} - 1 downto 0);{{cursor}}",
     }
 <
+                                                        *hdlsnip-mixed-scope*
+A `mixed` template emits declarations and statements, which belong in
+different parts of an architecture. Its render function returns a table
+rather than a string: >lua
+
+    return {
+      declarations = "signal count_r : unsigned(7 downto 0);",
+      statements = "p_count : process (clk) is ...",
+    }
+
+A state machine is the obvious case: the state type goes above `begin` and
+the processes below it.
+
 ==============================================================================
 10. LUA API                                                      *hdlsnip-api*
 

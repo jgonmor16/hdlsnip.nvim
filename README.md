@@ -162,8 +162,20 @@ Only static templates are offered. A completion item cannot ask a question, so
 | `ent` | `entity` | skeleton | Entity with a matching architecture |
 | `pkg` | `package` | skeleton | Package declaration |
 | `prc` | `process` | rtl | Clocked process with the configured reset |
-| `cdc` | `bit_sync` | cdc | Single-bit CDC synchroniser entity |
+| `cnt` | `counter` | rtl | Counter that wraps or saturates |
+| `edge` | `edge_detect` | rtl | One-cycle pulse on a rising, falling or either edge |
+| `fsm` | `fsm` | rtl | Two-process finite state machine |
+| `mux` | `mux` | rtl | Multiplexer, combinational or registered |
+| `pipe` | `pipeline` | rtl | N-stage delay line |
+| `cdc` | `bit_sync` | cdc | Single-bit CDC synchroniser |
+| `hs` | `cdc_handshake` | cdc | Multi-bit CDC by request and acknowledge |
+| `fifo` | `fifo_sync` | mem | Synchronous FIFO with count-based flags |
+| `ram` | `ram_dp` | mem | Simple dual-port RAM, read-first |
+| `axil` | `axi4lite_slave` | bus | AXI4-Lite slave with a register file |
+| `axis` | `axis_skid` | bus | AXI-Stream register slice with backpressure |
+| `apb` | `apb_slave` | bus | APB slave with a register file |
 | `tb` | `testbench` | tb | Self-checking testbench skeleton |
+| `vtb` | `tb_vunit` | tb | VUnit testbench with a test suite |
 
 Templates are either **static**, rendering as a snippet with tabstops, or
 **dynamic**, where the output depends on configuration or on a parameter. A
@@ -256,9 +268,15 @@ anything needing logic; set `dynamic = true` alongside it.
 ## Correctness
 
 Every template is rendered across seven configuration variants and one case per
-parameter alternative, committed under `tests/golden/`, and analysed with GHDL
-in CI. A change to generated VHDL shows up as a reviewable diff rather than
-hiding inside a Lua change.
+parameter alternative — 518 files, committed under `tests/golden/` — and every
+one that does not need an external library is analysed with GHDL in CI. A
+change to generated VHDL shows up as a reviewable diff rather than hiding
+inside a Lua change.
+
+Where behaviour rather than syntax is the point, the output has also been
+simulated: the FIFO, the AXI4-Lite slave, the APB slave, the CDC handshake, the
+AXI-Stream slice and the testbench skeleton each run against a testbench and
+pass.
 
 ```bash
 make test          # spec suite
