@@ -236,6 +236,7 @@ local function main()
   end
 
   vim.fn.mkdir(OUT .. "/vhdl", "p")
+  vim.fn.mkdir(OUT .. "/external", "p")
 
   local written, failed = 0, 0
   for _, tpl in ipairs(templates) do
@@ -261,7 +262,11 @@ local function main()
           )
           local lines = header(tpl, variant, case)
           vim.list_extend(lines, wrap(tpl, cfg, sections))
-          write(("%s/%s/%s"):format(OUT, tpl.lang, name), lines)
+          -- A template that needs a library CI does not have still gets
+          -- fixtures, because they diff. They just live somewhere the GHDL
+          -- step does not look.
+          local dir = tpl.external_libraries and "external" or tpl.lang
+          write(("%s/%s/%s"):format(OUT, dir, name), lines)
           written = written + 1
         end
       end
