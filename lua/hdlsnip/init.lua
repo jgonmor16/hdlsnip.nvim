@@ -3,6 +3,7 @@ local config = require("hdlsnip.config")
 local registry = require("hdlsnip.registry")
 local render = require("hdlsnip.render")
 local insert = require("hdlsnip.insert")
+local edit = require("hdlsnip.edit")
 local ui = require("hdlsnip.ui")
 
 local M = {}
@@ -108,7 +109,14 @@ local function render_and_insert(tpl, params, bufnr)
     )
     return
   end
-  insert.insert_sections(bufnr, sections, cfg)
+  local placed, first, count = insert.insert_sections(bufnr, sections, cfg)
+
+  -- Anchor it so the parameters can be changed later. Only when it went in
+  -- as one block: a mixed template lands in two places, and tracking half of
+  -- it would be worse than tracking none.
+  if not placed and first and tpl.dynamic then
+    edit.track(bufnr, tpl, params, first, count)
+  end
 end
 
 --- Insert a template, prompting for anything not supplied.

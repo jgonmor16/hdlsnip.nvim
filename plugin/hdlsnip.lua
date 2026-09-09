@@ -35,6 +35,10 @@ vim.api.nvim_create_user_command("HdlSnipReload", function()
   require("hdlsnip").reload()
 end, { desc = "Rescan the runtimepath for templates" })
 
+vim.api.nvim_create_user_command("HdlSnipEdit", function()
+  require("hdlsnip.form").open(0)
+end, { desc = "Edit the parameters of the template under the cursor" })
+
 vim.api.nvim_create_user_command("HdlSnipLspAttach", function()
   require("hdlsnip.lsp").attach(0)
 end, { desc = "Attach the hdlsnip completion server to this buffer" })
