@@ -97,6 +97,7 @@ With [lazy.nvim](https://github.com/folke/lazy.nvim):
 | `:HdlSnipExpand [name]` | Expand as a snippet, with tabstops |
 | `:HdlSnipReload` | Rescan the runtimepath for templates |
 | `:checkhealth hdlsnip` | Templates found, configuration in effect, anything skipped |
+| `:HdlSnipEdit` | Change the parameters of the template under the cursor |
 | `:HdlSnipLspAttach` | Attach the completion server to this buffer |
 
 Nothing is mapped by default. To expand from insert mode and move between
@@ -187,6 +188,22 @@ automatically.
   <img src="https://github.com/user-attachments/assets/63ab0a16-55ca-49c6-b411-ae905d0547ac" width="900"
        alt="Running HdlSnip bit_sync, answering two prompts, and getting a complete synchroniser entity with the stage count as a generic" />
 </p>
+
+## Changing your mind
+
+A dynamic template prompts once and inserts finished code, so changing a
+parameter used to mean deleting the block and starting again. It doesn't now:
+put the cursor in a block you inserted and run `:HdlSnipEdit`. A small form
+lists the parameters, and the block re-renders as you type.
+
+The parameters are edited outside the generated code rather than inside it,
+which is what keeps this small: there is no cursor to preserve in a block being
+replaced, and no per-parameter region to track. No snippet engine is involved —
+the text is generated, so re-rendering from the parameters is enough.
+
+The anchor is dropped when you write the file, and as soon as the block stops
+matching what was rendered. Editing a line by hand ends the tracking rather
+than having it overwritten later.
 
 ## Configuration
 
@@ -289,10 +306,7 @@ make ghdl          # analyse every fixture
 - Configurable keymaps for expansion and tabstop jumping ([#7](https://github.com/jgonmor16/hdlsnip.nvim/issues/7))
 - Completion menu integration through an in-process LSP server, no plugins
   ([#8](https://github.com/jgonmor16/hdlsnip.nvim/issues/8))
-- Live parameter editing for dynamic templates, with no snippet engine
-  dependency ([#12](https://github.com/jgonmor16/hdlsnip.nvim/issues/12))
-- More templates: FSMs, counters, FIFOs, dual-port RAM, AXI4-Lite, AXI-Stream,
-  VUnit and OSVVM testbench scaffolding
+- More templates: OSVVM scaffolding, asynchronous FIFO, Wishbone, Avalon-MM
 - Treesitter: entity to component, instantiation, signal declarations and
   testbench
 

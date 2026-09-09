@@ -12,12 +12,13 @@ CONTENTS                                                    *hdlsnip-contents*
     3. Commands ............................... |hdlsnip-commands|
     4. Mappings ............................... |hdlsnip-mappings|
     5. Completion ............................. |hdlsnip-completion|
-    6. Configuration .......................... |hdlsnip-configuration|
-    7. Project configuration .................. |hdlsnip-project-config|
-    8. Templates .............................. |hdlsnip-templates|
-    9. Writing a template ..................... |hdlsnip-writing-templates|
-   10. Lua API ................................ |hdlsnip-api|
-   11. Health ................................. |hdlsnip-health|
+    6. Changing a parameter ................... |hdlsnip-editing|
+    7. Configuration .......................... |hdlsnip-configuration|
+    8. Project configuration .................. |hdlsnip-project-config|
+    9. Templates .............................. |hdlsnip-templates|
+   10. Writing a template ..................... |hdlsnip-writing-templates|
+   11. Lua API ................................ |hdlsnip-api|
+   12. Health ................................. |hdlsnip-health|
 
 ==============================================================================
 1. INTRODUCTION                                         *hdlsnip-introduction*
@@ -66,6 +67,10 @@ built-in prompts are used if you have none.
                                                               *:HdlSnipReload*
 :HdlSnipReload          Rescan the runtimepath for templates. Useful while
                         writing one.
+
+                                                                *:HdlSnipEdit*
+:HdlSnipEdit            Open a form for the parameters of the template under
+                        the cursor. See |hdlsnip-editing|.
 
                                                            *:HdlSnipLspAttach*
 :HdlSnipLspAttach       Attach the completion server to the current buffer.
@@ -151,7 +156,31 @@ documentation popup previews the VHDL the template would render, cased
 according to the configuration in effect for that buffer.
 
 ==============================================================================
-6. CONFIGURATION                                       *hdlsnip-configuration*
+6. CHANGING A PARAMETER                                      *hdlsnip-editing*
+
+A dynamic template prompts once and inserts finished code. |:HdlSnipEdit|
+opens a form for the block under the cursor, listing its parameters; the block
+re-renders as the form is edited.
+
+The parameters are edited outside the generated code rather than inside it.
+There is then no cursor to preserve in a block being replaced, and no
+per-parameter region to track: the text is generated, so re-rendering from the
+parameters is enough. No snippet engine is involved.
+
+In the form, `<CR>` accepts and closes, `q` and `<Esc>` close. Input that does
+not validate is shown beside the field rather than raised, because a half
+typed value is normal.
+
+Tracking ends when the file is written, when the buffer is unloaded, and as
+soon as the block stops matching what was rendered. Editing a line by hand
+therefore ends the tracking, rather than having that edit overwritten by a
+later re-render.
+
+A `mixed` template is not tracked: it lands in two places, and tracking half
+of it would be worse than tracking none.
+
+==============================================================================
+7. CONFIGURATION                                       *hdlsnip-configuration*
 
 Calling `setup()` is optional; the defaults are used otherwise. >lua
 
@@ -218,7 +247,7 @@ Invalid options are reported with the path that is wrong, and the previous
 configuration is kept rather than half-applied.
 
 ==============================================================================
-7. PROJECT CONFIGURATION                              *hdlsnip-project-config*
+8. PROJECT CONFIGURATION                              *hdlsnip-project-config*
 
 A `.hdlsnip.lua` at the project root overrides the global configuration for
 buffers beneath it: >lua
@@ -239,7 +268,7 @@ Derived values are recomputed, not inherited. A project that sets
 `reset.polarity = "high"` gets `rst`, not the `rst_n` derived globally.
 
 ==============================================================================
-8. TEMPLATES                                               *hdlsnip-templates*
+9. TEMPLATES                                               *hdlsnip-templates*
 
 Shipped templates:
 
@@ -262,7 +291,7 @@ Shipped templates:
     vtb     tb_vunit        tb        VUnit testbench with a test suite
 
 ==============================================================================
-9. WRITING A TEMPLATE                              *hdlsnip-writing-templates*
+10. WRITING A TEMPLATE                             *hdlsnip-writing-templates*
 
 Templates are discovered on the 'runtimepath' at: >
 
@@ -338,7 +367,7 @@ A state machine is the obvious case: the state type goes above `begin` and
 the processes below it.
 
 ==============================================================================
-10. LUA API                                                      *hdlsnip-api*
+11. LUA API                                                      *hdlsnip-api*
 
                                                           *hdlsnip.setup()*
 require("hdlsnip").setup({opts})
@@ -365,13 +394,27 @@ require("hdlsnip").expand_at_cursor()
 require("hdlsnip").reload()
         Rescan the runtimepath.
 
+                                                     *hdlsnip.edit.at()*
+require("hdlsnip.edit").at({bufnr}, {row})
+        The tracked block containing {row}, as `id, entry`, or nil.
+
+                                                 *hdlsnip.edit.update()*
+require("hdlsnip.edit").update({bufnr}, {id}, {changes})
+        Re-render a tracked block with changed parameters. Returns
+        `ok, errors`. Leaves the buffer untouched when a change does not
+        validate.
+
+                                                   *hdlsnip.form.open()*
+require("hdlsnip.form").open({bufnr})
+        Open the parameter form for the block under the cursor.
+
                                               *hdlsnip.registry.register()*
 require("hdlsnip.registry").register({tpl})
         Register a template built in Lua rather than discovered from a file.
         Returns `ok, errors`.
 
 ==============================================================================
-11. HEALTH                                                    *hdlsnip-health*
+12. HEALTH                                                    *hdlsnip-health*
 
 `:checkhealth hdlsnip` reports the Neovim version, how many templates were
 found and of which kinds, the configuration in effect for the current buffer,
