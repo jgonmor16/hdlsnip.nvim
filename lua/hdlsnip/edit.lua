@@ -27,9 +27,21 @@ local state = {}
 
 local group = vim.api.nvim_create_augroup("hdlsnip.edit", { clear = true })
 
+--- Resolve 0 to the actual buffer number. `state` is keyed by number, so
+--- storing under 7 and looking up under 0 would silently miss.
+---@param bufnr integer?
+---@return integer
+local function resolve(bufnr)
+  if bufnr == nil or bufnr == 0 then
+    return vim.api.nvim_get_current_buf()
+  end
+  return bufnr
+end
+
 --- Forget every block in a buffer.
 ---@param bufnr integer
 function M.detach_all(bufnr)
+  bufnr = resolve(bufnr)
   if state[bufnr] then
     vim.api.nvim_buf_clear_namespace(bufnr, namespace, 0, -1)
     state[bufnr] = nil
@@ -40,6 +52,7 @@ end
 ---@param bufnr integer
 ---@param id integer
 function M.detach(bufnr, id)
+  bufnr = resolve(bufnr)
   if state[bufnr] then
     state[bufnr][id] = nil
     pcall(vim.api.nvim_buf_del_extmark, bufnr, namespace, id)
@@ -58,6 +71,7 @@ end
 ---@param line_count integer
 ---@return integer? id
 function M.track(bufnr, tpl, params, first_row, line_count)
+  bufnr = resolve(bufnr)
   if line_count < 1 then
     return nil
   end
@@ -104,6 +118,7 @@ end
 ---@return integer? id
 ---@return table? entry
 function M.at(bufnr, row)
+  bufnr = resolve(bufnr)
   if not state[bufnr] then
     return nil
   end
@@ -130,6 +145,7 @@ end
 ---@param id integer
 ---@return table?
 function M.params(bufnr, id)
+  bufnr = resolve(bufnr)
   local entry = state[bufnr] and state[bufnr][id]
   return entry and vim.deepcopy(entry.params) or nil
 end
@@ -144,6 +160,7 @@ end
 ---@return boolean ok
 ---@return string[] errors
 function M.update(bufnr, id, changes)
+  bufnr = resolve(bufnr)
   local entry = state[bufnr] and state[bufnr][id]
   if not entry then
     return false, { "block is no longer tracked" }
