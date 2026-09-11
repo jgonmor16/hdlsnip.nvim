@@ -3,7 +3,7 @@ PLENARY_URL := https://github.com/nvim-lua/plenary.nvim
 LOG := .tests/last-run.log
 GOLDEN := tests/golden
 
-.PHONY: test lint format golden golden-check ghdl vsg demo clean
+.PHONY: test lint format golden golden-check ghdl vsg demo smoke clean
 
 ## test: run the spec suite headless
 test: $(PLENARY)
@@ -88,6 +88,13 @@ demo:
 		echo "recording $$tape"; \
 		vhs "$$tape" || exit 1; \
 	done
+
+## smoke: render every template under several configurations for review
+smoke:
+	@mkdir -p .tests
+	@nvim --headless --noplugin -u scripts/init.lua \
+		-c "luafile scripts/smoke.lua"
+	@echo "review: .tests/smoke.txt"
 
 ## clean: remove test dependencies
 clean:
