@@ -36,7 +36,7 @@ return {
     },
   },
 
-  fixture_declarations = function(cfg)
+  fixture_declarations = function(cfg, _)
     return {
       ("signal %s : std_logic;"):format(style.name(cfg, "count_en", "signal")),
     }

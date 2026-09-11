@@ -29,8 +29,13 @@ return {
     },
   },
 
-  fixture_declarations = function(_)
-    return {}
+  fixture_declarations = function(cfg, params)
+    -- The watched signal belongs to the user's design; the fixture needs it
+    -- declared to analyse, and the inserted code must not redeclare it.
+    -- `params` carries only what a case overrode, so the default applies
+    -- when it did not vary this one.
+    local watched = (params or {}).sig or "flag"
+    return { ("signal %s : std_logic;"):format(watched) }
   end,
 
   render = function(params, cfg)
@@ -42,10 +47,6 @@ return {
     local label = style.name(cfg, params.sig .. "_edge", "process")
     local declarations, statements = {}, {}
 
-    declarations[#declarations + 1] = ("%s %s : std_logic := '0';"):format(
-      kw("signal"),
-      watched
-    )
     declarations[#declarations + 1] = ("%s %s : std_logic := '0';"):format(
       kw("signal"),
       delayed
@@ -110,10 +111,11 @@ return {
         delayed
       )
     elseif params.edge == "falling" then
-      expression = ("%s %s %s"):format(
+      expression = ("%s %s %s %s"):format(
         kw("not"),
         watched,
-        (" %s %s"):format(kw("and"), delayed)
+        kw("and"),
+        delayed
       )
     else
       expression = ("%s %s %s"):format(watched, kw("xor"), delayed)

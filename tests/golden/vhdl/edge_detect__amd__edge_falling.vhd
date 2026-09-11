@@ -15,7 +15,7 @@ end entity golden_wrapper;
 
 architecture golden of golden_wrapper is
 
-  signal flag : std_logic := '0';
+  signal flag : std_logic;
   signal flag_d_r : std_logic := '0';
   signal flag_falling : std_logic;
 
@@ -30,6 +30,6 @@ begin
     end if;
   end process p_flag_edge;
 
-  flag_falling <= not flag  and flag_d_r;
+  flag_falling <= not flag and flag_d_r;
 
 end architecture golden;

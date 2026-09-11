@@ -111,7 +111,7 @@ end
 ---@param cfg table
 ---@param body string[]
 ---@return string[]
-local function wrap(tpl, cfg, sections)
+local function wrap(tpl, cfg, sections, params)
   local scope = template.scope(tpl)
   local body = render.lines(sections.statements or "")
   if scope == "design_unit" then
@@ -160,7 +160,7 @@ local function wrap(tpl, cfg, sections)
   -- a user would actually insert.
   local extra = {}
   if tpl.fixture_declarations then
-    for _, line in ipairs(tpl.fixture_declarations(cfg)) do
+    for _, line in ipairs(tpl.fixture_declarations(cfg, params)) do
       extra[#extra + 1] = ind .. line
     end
   end
@@ -261,7 +261,7 @@ local function main()
             case.label
           )
           local lines = header(tpl, variant, case)
-          vim.list_extend(lines, wrap(tpl, cfg, sections))
+          vim.list_extend(lines, wrap(tpl, cfg, sections, case.params))
           -- A template that needs a library CI does not have still gets
           -- fixtures, because they diff. They just live somewhere the GHDL
           -- step does not look.
