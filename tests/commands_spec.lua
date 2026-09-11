@@ -108,21 +108,9 @@ describe("hdlsnip.expand", function()
 
   it("falls back to inserting a dynamic template", function()
     local bufnr = scratch({ "" })
-    -- No prompting happens because entity's parameters all have defaults and
-    -- vim.ui.input is stubbed to accept them.
-    local original = vim.ui.input
-    vim.ui.input = function(opts, on_confirm)
-      on_confirm(opts.default)
-    end
-    local original_select = vim.ui.select
-    vim.ui.select = function(items, _, on_choice)
-      on_choice(items[1])
-    end
-
-    hdlsnip.expand("entity")
-
-    vim.ui.input = original
-    vim.ui.select = original_select
+    -- Parameters supplied, so no dialog opens: what is under test is that
+    -- expand routes a dynamic template to insert, not how it asks.
+    hdlsnip.insert("entity", { name = "top", arch = "rtl", generics = false })
 
     assert.is_false(vim.snippet.active())
     assert.matches("entity top is", table.concat(contents(bufnr), "\n"))
@@ -157,5 +145,20 @@ describe("hdlsnip.expand", function()
   it("returns false with no trigger and no snippet", function()
     scratch({ "" })
     assert.is_false(hdlsnip.expand_at_cursor())
+  end)
+
+  it("routes a dynamic template to insert rather than expanding it", function()
+    scratch({ "" })
+    local called
+    local original = hdlsnip.insert
+    hdlsnip.insert = function(name)
+      called = name
+    end
+
+    hdlsnip.expand("entity")
+
+    hdlsnip.insert = original
+    assert.are.equal("entity", called)
+    assert.is_false(vim.snippet.active())
   end)
 end)
