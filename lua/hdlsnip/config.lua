@@ -265,13 +265,20 @@ end
 local raw = vim.deepcopy(M.defaults)
 local current = M.resolve(vim.deepcopy(raw))
 
---- Apply user options. Invalid options are reported and ignored; the previous
---- configuration is kept so a bad `setup()` cannot leave templates rendering
---- from a half-applied table.
+--- Apply user options.
+---
+--- Partial: options not given keep the value they already have, so calling
+--- `setup()` twice accumulates rather than resetting everything not repeated
+--- in the second call. Changing `keyword_case` must not silently unmap your
+--- keys.
+---
+--- Invalid options are reported and ignored, and the previous configuration
+--- is kept, so a bad `setup()` cannot leave templates rendering from a
+--- half-applied table.
 ---@param user table?
 ---@return table cfg the configuration now in effect
 function M.setup(user)
-  local candidate_raw = M.merge(M.defaults, user)
+  local candidate_raw = M.merge(raw, user)
   local candidate = M.resolve(vim.deepcopy(candidate_raw))
   local ok, errors = M.validate(candidate)
   if not ok then

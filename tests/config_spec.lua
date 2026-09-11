@@ -51,12 +51,19 @@ describe("config merge", function()
       local c = fresh()
       c.setup({ reset = { polarity = "high" } })
       assert.are.equal(
-        "rst",
-        c.setup({ reset = { polarity = "high" } }).reset.name
+        "rst_n",
+        c.setup({ reset = { polarity = "low" } }).reset.name
       )
-      assert.are.equal("rst_n", c.setup({}).reset.name)
     end
   )
+
+  it("keeps options a later setup does not mention", function()
+    local c = fresh()
+    c.setup({ clock = { name = "axi_aclk" } })
+    local cfg = c.setup({ keyword_case = "upper" })
+    assert.are.equal("axi_aclk", cfg.clock.name)
+    assert.are.equal("upper", cfg.keyword_case)
+  end)
 end)
 
 describe("config validation", function()
