@@ -15,7 +15,7 @@ end entity golden_wrapper;
 
 architecture golden of golden_wrapper is
 
-  signal gold_sig : std_logic := '0';
+  signal gold_sig : std_logic;
   signal gold_sig_d_r : std_logic := '0';
   signal gold_sig_rising : std_logic;
 
