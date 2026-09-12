@@ -29,23 +29,20 @@ describe("form.parse", function()
 end)
 
 describe("form.lines", function()
-  local tpl = {
-    name = "demo",
-    params = {
-      { name = "label", type = "identifier", default = "main", desc = "d" },
-      { name = "width", type = "integer", default = 8, desc = "d" },
-    },
+  local params = {
+    { name = "label", type = "identifier", default = "main", desc = "d" },
+    { name = "width", type = "integer", default = 8, desc = "d" },
   }
 
   it("aligns the names into a column", function()
-    local lines, width = form.lines(tpl, { label = "main", width = 8 })
+    local lines, width = form.lines(params, { label = "main", width = 8 })
     assert.are.equal(5, width)
     assert.are.equal("label  main", lines[1])
     assert.are.equal("width  8", lines[2])
   end)
 
   it("round trips through parse", function()
-    local lines = form.lines(tpl, { label = "wr_ptr", width = 32 })
+    local lines = form.lines(params, { label = "wr_ptr", width = 32 })
     local values = form.parse(lines, { label = true, width = true })
     assert.are.same({ label = "wr_ptr", width = "32" }, values)
   end)
@@ -61,7 +58,7 @@ describe("form.hint", function()
 
   it("gives the bounds of a number", function()
     assert.matches(
-      "1 to 4096",
+      "1%.%.4096",
       form.hint({ type = "integer", min = 1, max = 4096 })
     )
   end)
@@ -71,7 +68,7 @@ describe("form.hint", function()
   end)
 end)
 
-describe("form.open", function()
+describe("form.edit", function()
   it("reports when there is nothing under the cursor", function()
     local helpers = require("helpers")
     local bufnr = vim.api.nvim_create_buf(false, true)
@@ -79,7 +76,7 @@ describe("form.open", function()
     vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, { "-- nothing here" })
 
     local notifications = helpers.captured_notify(function()
-      assert.is_false(form.open())
+      assert.is_false(form.edit(0))
     end)
     assert.matches("no template under the cursor", notifications[1].msg)
   end)

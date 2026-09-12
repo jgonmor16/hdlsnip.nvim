@@ -5,6 +5,7 @@ local render = require("hdlsnip.render")
 local insert = require("hdlsnip.insert")
 local edit = require("hdlsnip.edit")
 local ui = require("hdlsnip.ui")
+local form = require("hdlsnip.form")
 
 local M = {}
 
@@ -132,7 +133,9 @@ function M.insert(name, params)
     if params then
       return render_and_insert(tpl, params, bufnr)
     end
-    ui.prompt_params(tpl, config.get(bufnr), function(prompted)
+    -- One dialog with every field, rather than a question at a time: the
+    -- values can be seen together and corrected before anything is inserted.
+    form.prompt(tpl, config.get(bufnr), function(prompted)
       render_and_insert(tpl, prompted, bufnr)
     end)
   end

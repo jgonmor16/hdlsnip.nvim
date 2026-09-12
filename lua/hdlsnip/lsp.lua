@@ -10,9 +10,10 @@
 --- sources with three sets of bugs. It also composes with `vhdl_ls`: both
 --- clients attach to the same buffer and the menu merges them.
 ---
---- Only static templates are offered. A completion item cannot ask a
---- question, so a dynamic template -- one whose output depends on a parameter
---- or on configuration -- stays on the trigger key and `:HdlSnip`.
+--- Dynamic templates are offered too. A completion item cannot ask a
+--- question, so one of those inserts nothing and the `CompleteDone` handler
+--- opens the parameter dialog instead. Offering only static templates would
+--- have put one item in the menu out of seventeen.
 local config = require("hdlsnip.config")
 local registry = require("hdlsnip.registry")
 local render = require("hdlsnip.render")
@@ -49,23 +50,42 @@ function M.items(cfg)
   local items = {}
 
   for _, tpl in ipairs(registry.list({ lang = "vhdl" })) do
-    if not tpl.dynamic and tpl.trig then
-      local body = render.placeholders(tpl, cfg)
+    if tpl.trig then
       local preview = render.values(tpl, {}, cfg)
-      if body then
+      local documentation = preview
+          and {
+            kind = "markdown",
+            value = ("```vhdl\n%s\n```"):format(preview),
+          }
+        or nil
+
+      if tpl.dynamic then
+        -- Nothing is inserted here: CompleteDone opens the dialog, and
+        -- inserting text first would have to be undone.
         items[#items + 1] = {
           label = tpl.trig,
           filterText = tpl.trig,
           kind = kind,
-          detail = tpl.desc,
-          insertText = body,
-          insertTextFormat = 2, -- snippet
-          documentation = preview and {
-            kind = "markdown",
-            value = ("```vhdl\n%s\n```"):format(preview),
-          } or nil,
-          data = { template = tpl.name },
+          detail = tpl.desc .. "  (asks for parameters)",
+          insertText = "",
+          insertTextFormat = 1,
+          documentation = documentation,
+          data = { template = tpl.name, dynamic = true },
         }
+      else
+        local body = render.placeholders(tpl, cfg)
+        if body then
+          items[#items + 1] = {
+            label = tpl.trig,
+            filterText = tpl.trig,
+            kind = kind,
+            detail = tpl.desc,
+            insertText = body,
+            insertTextFormat = 2, -- snippet
+            documentation = documentation,
+            data = { template = tpl.name },
+          }
+        end
       end
     end
   end
@@ -143,6 +163,29 @@ function M.server(dispatchers)
   return srv
 end
 
+--- Finish a completion that only named a template.
+---
+--- A dynamic template inserts nothing, so accepting one leaves the buffer as
+--- it was and this opens the dialog. Read from `v:completed_item`, which is
+--- where Neovim keeps the LSP item after the menu closes.
+local function completed()
+  local item = vim.v.completed_item
+  local data = item
+    and item.user_data
+    and item.user_data.nvim
+    and item.user_data.nvim.lsp
+    and item.user_data.nvim.lsp.completion_item
+  if not data or not data.data or not data.data.dynamic then
+    return
+  end
+
+  -- Scheduled: CompleteDone fires while the menu is still tearing down, and
+  -- opening a window from inside it is not allowed.
+  vim.schedule(function()
+    require("hdlsnip").insert(data.data.template)
+  end)
+end
+
 --- Attach the server to a buffer, once.
 ---@param bufnr integer?
 ---@return integer? client_id
@@ -152,6 +195,16 @@ function M.attach(bufnr)
   for _, client in ipairs(vim.lsp.get_clients({ bufnr = bufnr, name = M.name })) do
     return client.id
   end
+
+  vim.api.nvim_create_autocmd("CompleteDone", {
+    buffer = bufnr,
+    group = vim.api.nvim_create_augroup(
+      "hdlsnip.lsp." .. bufnr,
+      { clear = true }
+    ),
+    desc = "hdlsnip: ask for parameters after a dynamic template is chosen",
+    callback = completed,
+  })
 
   return vim.lsp.start({
     name = M.name,

@@ -1,26 +1,28 @@
---- A form for editing a tracked block's parameters.
+--- A dialog for a template's parameters.
 ---
---- The parameters are edited outside the generated code rather than inside
---- it. That avoids the hard part of live editing entirely: there is no cursor
---- to preserve in a block that is being replaced, and no per-parameter region
---- to track. Type in the form, watch the block re-render.
+--- One window serves both jobs: entering values before a dynamic template is
+--- inserted, and changing them afterwards. Editing the parameters outside the
+--- generated code is what keeps this simple -- there is no cursor to preserve
+--- in a block being replaced, and no per-parameter region to track.
 ---
---- Each line is `name` then the value. Only the value is meant to be edited;
---- changing a name simply stops that line matching a parameter, which is
---- reported rather than guessed at.
+--- Each line is `name` then the value. Only the value is meant to change;
+--- a name that stops matching a parameter is reported rather than guessed at.
 local edit = require("hdlsnip.edit")
+local template = require("hdlsnip.template")
+local config = require("hdlsnip.config")
 
 local M = {}
 
-local DEBOUNCE = 150 -- ms of quiet before re-rendering
+local DEBOUNCE = 150 -- ms of quiet before a live re-render
+local NAMESPACE = vim.api.nvim_create_namespace("hdlsnip.form")
 
---- Parse form lines back into parameter values.
----
---- Kept separate from the window so it can be tested without one.
+local open_form = nil
+
+--- Parse form lines back into raw values, keyed by parameter name.
 ---@param lines string[]
----@param names table<string, true> parameter names the template declares
+---@param names table<string, true>
 ---@return table values
----@return string[] unknown names that matched no parameter
+---@return string[] unknown
 function M.parse(lines, names)
   local values, unknown = {}, {}
   for _, line in ipairs(lines) do
@@ -36,28 +38,28 @@ function M.parse(lines, names)
   return values, unknown
 end
 
---- Render the form's contents for a template and its current values.
----@param tpl table
----@param params table
+--- The form's contents for a set of parameters and values.
+---@param params table[]
+---@param values table
 ---@return string[] lines
----@return integer width
-function M.lines(tpl, params)
+---@return integer label_width
+function M.lines(params, values)
   local width = 0
-  for _, param in ipairs(tpl.params or {}) do
+  for _, param in ipairs(params or {}) do
     width = math.max(width, #param.name)
   end
 
   local lines = {}
-  for _, param in ipairs(tpl.params or {}) do
-    lines[#lines + 1] = ("%-" .. width .. "s  %s"):format(
+  for index, param in ipairs(params or {}) do
+    lines[index] = ("%-" .. width .. "s  %s"):format(
       param.name,
-      tostring(params[param.name])
+      tostring(values[param.name])
     )
   end
   return lines, width
 end
 
---- Hint shown under a field: its type, and its bounds or choices.
+--- What a field accepts, shown beside it.
 ---@param param table
 ---@return string
 function M.hint(param)
@@ -65,18 +67,12 @@ function M.hint(param)
     return table.concat(param.choices, " | ")
   end
   if param.min or param.max then
-    return ("%s, %s to %s"):format(
-      param.type,
-      param.min or "any",
-      param.max or "any"
-    )
+    return ("%s %s..%s"):format(param.type, param.min or "", param.max or "")
   end
   return param.type
 end
 
-local open_form = nil
-
---- Close the form, if one is open.
+--- Close the dialog.
 function M.close()
   local current = open_form
   open_form = nil
@@ -86,59 +82,54 @@ function M.close()
 end
 
 --- Close a specific window, whatever the shared state says.
----
---- The mappings use this rather than `close()`: BufLeave clears `open_form`
---- whenever focus leaves the form, even briefly, and a close that depended on
---- that state would then do nothing at all.
 ---@param win integer
 function M.close_window(win)
+  open_form = nil
   if win and vim.api.nvim_win_is_valid(win) then
     vim.api.nvim_win_close(win, true)
   end
-  open_form = nil
 end
 
---- Open the form for the tracked block under the cursor.
----@param bufnr integer?
+--- Open the dialog.
+---
+--- `on_change` is optional: with it the values are coerced and handed over on
+--- every pause in typing, which is what live editing uses. Without it, the
+--- values are only checked when the dialog is accepted.
+---@param opts table `{ title, params, values, cfg, on_change, on_accept }`
 ---@return boolean opened
-function M.open(bufnr)
-  if bufnr == nil or bufnr == 0 then
-    bufnr = vim.api.nvim_get_current_buf()
-  end
-  local row = vim.api.nvim_win_get_cursor(0)[1]
-  local id, entry = edit.at(bufnr, row)
-  if not id then
-    vim.notify(
-      "hdlsnip: no template under the cursor to edit",
-      vim.log.levels.WARN
-    )
+function M.open(opts)
+  M.close()
+
+  local params = opts.params or {}
+  if #params == 0 then
+    opts.on_accept({})
     return false
   end
 
-  M.close()
-
-  local tpl = entry.template
   local names = {}
-  for _, param in ipairs(tpl.params or {}) do
+  for _, param in ipairs(params) do
     names[param.name] = true
   end
 
-  local lines = M.lines(tpl, entry.params)
-  local form = vim.api.nvim_create_buf(false, true)
-  vim.api.nvim_buf_set_lines(form, 0, -1, false, lines)
-  vim.bo[form].buftype = "nofile"
-  vim.bo[form].bufhidden = "wipe"
-  vim.bo[form].filetype = "hdlsnip-form"
+  local lines, label_width = M.lines(params, opts.values)
+  local buf = vim.api.nvim_create_buf(false, true)
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+  vim.bo[buf].buftype = "nofile"
+  vim.bo[buf].bufhidden = "wipe"
+  vim.bo[buf].filetype = "hdlsnip-form"
 
   local width = 0
   for _, line in ipairs(lines) do
     width = math.max(width, #line)
   end
-  width = math.max(width + 4, #tpl.name + 8, 32)
+  for _, param in ipairs(params) do
+    width = math.max(width, label_width + 2 + #M.hint(param) + 2)
+  end
+  width = math.max(width + 2, #(opts.title or "") + 6, 34)
 
-  local win = vim.api.nvim_open_win(form, true, {
-    -- Bottom right of the editor, not over the block: the point is to watch
-    -- the code change while typing.
+  local win = vim.api.nvim_open_win(buf, true, {
+    -- Bottom right rather than over the code: watching the buffer change is
+    -- half the point.
     relative = "editor",
     anchor = "SE",
     row = vim.o.lines - 3,
@@ -147,89 +138,226 @@ function M.open(bufnr)
     height = #lines,
     style = "minimal",
     border = "rounded",
-    title = (" %s "):format(tpl.name),
+    title = (" %s "):format(opts.title or "parameters"),
     title_pos = "center",
   })
+  vim.wo[win].cursorline = true
 
-  open_form = { win = win, buf = form, target = bufnr, id = id }
+  local origin = opts.origin_win
+  open_form = { win = win, buf = buf }
+
+  local error_win, error_buf
+
+  --- Show the reasons a value was rejected, in their own window above the
+  --- dialog. Virtual text on the first line competed with the hints and was
+  --- easy to miss entirely.
+  local function show_errors(errors)
+    if not errors or #errors == 0 then
+      if error_win and vim.api.nvim_win_is_valid(error_win) then
+        vim.api.nvim_win_close(error_win, true)
+      end
+      error_win = nil
+      return
+    end
+
+    if not (error_buf and vim.api.nvim_buf_is_valid(error_buf)) then
+      error_buf = vim.api.nvim_create_buf(false, true)
+      vim.bo[error_buf].buftype = "nofile"
+      vim.bo[error_buf].bufhidden = "wipe"
+    end
+    vim.api.nvim_buf_set_lines(error_buf, 0, -1, false, errors)
+
+    local error_width = 0
+    for _, line in ipairs(errors) do
+      error_width = math.max(error_width, #line)
+    end
+    error_width = math.max(error_width + 2, width)
+
+    local window = {
+      relative = "editor",
+      anchor = "SE",
+      -- Above the dialog, so it stays on screen whatever the dialog's height.
+      row = vim.o.lines - 4 - #lines,
+      col = vim.o.columns - 2,
+      width = error_width,
+      height = #errors,
+      style = "minimal",
+      border = "rounded",
+      focusable = false,
+      zindex = 60,
+    }
+
+    if error_win and vim.api.nvim_win_is_valid(error_win) then
+      vim.api.nvim_win_set_config(error_win, window)
+    else
+      error_win = vim.api.nvim_open_win(error_buf, false, window)
+      vim.wo[error_win].winhighlight = "Normal:ErrorMsg,FloatBorder:ErrorMsg"
+    end
+  end
 
   local timer = assert(vim.uv.new_timer())
   local timer_closed = false
-
-  --- uv reports `is_closing` too late when two events arrive from the same
-  --- window close, so the flag is ours rather than the handle's.
   local function stop_timer()
-    timer_closed = true
-    timer:stop()
-    timer:close()
-  end
-  local namespace = vim.api.nvim_create_namespace("hdlsnip.form")
-
-  local function apply()
-    if not vim.api.nvim_buf_is_valid(form) then
-      return
-    end
-    vim.api.nvim_buf_clear_namespace(form, namespace, 0, -1)
-
-    local values, unknown =
-      M.parse(vim.api.nvim_buf_get_lines(form, 0, -1, false), names)
-    if #unknown > 0 then
-      vim.api.nvim_buf_set_extmark(form, namespace, 0, 0, {
-        virt_text = { { " not a parameter: " .. unknown[1], "WarningMsg" } },
-        virt_text_pos = "eol",
-      })
-      return
-    end
-
-    local ok, errors = edit.update(bufnr, id, values)
-    if not ok then
-      -- Invalid input is normal while a value is being typed, so it is shown
-      -- beside the field rather than thrown as an error.
-      vim.api.nvim_buf_set_extmark(form, namespace, 0, 0, {
-        virt_text = { { " " .. (errors[1] or "invalid"), "WarningMsg" } },
-        virt_text_pos = "eol",
-      })
-    end
-  end
-
-  vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI" }, {
-    buffer = form,
-    desc = "hdlsnip: re-render as the form is edited",
-    callback = function()
+    if not timer_closed then
+      timer_closed = true
       timer:stop()
-      timer:start(DEBOUNCE, 0, vim.schedule_wrap(apply))
-    end,
-  })
+      timer:close()
+    end
+  end
+
+  --- Hints sit immediately after the name, as inline virtual text: at the end
+  --- of the line they would slide along as the value is typed.
+  local function decorate()
+    vim.api.nvim_buf_clear_namespace(buf, NAMESPACE, 0, -1)
+    for index, param in ipairs(params) do
+      vim.api.nvim_buf_set_extmark(buf, NAMESPACE, index - 1, #param.name, {
+        virt_text = { { " " .. M.hint(param) .. " ", "Comment" } },
+        virt_text_pos = "inline",
+      })
+    end
+  end
+
+  --- Coerce the form's contents. Returns nil and the reasons when a value
+  --- does not validate, which is normal while one is being typed.
+  local function collect()
+    local raw, unknown =
+      M.parse(vim.api.nvim_buf_get_lines(buf, 0, -1, false), names)
+    if #unknown > 0 then
+      return nil, { ("%q is not a parameter"):format(unknown[1]) }
+    end
+
+    local values, errors = {}, {}
+    for _, param in ipairs(params) do
+      local value, err = template.coerce(param, raw[param.name], opts.cfg)
+      if err then
+        errors[#errors + 1] = ("%s: %s"):format(param.name, err)
+      else
+        values[param.name] = value
+      end
+    end
+    if #errors > 0 then
+      return nil, errors
+    end
+    return values, {}
+  end
+
+  decorate()
+  show_errors(nil)
+
+  if opts.on_change then
+    vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI" }, {
+      buffer = buf,
+      desc = "hdlsnip: re-render as the dialog is edited",
+      callback = function()
+        timer:stop()
+        timer:start(
+          DEBOUNCE,
+          0,
+          vim.schedule_wrap(function()
+            if not vim.api.nvim_buf_is_valid(buf) then
+              return
+            end
+            local values, errors = collect()
+            show_errors(values and opts.on_change(values) or errors)
+          end)
+        )
+      end,
+    })
+  end
 
   vim.api.nvim_create_autocmd({ "BufLeave", "WinClosed" }, {
-    buffer = form,
+    buffer = buf,
     once = true,
     callback = function()
-      if timer_closed then
-        return
-      end
       stop_timer()
+      show_errors(nil)
       open_form = nil
     end,
   })
 
+  local function accept()
+    vim.cmd.stopinsert()
+    local values, errors = collect()
+    if not values then
+      show_errors(errors)
+      return
+    end
+    show_errors(nil)
+    M.close_window(win)
+    if origin and vim.api.nvim_win_is_valid(origin) then
+      vim.api.nvim_set_current_win(origin)
+    end
+    if opts.on_accept then
+      opts.on_accept(values)
+    end
+  end
+
   for _, key in ipairs({ "q", "<Esc>" }) do
     vim.keymap.set("n", key, function()
       M.close_window(win)
-    end, { buffer = form, nowait = true })
+      if origin and vim.api.nvim_win_is_valid(origin) then
+        vim.api.nvim_set_current_win(origin)
+      end
+    end, { buffer = buf, nowait = true })
   end
-  vim.keymap.set({ "n", "i" }, "<CR>", function()
-    vim.cmd.stopinsert()
-    apply()
-    M.close_window(win)
-  end, { buffer = form })
+  vim.keymap.set({ "n", "i" }, "<CR>", accept, { buffer = buf })
 
-  -- Start on the first value rather than at column zero, which is where the
-  -- user is going to type anyway.
-  local _, label_width = M.lines(tpl, entry.params)
-  vim.api.nvim_win_set_cursor(win, { 1, label_width + 2 })
-
+  -- At the end of the first value, in insert mode: typing replaces or
+  -- extends it without first having to move.
+  vim.api.nvim_win_set_cursor(win, { 1, #(lines[1] or "") })
+  vim.cmd.startinsert({ bang = true })
   return true
+end
+
+--- Ask for a template's parameters before inserting it.
+---@param tpl table
+---@param cfg table
+---@param on_accept fun(values: table)
+function M.prompt(tpl, cfg, on_accept)
+  local values = {}
+  for _, param in ipairs(tpl.params or {}) do
+    values[param.name] = param.default
+  end
+
+  M.open({
+    title = tpl.name,
+    params = tpl.params,
+    values = values,
+    cfg = cfg,
+    origin_win = vim.api.nvim_get_current_win(),
+    on_accept = on_accept,
+  })
+end
+
+--- Change the parameters of the tracked block under the cursor.
+---@param bufnr integer?
+---@return boolean opened
+function M.edit(bufnr)
+  if bufnr == nil or bufnr == 0 then
+    bufnr = vim.api.nvim_get_current_buf()
+  end
+
+  local row = vim.api.nvim_win_get_cursor(0)[1]
+  local id, entry = edit.at(bufnr, row)
+  if not id then
+    vim.notify("hdlsnip: no template under the cursor", vim.log.levels.WARN)
+    return false
+  end
+
+  return M.open({
+    title = entry.template.name,
+    params = entry.template.params,
+    values = entry.params,
+    cfg = config.get(bufnr),
+    origin_win = vim.api.nvim_get_current_win(),
+    on_change = function(values)
+      local ok, errors = edit.update(bufnr, id, values)
+      return ok and {} or errors
+    end,
+    on_accept = function(values)
+      edit.update(bufnr, id, values)
+    end,
+  })
 end
 
 return M
