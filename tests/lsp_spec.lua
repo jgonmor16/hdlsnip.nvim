@@ -30,11 +30,34 @@ describe("lsp.items", function()
     assert.matches("%$1", item.insertText)
   end)
 
-  it("omits dynamic templates, which cannot ask a question", function()
+  it("offers dynamic templates too, flagged for the dialog", function()
     local items = lsp.items(cfg({}))
-    assert.is_nil(by_label(items, "ent"))
-    assert.is_nil(by_label(items, "prc"))
-    assert.is_nil(by_label(items, "cdc"))
+    for _, trigger in ipairs({ "ent", "prc", "cdc", "axil" }) do
+      local item = by_label(items, trigger)
+      assert.is_not_nil(item, trigger .. " is missing")
+      assert.is_true(item.data.dynamic)
+      -- Nothing is inserted: CompleteDone opens the dialog instead, and
+      -- inserted text would have to be undone first.
+      assert.are.equal("", item.insertText)
+      assert.are.equal(1, item.insertTextFormat)
+      assert.matches("asks for parameters", item.detail)
+    end
+  end)
+
+  it("offers one item per template with a trigger", function()
+    local registry = require("hdlsnip.registry")
+    local expected = 0
+    for _, tpl in ipairs(registry.list({ lang = "vhdl" })) do
+      if tpl.trig then
+        expected = expected + 1
+      end
+    end
+    assert.are.equal(expected, #lsp.items(cfg({})))
+  end)
+
+  it("previews a dynamic template's output too", function()
+    local item = by_label(lsp.items(cfg({})), "prc")
+    assert.matches("p_main : process", item.documentation.value)
   end)
 
   it("previews the rendered template in the documentation", function()
