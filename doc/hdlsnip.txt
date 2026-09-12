@@ -150,9 +150,11 @@ With `noselect`, `<C-n>` selects an entry and `<C-y>` accepts it. Accepting
 expands the snippet, so the first parameter is selected and ready to type
 over.
 
-Only static templates are offered. A completion item cannot ask a question, so
-a dynamic template stays on |hdlsnip.expand_at_cursor()| and |:HdlSnip|. The
-documentation popup previews the VHDL the template would render, cased
+Every template is offered. A static one expands as a snippet; a dynamic one
+cannot, since a completion item asks no questions, so it inserts nothing and
+opens the parameter dialog instead. The menu says which will ask.
+
+The documentation popup previews the VHDL the template would render, cased
 according to the configuration in effect for that buffer.
 
 ==============================================================================
@@ -161,6 +163,11 @@ according to the configuration in effect for that buffer.
 A dynamic template prompts once and inserts finished code. |:HdlSnipEdit|
 opens a form for the block under the cursor, listing its parameters; the block
 re-renders as the form is edited.
+
+The same dialog asks for the parameters in the first place: every field at
+once, with what it accepts beside it, rather than a question at a time. A
+value that does not validate is reported in a window above the dialog and the
+dialog stays open.
 
 The parameters are edited outside the generated code rather than inside it.
 There is then no cursor to preserve in a block being replaced, and no
@@ -242,6 +249,10 @@ lsp             Offer templates through the in-process completion server.
                 See |hdlsnip-completion|.
 
 keys            Mappings created by `setup()`. See |hdlsnip-mappings|.
+
+`setup()` may be called more than once. It is partial: an option it does not
+mention keeps its current value, so a later call adding `keyword_case` does
+not unset the `keys` an earlier one established.
 
 Invalid options are reported with the path that is wrong, and the previous
 configuration is kept rather than half-applied.

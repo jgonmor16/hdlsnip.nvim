@@ -136,8 +136,8 @@ keymap = {
 
 Templates also appear in the completion menu. hdlsnip runs an in-process LSP
 server — a Lua table, not a process — so any completion frontend picks them up.
-Type `pk`, accept `pkg`, and the snippet expands: naming it once fills the
-`end package` clause too, and `<C-k>` moves to the next tabstop.
+Every template is offered. A static one expands as a snippet; a dynamic one
+opens a dialog for its parameters, and says so in the menu.
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/e99c760f-6eb2-4ea2-893e-193db91acd52" width="900"
@@ -152,9 +152,6 @@ vim.lsp.completion.enable(true, client_id, bufnr, { autotrigger = true })
 
 nvim-cmp and blink.cmp need nothing: they consume LSP sources already. Turn it
 off with `lsp = false`.
-
-Only static templates are offered. A completion item cannot ask a question, so
-`ent`, `prc` and `cdc` stay on the trigger key and `:HdlSnip`.
 
 ## Templates
 
@@ -181,8 +178,8 @@ Only static templates are offered. A completion item cannot ask a question, so
 Templates are either **static**, rendering as a snippet with tabstops, or
 **dynamic**, where the output depends on configuration or on a parameter. A
 tabstop cannot decide whether a reset port exists, so dynamic templates prompt
-and insert fully formed instead. `:HdlSnipExpand` falls back to that
-automatically.
+and insert fully formed instead — one dialog with every field, not a question
+at a time. `:HdlSnipExpand` falls back to that automatically.
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/63ab0a16-55ca-49c6-b411-ae905d0547ac" width="900"
@@ -236,6 +233,9 @@ Defaults, in full:
 
 Invalid options are reported with the path that is wrong, and the previous
 configuration is kept rather than half-applied.
+
+`setup()` is partial: options it does not mention keep their current value, so
+calling it twice accumulates rather than resetting.
 
 ### Per project
 
