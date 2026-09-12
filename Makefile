@@ -61,6 +61,7 @@ golden-check:
 ## Fixtures deliberately reuse design unit names across cases, so each file
 ## is analysed into a throwaway working directory rather than a shared one.
 ghdl:
+	@echo
 	@for f in $(GOLDEN)/vhdl/*.vhd; do \
 		case "$$f" in *__vhdl93__*) std=93 ;; *) std=08 ;; esac; \
 		work=$$(mktemp -d); \

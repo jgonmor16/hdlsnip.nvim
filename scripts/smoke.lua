@@ -130,7 +130,8 @@ local function main()
   fd:write(table.concat(out, "\n") .. "\n")
   fd:close()
 
-  print(("smoke: wrote %s"):format(OUT))
+  io.stdout:write(("smoke: wrote %s\n"):format(OUT))
+  io.stdout:flush()
   os.exit(failures == 0 and 0 or 1)
 end
 

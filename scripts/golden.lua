@@ -273,7 +273,8 @@ local function main()
     end
   end
 
-  print(("golden: wrote %d files to %s"):format(written, OUT))
+  io.stdout:write(("golden: wrote %d files to %s\n"):format(written, OUT))
+  io.stdout:flush()
   os.exit(failed == 0 and 0 or 1)
 end
 
