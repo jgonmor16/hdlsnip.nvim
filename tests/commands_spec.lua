@@ -108,23 +108,57 @@ describe("hdlsnip.expand", function()
 
   it("falls back to inserting a dynamic template", function()
     local bufnr = scratch({ "" })
-    -- No prompting happens because entity's parameters all have defaults and
-    -- vim.ui.input is stubbed to accept them.
-    local original = vim.ui.input
-    vim.ui.input = function(opts, on_confirm)
-      on_confirm(opts.default)
+    -- Parameters supplied, so no dialog opens: what is under test is that
+    -- expand routes a dynamic template to insert, not how it asks.
+    hdlsnip.insert("entity", { name = "top", arch = "rtl", generics = false })
+
+    assert.is_false(vim.snippet.active())
+    assert.matches("entity top is", table.concat(contents(bufnr), "\n"))
+  end)
+
+  it("advances an active snippet when there is no trigger", function()
+    -- A word before the cursor that is not a trigger, so the lookup fails and
+    -- the jump branch is reached. An empty line returns earlier than that.
+    local bufnr = scratch({ "signal" })
+    vim.api.nvim_win_set_cursor(0, { 1, 6 })
+
+    -- Stubbed rather than driven through a real snippet session: whether a
+    -- forward jump exists from a given tabstop is Neovim's business, and the
+    -- behaviour under test is that we ask and then jump.
+    local active, jump = vim.snippet.active, vim.snippet.jump
+    local jumped
+    vim.snippet.active = function()
+      return true
     end
-    local original_select = vim.ui.select
-    vim.ui.select = function(items, _, on_choice)
-      on_choice(items[1])
+    vim.snippet.jump = function(direction)
+      jumped = direction
+    end
+
+    local expanded = hdlsnip.expand_at_cursor()
+
+    vim.snippet.active, vim.snippet.jump = active, jump
+    assert.is_true(expanded)
+    assert.are.equal(1, jumped)
+    assert.are.same({ "signal" }, contents(bufnr))
+  end)
+
+  it("returns false with no trigger and no snippet", function()
+    scratch({ "" })
+    assert.is_false(hdlsnip.expand_at_cursor())
+  end)
+
+  it("routes a dynamic template to insert rather than expanding it", function()
+    scratch({ "" })
+    local called
+    local original = hdlsnip.insert
+    hdlsnip.insert = function(name)
+      called = name
     end
 
     hdlsnip.expand("entity")
 
-    vim.ui.input = original
-    vim.ui.select = original_select
-
+    hdlsnip.insert = original
+    assert.are.equal("entity", called)
     assert.is_false(vim.snippet.active())
-    assert.matches("entity top is", table.concat(contents(bufnr), "\n"))
   end)
 end)

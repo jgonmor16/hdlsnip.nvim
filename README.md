@@ -16,6 +16,13 @@ Parameterised VHDL templates for Neovim — entities, packages, clocked processe
 and CDC synchronisers, rendered from Lua rather than pasted from a static
 snippet file.
 
+Four characters and two answers:
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/940096bb-281e-45f4-ab33-b930e7af626a" width="900"
+       alt="Typing axil and pressing Ctrl-K opens a dialog for the entity name and register count; accepting it writes a complete AXI4-Lite slave" />
+</p>
+
 ```vhdl
 -- :HdlSnip process, with reset.style = "async", polarity = "low"
 p_main : process (clk, rst_n) is
@@ -34,7 +41,7 @@ That is the point: the shape of the code follows your house style, and getting
 it wrong is a synthesis mismatch rather than a syntax error.
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/2767ce9a-3e42-429f-8129-341acdbc9e16" width="900"
+  <img src="https://github.com/user-attachments/assets/33b3a86b-3e4a-47b2-975e-f8e2675e05d1" width="900"
        alt="The same process template inserted twice: an asynchronous reset outside the clock test, then a synchronous one inside it after a single configuration change" />
 </p>
 
@@ -97,34 +104,66 @@ With [lazy.nvim](https://github.com/folke/lazy.nvim):
 | `:HdlSnipExpand [name]` | Expand as a snippet, with tabstops |
 | `:HdlSnipReload` | Rescan the runtimepath for templates |
 | `:checkhealth hdlsnip` | Templates found, configuration in effect, anything skipped |
+| `:HdlSnipEdit` | Change the parameters of the template under the cursor |
+| `:HdlSnipLspAttach` | Attach the completion server to this buffer |
 
-For insert mode, map the trigger expansion and the tabstop jumps:
+Nothing is mapped by default. To expand from insert mode and move between
+tabstops:
 
 ```lua
-vim.keymap.set("i", "<C-s>", function()
-  require("hdlsnip").expand_at_cursor()
-end)
-
-vim.keymap.set({ "i", "s" }, "<C-l>", function()
-  if vim.snippet.active({ direction = 1 }) then
-    vim.snippet.jump(1)
-  end
-end)
-
-vim.keymap.set({ "i", "s" }, "<C-h>", function()
-  if vim.snippet.active({ direction = -1 }) then
-    vim.snippet.jump(-1)
-  end
-end)
+require("hdlsnip").setup({
+  keys = {
+    expand = "<C-k>",       -- expand a trigger, or jump forward in a snippet
+    jump_prev = "<C-j>",
+  },
+})
 ```
 
-Type `pkg`, press `<C-s>`, and the trigger is replaced by the template with the
-package name as the first tabstop.
+Each falls through when it has nothing to do, so `<C-k>` still inserts a
+digraph when the word before the cursor is not a trigger and no snippet is
+active. `jump_next` is only needed if you want a separate key for jumping
+forward.
+
+`field_next` and `field_prev` move between fields in the parameter dialog. They
+default to `<Tab>` and `<C-k>`, and `<S-Tab>` and `<C-j>` — set rather than
+unset, unlike the others, because they are buffer-local to a window the plugin
+opened and take nothing from you. Either takes one mapping or a list.
+
+With a plugin manager that takes an opts table, keys goes in there alongside
+the rest of the configuration.
+
+If a completion plugin is bound to the same key, whichever mapping is defined
+last wins. With blink.cmp, give hdlsnip first refusal instead:
+
+```lua
+keymap = {
+  ["<C-k>"] = {
+    function()
+      return require("hdlsnip").expand_at_cursor()
+    end,
+    "fallback",
+  },
+}
+```
+
+Templates also appear in the completion menu. hdlsnip runs an in-process LSP
+server — a Lua table, not a process — so any completion frontend picks them up.
+Every template is offered. A static one expands as a snippet; a dynamic one
+opens a dialog for its parameters, and says so in the menu.
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/73d8b769-8a93-43fa-9e89-04e5ed57928e" width="900"
-       alt="Typing pkg and pressing Ctrl-S expands a package template; naming it once updates both the declaration and the end clause" />
+  <img src="https://github.com/user-attachments/assets/20d2aaf0-9509-4628-9242-df2b508ff5db" width="900"
+       alt="Typing pk opens the completion menu; accepting pkg expands the package template, naming it updates both the declaration and the end clause, and Ctrl-K jumps into the body" />
 </p>
+
+With the built-in menu:
+
+```lua
+vim.lsp.completion.enable(true, client_id, bufnr, { autotrigger = true })
+```
+
+nvim-cmp and blink.cmp need nothing: they consume LSP sources already. Turn it
+off with `lsp = false`.
 
 ## Templates
 
@@ -133,17 +172,46 @@ package name as the first tabstop.
 | `ent` | `entity` | skeleton | Entity with a matching architecture |
 | `pkg` | `package` | skeleton | Package declaration |
 | `prc` | `process` | rtl | Clocked process with the configured reset |
-| `cdc` | `bit_sync` | cdc | Single-bit CDC synchroniser entity |
+| `cnt` | `counter` | rtl | Counter that wraps or saturates |
+| `edge` | `edge_detect` | rtl | One-cycle pulse on a rising, falling or either edge |
+| `fsm` | `fsm` | rtl | Two-process finite state machine |
+| `mux` | `mux` | rtl | Multiplexer, combinational or registered |
+| `pipe` | `pipeline` | rtl | N-stage delay line |
+| `cdc` | `bit_sync` | cdc | Single-bit CDC synchroniser |
+| `hs` | `cdc_handshake` | cdc | Multi-bit CDC by request and acknowledge |
+| `fifo` | `fifo_sync` | mem | Synchronous FIFO with count-based flags |
+| `ram` | `ram_dp` | mem | Simple dual-port RAM, read-first |
+| `axil` | `axi4lite_slave` | bus | AXI4-Lite slave with a register file |
+| `axis` | `axis_skid` | bus | AXI-Stream register slice with backpressure |
+| `apb` | `apb_slave` | bus | APB slave with a register file |
+| `tb` | `testbench` | tb | Self-checking testbench skeleton |
+| `vtb` | `tb_vunit` | tb | VUnit testbench with a test suite |
 
 Templates are either **static**, rendering as a snippet with tabstops, or
 **dynamic**, where the output depends on configuration or on a parameter. A
 tabstop cannot decide whether a reset port exists, so dynamic templates prompt
-and insert fully formed instead. `:HdlSnipExpand` falls back to that
-automatically.
+and insert fully formed instead — one dialog with every field, not a question
+at a time. `:HdlSnipExpand` falls back to that automatically.
+
+## Changing your mind
+
+A dynamic template prompts once and inserts finished code, so changing a
+parameter used to mean deleting the block and starting again. It doesn't now:
+put the cursor in a block you inserted and run `:HdlSnipEdit`. A small form
+lists the parameters, and the block re-renders as you type.
+
+The parameters are edited outside the generated code rather than inside it,
+which is what keeps this small: there is no cursor to preserve in a block being
+replaced, and no per-parameter region to track. No snippet engine is involved —
+the text is generated, so re-rendering from the parameters is enough.
+
+The anchor is dropped when you write the file, and as soon as the block stops
+matching what was rendered. Editing a line by hand ends the tracking rather
+than having it overwritten later.
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/63ab0a16-55ca-49c6-b411-ae905d0547ac" width="900"
-       alt="Running HdlSnip bit_sync, answering two prompts, and getting a complete synchroniser entity with the stage count as a generic" />
+  <img src="https://github.com/user-attachments/assets/4c0eda51-1d6e-495e-a1ca-e9ef8281b917" width="900"
+       alt="Opening HdlSnipEdit on an inserted synchroniser and changing the stage count and entity name, with the block re-rendering as the dialog is edited" />
 </p>
 
 ## Configuration
@@ -172,11 +240,22 @@ Defaults, in full:
   },
   vendor = "generic",       -- "generic" | "amd" | "intel" | "lattice" | "microchip"
   align_ports = true,
+  lsp = true,               -- offer templates in the completion menu
+  keys = {
+    expand = false,         -- trigger word before the cursor
+    jump_next = false,      -- next tabstop
+    jump_prev = false,      -- previous tabstop
+    field_next = { "<Tab>", "<C-k>" },   -- in the parameter dialog only
+    field_prev = { "<S-Tab>", "<C-j>" },
+  },
 }
 ```
 
 Invalid options are reported with the path that is wrong, and the previous
 configuration is kept rather than half-applied.
+
+`setup()` is partial: options it does not mention keep their current value, so
+calling it twice accumulates rather than resetting.
 
 ### Per project
 
@@ -225,10 +304,16 @@ anything needing logic; set `dynamic = true` alongside it.
 
 ## Correctness
 
-Every template is rendered across six configuration variants and one case per
-parameter alternative, committed under `tests/golden/`, and analysed with GHDL
-in CI. A change to generated VHDL shows up as a reviewable diff rather than
-hiding inside a Lua change.
+Every template is rendered across seven configuration variants and one case per
+parameter alternative — 518 files, committed under `tests/golden/` — and every
+one that does not need an external library is analysed with GHDL in CI. A
+change to generated VHDL shows up as a reviewable diff rather than hiding
+inside a Lua change.
+
+Where behaviour rather than syntax is the point, the output has also been
+simulated: the FIFO, the AXI4-Lite slave, the APB slave, the CDC handshake, the
+AXI-Stream slice and the testbench skeleton each run against a testbench and
+pass.
 
 ```bash
 make test          # spec suite
@@ -238,13 +323,7 @@ make ghdl          # analyse every fixture
 
 ## Roadmap
 
-- Configurable keymaps for expansion and tabstop jumping ([#7](https://github.com/jgonmor16/hdlsnip.nvim/issues/7))
-- Completion menu integration through an in-process LSP server, no plugins
-  ([#8](https://github.com/jgonmor16/hdlsnip.nvim/issues/8))
-- Live parameter editing for dynamic templates, with no snippet engine
-  dependency ([#12](https://github.com/jgonmor16/hdlsnip.nvim/issues/12))
-- More templates: FSMs, counters, FIFOs, dual-port RAM, AXI4-Lite, AXI-Stream,
-  VUnit and OSVVM testbench scaffolding
+- More templates: OSVVM scaffolding, asynchronous FIFO, Wishbone, Avalon-MM
 - Treesitter: entity to component, instantiation, signal declarations and
   testbench
 

@@ -1,0 +1,2020 @@
+>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+  1
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+
+────────────────────────────────────────────────────────────────────────────────
+  1
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+
+────────────────────────────────────────────────────────────────────────────────
+  1
+~                                                                                                                         ╭───╮
+~                                                                                                                         │ i │
+~                                                                                                                         ╰───╯
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+
+────────────────────────────────────────────────────────────────────────────────
+  1
+~                                                                                                                         ╭───╮
+~                                                                                                                         │ i │
+~                                                                                                                         ╰───╯
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+
+────────────────────────────────────────────────────────────────────────────────
+  1 axil
+~   axil Interface AXI4-Lite slave with a register file  (asks for parameters)                                        ╭───────╮
+~                                                                                                                     │ iaxil │
+~                                                                                                                     ╰───────╯
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+
+────────────────────────────────────────────────────────────────────────────────
+  1 axil
+~   axil Interface AXI4-Lite slave with a register file  (asks for parameters)                                        ╭───────╮
+~                                                                                                                     │ iaxil │
+~                                                                                                                     ╰───────╯
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+
+────────────────────────────────────────────────────────────────────────────────
+  1
+~   axil Interface AXI4-Lite slave with a register file  (asks for parameters)                                        ╭───────╮
+~                                                                                                                     │ iaxil │
+~                                                                                                                     ╰───────╯
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+
+────────────────────────────────────────────────────────────────────────────────
+  1
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~                                                                                          ╭───────── axi4lite_slave ─────────╮
+~                                                                                          │name identifier        axi_regs   │
+~                                                                                          │registers integer 1..256   4      │
+~                                                                                          │prefix string      s_axi          │
+~                                                                                          ╰──────────────────────────────────╯
+
+────────────────────────────────────────────────────────────────────────────────
+  1
+~                                                                                                                     ╭───────╮
+~                                                                                                                     │ <C-W> │
+~                                                                                                                     ╰───────╯
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~                                                                                          ╭───────── axi4lite_slave ─────────╮
+~                                                                                          │name identifier                   │
+~                                                                                          │registers integer 1..256   4      │
+~                                                                                          │prefix string      s_axi          │
+~                                                                                          ╰──────────────────────────────────╯
+
+────────────────────────────────────────────────────────────────────────────────
+  1
+~                                                                                                           ╭─────────────────╮
+~                                                                                                           │ <C-W> ctrl_regs │
+~                                                                                                           ╰─────────────────╯
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~                                                                                          ╭───────── axi4lite_slave ─────────╮
+~                                                                                          │name identifier        ctrl_regs  │
+~                                                                                          │registers integer 1..256   4      │
+~                                                                                          │prefix string      s_axi          │
+~                                                                                          ╰──────────────────────────────────╯
+
+────────────────────────────────────────────────────────────────────────────────
+  1
+~                                                                                                           ╭─────────────────╮
+~                                                                                                           │ <C-W> ctrl_regs │
+~                                                                                                           ╰─────────────────╯
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~                                                                                          ╭───────── axi4lite_slave ─────────╮
+~                                                                                          │name identifier        ctrl_regs  │
+~                                                                                          │registers integer 1..256   4      │
+~                                                                                          │prefix string      s_axi          │
+~                                                                                          ╰──────────────────────────────────╯
+
+────────────────────────────────────────────────────────────────────────────────
+  1
+~                                                                                                           ╭─────────────────╮
+~                                                                                                           │ <C-W> ctrl_regs │
+~                                                                                                           ╰─────────────────╯
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~                                                                                          ╭───────── axi4lite_slave ─────────╮
+~                                                                                          │name identifier        ctrl_regs  │
+~                                                                                          │registers integer 1..256   4      │
+~                                                                                          │prefix string      s_axi          │
+~                                                                                          ╰──────────────────────────────────╯
+
+────────────────────────────────────────────────────────────────────────────────
+  1
+~                                                                                                     ╭───────────────────────╮
+~                                                                                                     │ <C-W> ctrl_regs <C-K> │
+~                                                                                                     ╰───────────────────────╯
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~                                                                                          ╭───────── axi4lite_slave ─────────╮
+~                                                                                          │name identifier        ctrl_regs  │
+~                                                                                          │registers integer 1..256   4      │
+~                                                                                          │prefix string      s_axi          │
+~                                                                                          ╰──────────────────────────────────╯
+
+────────────────────────────────────────────────────────────────────────────────
+  1
+~                                                                                               ╭─────────────────────────────╮
+~                                                                                               │ <C-W> ctrl_regs <C-K> <C-W> │
+~                                                                                               ╰─────────────────────────────╯
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~                                                                                          ╭───────── axi4lite_slave ─────────╮
+~                                                                                          │name identifier        ctrl_regs  │
+~                                                                                          │registers integer 1..256          │
+~                                                                                          │prefix string      s_axi          │
+~                                                                                          ╰──────────────────────────────────╯
+
+────────────────────────────────────────────────────────────────────────────────
+  1
+~                                                                                             ╭───────────────────────────────╮
+~                                                                                             │ <C-W> ctrl_regs <C-K> <C-W> 8 │
+~                                                                                             ╰───────────────────────────────╯
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~                                                                                          ╭───────── axi4lite_slave ─────────╮
+~                                                                                          │name identifier        ctrl_regs  │
+~                                                                                          │registers integer 1..256   8      │
+~                                                                                          │prefix string      s_axi          │
+~                                                                                          ╰──────────────────────────────────╯
+
+────────────────────────────────────────────────────────────────────────────────
+  1
+~                                                                                             ╭───────────────────────────────╮
+~                                                                                             │ <C-W> ctrl_regs <C-K> <C-W> 8 │
+~                                                                                             ╰───────────────────────────────╯
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~                                                                                          ╭───────── axi4lite_slave ─────────╮
+~                                                                                          │name identifier        ctrl_regs  │
+~                                                                                          │registers integer 1..256   8      │
+~                                                                                          │prefix string      s_axi          │
+~                                                                                          ╰──────────────────────────────────╯
+
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;                                                             ╭──────────────────────────────╮
+  3   use ieee.numeric_std.all;                                                                │ ctrl_regs <C-K> <C-W> 8 <CR> │
+  4                                                                                            ╰──────────────────────────────╯
+  5 entity ctrl_regs is
+  6   generic (
+  7     G_REGISTERS : positive := 8;
+  8     G_ADDR_WIDTH : positive := 5
+  9   );
+ 10   port (
+ 11     clk           : in  std_logic;
+ 12     rst_n         : in  std_logic;
+ 13     s_axi_awaddr  : in  std_logic_vector(G_ADDR_WIDTH - 1 downto 0);
+ 14     s_axi_awvalid : in  std_logic;
+ 15     s_axi_awready : out std_logic;
+ 16     s_axi_wdata   : in  std_logic_vector(31 downto 0);
+ 17     s_axi_wstrb   : in  std_logic_vector(3 downto 0);
+ 18     s_axi_wvalid  : in  std_logic;
+ 19     s_axi_wready  : out std_logic;
+ 20     s_axi_bresp   : out std_logic_vector(1 downto 0);
+ 21     s_axi_bvalid  : out std_logic;
+ 22     s_axi_bready  : in  std_logic;
+ 23     s_axi_araddr  : in  std_logic_vector(G_ADDR_WIDTH - 1 downto 0);
+ 24     s_axi_arvalid : in  std_logic;
+ 25     s_axi_arready : out std_logic;
+ 26     s_axi_rdata   : out std_logic_vector(31 downto 0);
+ 27     s_axi_rresp   : out std_logic_vector(1 downto 0);
+ 28     s_axi_rvalid  : out std_logic;
+ 29     s_axi_rready  : in  std_logic
+ 30   );
+ 31 end entity ctrl_regs;
+ 32
+ 33 architecture rtl of ctrl_regs is
+ 34
+ 35   type t_registers is array (0 to G_REGISTERS - 1) of std_logic_vector(31 downto 0);
+ 36
+ 37   signal reg_file_r : t_registers;
+ 38
+ 39   -- Word index, so the two low address bits are dropped.
+ 40   signal wr_index : natural;
+ 41   signal rd_index : natural;
+ 42
+ 43   -- Internal drivers: the handshake reads back what it drives,
+ 44   -- and reading an out port is illegal before VHDL-2008.
+ 45   signal s_axi_awready_r : std_logic;
+ 46   signal s_axi_wready_r  : std_logic;
+ 47   signal s_axi_bresp_r   : std_logic_vector(1 downto 0);
+ 48   signal s_axi_bvalid_r  : std_logic;
+ 49   signal s_axi_arready_r : std_logic;
+ 50   signal s_axi_rdata_r   : std_logic_vector(31 downto 0);
+ 51   signal s_axi_rresp_r   : std_logic_vector(1 downto 0);
+ 52   signal s_axi_rvalid_r  : std_logic;
+ 53
+ 54 begin
+ 55
+
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;
+  3   use ieee.numeric_std.all;
+  4
+  5 entity ctrl_regs is
+  6   generic (
+  7     G_REGISTERS : positive := 8;
+  8     G_ADDR_WIDTH : positive := 5
+  9   );
+ 10   port (
+ 11     clk           : in  std_logic;
+ 12     rst_n         : in  std_logic;
+ 13     s_axi_awaddr  : in  std_logic_vector(G_ADDR_WIDTH - 1 downto 0);
+ 14     s_axi_awvalid : in  std_logic;
+ 15     s_axi_awready : out std_logic;
+ 16     s_axi_wdata   : in  std_logic_vector(31 downto 0);
+ 17     s_axi_wstrb   : in  std_logic_vector(3 downto 0);
+ 18     s_axi_wvalid  : in  std_logic;
+ 19     s_axi_wready  : out std_logic;
+ 20     s_axi_bresp   : out std_logic_vector(1 downto 0);
+ 21     s_axi_bvalid  : out std_logic;
+ 22     s_axi_bready  : in  std_logic;
+ 23     s_axi_araddr  : in  std_logic_vector(G_ADDR_WIDTH - 1 downto 0);
+ 24     s_axi_arvalid : in  std_logic;
+ 25     s_axi_arready : out std_logic;
+ 26     s_axi_rdata   : out std_logic_vector(31 downto 0);
+ 27     s_axi_rresp   : out std_logic_vector(1 downto 0);
+ 28     s_axi_rvalid  : out std_logic;
+ 29     s_axi_rready  : in  std_logic
+ 30   );
+ 31 end entity ctrl_regs;
+ 32
+ 33 architecture rtl of ctrl_regs is
+ 34
+ 35   type t_registers is array (0 to G_REGISTERS - 1) of std_logic_vector(31 downto 0);
+ 36
+ 37   signal reg_file_r : t_registers;
+ 38
+ 39   -- Word index, so the two low address bits are dropped.
+ 40   signal wr_index : natural;
+ 41   signal rd_index : natural;
+ 42
+ 43   -- Internal drivers: the handshake reads back what it drives,
+ 44   -- and reading an out port is illegal before VHDL-2008.
+ 45   signal s_axi_awready_r : std_logic;
+ 46   signal s_axi_wready_r  : std_logic;
+ 47   signal s_axi_bresp_r   : std_logic_vector(1 downto 0);
+ 48   signal s_axi_bvalid_r  : std_logic;
+ 49   signal s_axi_arready_r : std_logic;
+ 50   signal s_axi_rdata_r   : std_logic_vector(31 downto 0);
+ 51   signal s_axi_rresp_r   : std_logic_vector(1 downto 0);
+ 52   signal s_axi_rvalid_r  : std_logic;
+ 53
+ 54 begin
+ 55
+
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;                                                                                       ╭────╮
+  3   use ieee.numeric_std.all;                                                                                          │ gg │
+  4                                                                                                                      ╰────╯
+  5 entity ctrl_regs is
+  6   generic (
+  7     G_REGISTERS : positive := 8;
+  8     G_ADDR_WIDTH : positive := 5
+  9   );
+ 10   port (
+ 11     clk           : in  std_logic;
+ 12     rst_n         : in  std_logic;
+ 13     s_axi_awaddr  : in  std_logic_vector(G_ADDR_WIDTH - 1 downto 0);
+ 14     s_axi_awvalid : in  std_logic;
+ 15     s_axi_awready : out std_logic;
+ 16     s_axi_wdata   : in  std_logic_vector(31 downto 0);
+ 17     s_axi_wstrb   : in  std_logic_vector(3 downto 0);
+ 18     s_axi_wvalid  : in  std_logic;
+ 19     s_axi_wready  : out std_logic;
+ 20     s_axi_bresp   : out std_logic_vector(1 downto 0);
+ 21     s_axi_bvalid  : out std_logic;
+ 22     s_axi_bready  : in  std_logic;
+ 23     s_axi_araddr  : in  std_logic_vector(G_ADDR_WIDTH - 1 downto 0);
+ 24     s_axi_arvalid : in  std_logic;
+ 25     s_axi_arready : out std_logic;
+ 26     s_axi_rdata   : out std_logic_vector(31 downto 0);
+ 27     s_axi_rresp   : out std_logic_vector(1 downto 0);
+ 28     s_axi_rvalid  : out std_logic;
+ 29     s_axi_rready  : in  std_logic
+ 30   );
+ 31 end entity ctrl_regs;
+ 32
+ 33 architecture rtl of ctrl_regs is
+ 34
+ 35   type t_registers is array (0 to G_REGISTERS - 1) of std_logic_vector(31 downto 0);
+ 36
+ 37   signal reg_file_r : t_registers;
+ 38
+ 39   -- Word index, so the two low address bits are dropped.
+ 40   signal wr_index : natural;
+ 41   signal rd_index : natural;
+ 42
+ 43   -- Internal drivers: the handshake reads back what it drives,
+ 44   -- and reading an out port is illegal before VHDL-2008.
+ 45   signal s_axi_awready_r : std_logic;
+ 46   signal s_axi_wready_r  : std_logic;
+ 47   signal s_axi_bresp_r   : std_logic_vector(1 downto 0);
+ 48   signal s_axi_bvalid_r  : std_logic;
+ 49   signal s_axi_arready_r : std_logic;
+ 50   signal s_axi_rdata_r   : std_logic_vector(31 downto 0);
+ 51   signal s_axi_rresp_r   : std_logic_vector(1 downto 0);
+ 52   signal s_axi_rvalid_r  : std_logic;
+ 53
+ 54 begin
+ 55
+
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;
+  3   use ieee.numeric_std.all;
+  4
+  5 entity ctrl_regs is
+  6   generic (
+  7     G_REGISTERS : positive := 8;
+  8     G_ADDR_WIDTH : positive := 5
+  9   );
+ 10   port (
+ 11     clk           : in  std_logic;
+ 12     rst_n         : in  std_logic;
+ 13     s_axi_awaddr  : in  std_logic_vector(G_ADDR_WIDTH - 1 downto 0);
+ 14     s_axi_awvalid : in  std_logic;
+ 15     s_axi_awready : out std_logic;
+ 16     s_axi_wdata   : in  std_logic_vector(31 downto 0);
+ 17     s_axi_wstrb   : in  std_logic_vector(3 downto 0);
+ 18     s_axi_wvalid  : in  std_logic;
+ 19     s_axi_wready  : out std_logic;
+ 20     s_axi_bresp   : out std_logic_vector(1 downto 0);
+ 21     s_axi_bvalid  : out std_logic;
+ 22     s_axi_bready  : in  std_logic;
+ 23     s_axi_araddr  : in  std_logic_vector(G_ADDR_WIDTH - 1 downto 0);
+ 24     s_axi_arvalid : in  std_logic;
+ 25     s_axi_arready : out std_logic;
+ 26     s_axi_rdata   : out std_logic_vector(31 downto 0);
+ 27     s_axi_rresp   : out std_logic_vector(1 downto 0);
+ 28     s_axi_rvalid  : out std_logic;
+ 29     s_axi_rready  : in  std_logic
+ 30   );
+ 31 end entity ctrl_regs;
+ 32
+ 33 architecture rtl of ctrl_regs is
+ 34
+ 35   type t_registers is array (0 to G_REGISTERS - 1) of std_logic_vector(31 downto 0);
+ 36
+ 37   signal reg_file_r : t_registers;
+ 38
+ 39   -- Word index, so the two low address bits are dropped.
+ 40   signal wr_index : natural;
+ 41   signal rd_index : natural;
+ 42
+ 43   -- Internal drivers: the handshake reads back what it drives,
+ 44   -- and reading an out port is illegal before VHDL-2008.
+ 45   signal s_axi_awready_r : std_logic;
+ 46   signal s_axi_wready_r  : std_logic;
+ 47   signal s_axi_bresp_r   : std_logic_vector(1 downto 0);
+ 48   signal s_axi_bvalid_r  : std_logic;
+ 49   signal s_axi_arready_r : std_logic;
+ 50   signal s_axi_rdata_r   : std_logic_vector(31 downto 0);
+ 51   signal s_axi_rresp_r   : std_logic_vector(1 downto 0);
+ 52   signal s_axi_rvalid_r  : std_logic;
+ 53
+ 54 begin
+ 55
+
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;
+  3   use ieee.numeric_std.all;
+  4
+  5 entity ctrl_regs is
+  6   generic (
+  7     G_REGISTERS : positive := 8;
+  8     G_ADDR_WIDTH : positive := 5
+  9   );
+ 10   port (
+ 11     clk           : in  std_logic;
+ 12     rst_n         : in  std_logic;
+ 13     s_axi_awaddr  : in  std_logic_vector(G_ADDR_WIDTH - 1 downto 0);
+ 14     s_axi_awvalid : in  std_logic;
+ 15     s_axi_awready : out std_logic;
+ 16     s_axi_wdata   : in  std_logic_vector(31 downto 0);
+ 17     s_axi_wstrb   : in  std_logic_vector(3 downto 0);
+ 18     s_axi_wvalid  : in  std_logic;
+ 19     s_axi_wready  : out std_logic;
+ 20     s_axi_bresp   : out std_logic_vector(1 downto 0);
+ 21     s_axi_bvalid  : out std_logic;
+ 22     s_axi_bready  : in  std_logic;
+ 23     s_axi_araddr  : in  std_logic_vector(G_ADDR_WIDTH - 1 downto 0);
+ 24     s_axi_arvalid : in  std_logic;
+ 25     s_axi_arready : out std_logic;
+ 26     s_axi_rdata   : out std_logic_vector(31 downto 0);
+ 27     s_axi_rresp   : out std_logic_vector(1 downto 0);
+ 28     s_axi_rvalid  : out std_logic;
+ 29     s_axi_rready  : in  std_logic
+ 30   );
+ 31 end entity ctrl_regs;
+ 32
+ 33 architecture rtl of ctrl_regs is
+ 34
+ 35   type t_registers is array (0 to G_REGISTERS - 1) of std_logic_vector(31 downto 0);
+ 36
+ 37   signal reg_file_r : t_registers;
+ 38
+ 39   -- Word index, so the two low address bits are dropped.
+ 40   signal wr_index : natural;
+ 41   signal rd_index : natural;
+ 42
+ 43   -- Internal drivers: the handshake reads back what it drives,
+ 44   -- and reading an out port is illegal before VHDL-2008.
+ 45   signal s_axi_awready_r : std_logic;
+ 46   signal s_axi_wready_r  : std_logic;
+ 47   signal s_axi_bresp_r   : std_logic_vector(1 downto 0);
+ 48   signal s_axi_bvalid_r  : std_logic;
+ 49   signal s_axi_arready_r : std_logic;
+ 50   signal s_axi_rdata_r   : std_logic_vector(31 downto 0);
+ 51   signal s_axi_rresp_r   : std_logic_vector(1 downto 0);
+ 52   signal s_axi_rvalid_r  : std_logic;
+ 53
+ 54 begin
+ 55
+
+────────────────────────────────────────────────────────────────────────────────
+ 28     s_axi_rvalid  : out std_logic;
+ 29     s_axi_rready  : in  std_logic
+ 30   );
+ 31 end entity ctrl_regs;
+ 32
+ 33 architecture rtl of ctrl_regs is
+ 34
+ 35   type t_registers is array (0 to G_REGISTERS - 1) of std_logic_vector(31 downto 0);
+ 36
+ 37   signal reg_file_r : t_registers;
+ 38
+ 39   -- Word index, so the two low address bits are dropped.
+ 40   signal wr_index : natural;
+ 41   signal rd_index : natural;
+ 42
+ 43   -- Internal drivers: the handshake reads back what it drives,
+ 44   -- and reading an out port is illegal before VHDL-2008.
+ 45   signal s_axi_awready_r : std_logic;
+ 46   signal s_axi_wready_r  : std_logic;
+ 47   signal s_axi_bresp_r   : std_logic_vector(1 downto 0);
+ 48   signal s_axi_bvalid_r  : std_logic;
+ 49   signal s_axi_arready_r : std_logic;
+ 50   signal s_axi_rdata_r   : std_logic_vector(31 downto 0);
+ 51   signal s_axi_rresp_r   : std_logic_vector(1 downto 0);
+ 52   signal s_axi_rvalid_r  : std_logic;
+ 53
+ 54 begin
+ 55
+ 56   wr_index <= to_integer(unsigned(s_axi_awaddr(G_ADDR_WIDTH - 1 downto 2)));
+ 57   rd_index <= to_integer(unsigned(s_axi_araddr(G_ADDR_WIDTH - 1 downto 2)));
+ 58
+ 59   p_write : process (clk, rst_n) is
+ 60   begin
+ 61     if rst_n = '0' then
+ 62       s_axi_awready_r <= '0';
+ 63       s_axi_wready_r <= '0';
+ 64       s_axi_bvalid_r <= '0';
+ 65       s_axi_bresp_r <= "00";
+ 66       reg_file_r <= (others => (others => '0'));
+ 67     elsif rising_edge(clk) then
+ 68       -- READY is a single cycle pulse.
+ 69       s_axi_awready_r <= '0';
+ 70       s_axi_wready_r <= '0';
+ 71
+ 72       if s_axi_bvalid_r = '1' and s_axi_bready = '1' then
+ 73         s_axi_bvalid_r <= '0';
+ 74       end if;
+ 75
+ 76       -- Both channels must be valid, so a response is never
+ 77       -- issued before the data arrives, and no new response is
+ 78       -- started while an earlier one is outstanding.
+ 79       if s_axi_awvalid = '1' and s_axi_wvalid = '1'
+ 80           and s_axi_awready_r = '0' and s_axi_wready_r = '0'
+ 81           and (s_axi_bvalid_r = '0' or s_axi_bready = '1') then
+ 82         s_axi_awready_r <= '1';
+
+────────────────────────────────────────────────────────────────────────────────
+ 55
+ 56   wr_index <= to_integer(unsigned(s_axi_awaddr(G_ADDR_WIDTH - 1 downto 2)));                                      ╭───────╮
+ 57   rd_index <= to_integer(unsigned(s_axi_araddr(G_ADDR_WIDTH - 1 downto 2)));                                      │ <C-D> │
+ 58                                                                                                                   ╰───────╯
+ 59   p_write : process (clk, rst_n) is
+ 60   begin
+ 61     if rst_n = '0' then
+ 62       s_axi_awready_r <= '0';
+ 63       s_axi_wready_r <= '0';
+ 64       s_axi_bvalid_r <= '0';
+ 65       s_axi_bresp_r <= "00";
+ 66       reg_file_r <= (others => (others => '0'));
+ 67     elsif rising_edge(clk) then
+ 68       -- READY is a single cycle pulse.
+ 69       s_axi_awready_r <= '0';
+ 70       s_axi_wready_r <= '0';
+ 71
+ 72       if s_axi_bvalid_r = '1' and s_axi_bready = '1' then
+ 73         s_axi_bvalid_r <= '0';
+ 74       end if;
+ 75
+ 76       -- Both channels must be valid, so a response is never
+ 77       -- issued before the data arrives, and no new response is
+ 78       -- started while an earlier one is outstanding.
+ 79       if s_axi_awvalid = '1' and s_axi_wvalid = '1'
+ 80           and s_axi_awready_r = '0' and s_axi_wready_r = '0'
+ 81           and (s_axi_bvalid_r = '0' or s_axi_bready = '1') then
+ 82         s_axi_awready_r <= '1';
+ 83         s_axi_wready_r <= '1';
+ 84
+ 85         if wr_index < G_REGISTERS then
+ 86           -- Byte strobes: ignoring them corrupts a
+ 87           -- read-modify-write from software.
+ 88           for byte in 0 to 3 loop
+ 89             if s_axi_wstrb(byte) = '1' then
+ 90               reg_file_r(wr_index)(byte * 8 + 7 downto byte * 8) <=
+ 91                 s_axi_wdata(byte * 8 + 7 downto byte * 8);
+ 92             end if;
+ 93           end loop;
+ 94           s_axi_bresp_r <= "00";
+ 95         else
+ 96           -- Outside the register file: DECERR rather than a
+ 97           -- silent alias, so a bad address is visible.
+ 98           s_axi_bresp_r <= "11";
+ 99         end if;
+100
+101         s_axi_bvalid_r <= '1';
+102       end if;
+103     end if;
+104   end process p_write;
+105
+106   p_read : process (clk, rst_n) is
+107   begin
+108     if rst_n = '0' then
+109       s_axi_arready_r <= '0';
+
+────────────────────────────────────────────────────────────────────────────────
+ 55
+ 56   wr_index <= to_integer(unsigned(s_axi_awaddr(G_ADDR_WIDTH - 1 downto 2)));
+ 57   rd_index <= to_integer(unsigned(s_axi_araddr(G_ADDR_WIDTH - 1 downto 2)));
+ 58
+ 59   p_write : process (clk, rst_n) is
+ 60   begin
+ 61     if rst_n = '0' then
+ 62       s_axi_awready_r <= '0';
+ 63       s_axi_wready_r <= '0';
+ 64       s_axi_bvalid_r <= '0';
+ 65       s_axi_bresp_r <= "00";
+ 66       reg_file_r <= (others => (others => '0'));
+ 67     elsif rising_edge(clk) then
+ 68       -- READY is a single cycle pulse.
+ 69       s_axi_awready_r <= '0';
+ 70       s_axi_wready_r <= '0';
+ 71
+ 72       if s_axi_bvalid_r = '1' and s_axi_bready = '1' then
+ 73         s_axi_bvalid_r <= '0';
+ 74       end if;
+ 75
+ 76       -- Both channels must be valid, so a response is never
+ 77       -- issued before the data arrives, and no new response is
+ 78       -- started while an earlier one is outstanding.
+ 79       if s_axi_awvalid = '1' and s_axi_wvalid = '1'
+ 80           and s_axi_awready_r = '0' and s_axi_wready_r = '0'
+ 81           and (s_axi_bvalid_r = '0' or s_axi_bready = '1') then
+ 82         s_axi_awready_r <= '1';
+ 83         s_axi_wready_r <= '1';
+ 84
+ 85         if wr_index < G_REGISTERS then
+ 86           -- Byte strobes: ignoring them corrupts a
+ 87           -- read-modify-write from software.
+ 88           for byte in 0 to 3 loop
+ 89             if s_axi_wstrb(byte) = '1' then
+ 90               reg_file_r(wr_index)(byte * 8 + 7 downto byte * 8) <=
+ 91                 s_axi_wdata(byte * 8 + 7 downto byte * 8);
+ 92             end if;
+ 93           end loop;
+ 94           s_axi_bresp_r <= "00";
+ 95         else
+ 96           -- Outside the register file: DECERR rather than a
+ 97           -- silent alias, so a bad address is visible.
+ 98           s_axi_bresp_r <= "11";
+ 99         end if;
+100
+101         s_axi_bvalid_r <= '1';
+102       end if;
+103     end if;
+104   end process p_write;
+105
+106   p_read : process (clk, rst_n) is
+107   begin
+108     if rst_n = '0' then
+109       s_axi_arready_r <= '0';
+
+────────────────────────────────────────────────────────────────────────────────
+ 82         s_axi_awready_r <= '1';
+ 83         s_axi_wready_r <= '1';                                                                                    ╭───────╮
+ 84                                                                                                                   │ <C-D> │
+ 85         if wr_index < G_REGISTERS then                                                                            ╰───────╯
+ 86           -- Byte strobes: ignoring them corrupts a
+ 87           -- read-modify-write from software.
+ 88           for byte in 0 to 3 loop
+ 89             if s_axi_wstrb(byte) = '1' then
+ 90               reg_file_r(wr_index)(byte * 8 + 7 downto byte * 8) <=
+ 91                 s_axi_wdata(byte * 8 + 7 downto byte * 8);
+ 92             end if;
+ 93           end loop;
+ 94           s_axi_bresp_r <= "00";
+ 95         else
+ 96           -- Outside the register file: DECERR rather than a
+ 97           -- silent alias, so a bad address is visible.
+ 98           s_axi_bresp_r <= "11";
+ 99         end if;
+100
+101         s_axi_bvalid_r <= '1';
+102       end if;
+103     end if;
+104   end process p_write;
+105
+106   p_read : process (clk, rst_n) is
+107   begin
+108     if rst_n = '0' then
+109       s_axi_arready_r <= '0';
+110       s_axi_rvalid_r <= '0';
+111       s_axi_rresp_r <= "00";
+112       s_axi_rdata_r <= (others => '0');
+113     elsif rising_edge(clk) then
+114       s_axi_arready_r <= '0';
+115
+116       if s_axi_rvalid_r = '1' and s_axi_rready = '1' then
+117         s_axi_rvalid_r <= '0';
+118       end if;
+119
+120       if s_axi_arvalid = '1' and s_axi_arready_r = '0'
+121           and (s_axi_rvalid_r = '0' or s_axi_rready = '1') then
+122         s_axi_arready_r <= '1';
+123
+124         if rd_index < G_REGISTERS then
+125           s_axi_rdata_r <= reg_file_r(rd_index);
+126           s_axi_rresp_r <= "00";
+127         else
+128           s_axi_rdata_r <= (others => '0');
+129           s_axi_rresp_r <= "11";
+130         end if;
+131
+132         s_axi_rvalid_r <= '1';
+133       end if;
+134     end if;
+135   end process p_read;
+136
+
+────────────────────────────────────────────────────────────────────────────────
+ 82         s_axi_awready_r <= '1';
+ 83         s_axi_wready_r <= '1';
+ 84
+ 85         if wr_index < G_REGISTERS then
+ 86           -- Byte strobes: ignoring them corrupts a
+ 87           -- read-modify-write from software.
+ 88           for byte in 0 to 3 loop
+ 89             if s_axi_wstrb(byte) = '1' then
+ 90               reg_file_r(wr_index)(byte * 8 + 7 downto byte * 8) <=
+ 91                 s_axi_wdata(byte * 8 + 7 downto byte * 8);
+ 92             end if;
+ 93           end loop;
+ 94           s_axi_bresp_r <= "00";
+ 95         else
+ 96           -- Outside the register file: DECERR rather than a
+ 97           -- silent alias, so a bad address is visible.
+ 98           s_axi_bresp_r <= "11";
+ 99         end if;
+100
+101         s_axi_bvalid_r <= '1';
+102       end if;
+103     end if;
+104   end process p_write;
+105
+106   p_read : process (clk, rst_n) is
+107   begin
+108     if rst_n = '0' then
+109       s_axi_arready_r <= '0';
+110       s_axi_rvalid_r <= '0';
+111       s_axi_rresp_r <= "00";
+112       s_axi_rdata_r <= (others => '0');
+113     elsif rising_edge(clk) then
+114       s_axi_arready_r <= '0';
+115
+116       if s_axi_rvalid_r = '1' and s_axi_rready = '1' then
+117         s_axi_rvalid_r <= '0';
+118       end if;
+119
+120       if s_axi_arvalid = '1' and s_axi_arready_r = '0'
+121           and (s_axi_rvalid_r = '0' or s_axi_rready = '1') then
+122         s_axi_arready_r <= '1';
+123
+124         if rd_index < G_REGISTERS then
+125           s_axi_rdata_r <= reg_file_r(rd_index);
+126           s_axi_rresp_r <= "00";
+127         else
+128           s_axi_rdata_r <= (others => '0');
+129           s_axi_rresp_r <= "11";
+130         end if;
+131
+132         s_axi_rvalid_r <= '1';
+133       end if;
+134     end if;
+135   end process p_read;
+136
+
+────────────────────────────────────────────────────────────────────────────────
+ 82         s_axi_awready_r <= '1';
+ 83         s_axi_wready_r <= '1';
+ 84
+ 85         if wr_index < G_REGISTERS then
+ 86           -- Byte strobes: ignoring them corrupts a
+ 87           -- read-modify-write from software.
+ 88           for byte in 0 to 3 loop
+ 89             if s_axi_wstrb(byte) = '1' then
+ 90               reg_file_r(wr_index)(byte * 8 + 7 downto byte * 8) <=
+ 91                 s_axi_wdata(byte * 8 + 7 downto byte * 8);
+ 92             end if;
+ 93           end loop;
+ 94           s_axi_bresp_r <= "00";
+ 95         else
+ 96           -- Outside the register file: DECERR rather than a
+ 97           -- silent alias, so a bad address is visible.
+ 98           s_axi_bresp_r <= "11";
+ 99         end if;
+100
+101         s_axi_bvalid_r <= '1';
+102       end if;
+103     end if;
+104   end process p_write;
+105
+106   p_read : process (clk, rst_n) is
+107   begin
+108     if rst_n = '0' then
+109       s_axi_arready_r <= '0';
+110       s_axi_rvalid_r <= '0';
+111       s_axi_rresp_r <= "00";
+112       s_axi_rdata_r <= (others => '0');
+113     elsif rising_edge(clk) then
+114       s_axi_arready_r <= '0';
+115
+116       if s_axi_rvalid_r = '1' and s_axi_rready = '1' then
+117         s_axi_rvalid_r <= '0';
+118       end if;
+119
+120       if s_axi_arvalid = '1' and s_axi_arready_r = '0'
+121           and (s_axi_rvalid_r = '0' or s_axi_rready = '1') then
+122         s_axi_arready_r <= '1';
+123
+124         if rd_index < G_REGISTERS then
+125           s_axi_rdata_r <= reg_file_r(rd_index);
+126           s_axi_rresp_r <= "00";
+127         else
+128           s_axi_rdata_r <= (others => '0');
+129           s_axi_rresp_r <= "11";
+130         end if;
+131
+132         s_axi_rvalid_r <= '1';
+133       end if;
+134     end if;
+135   end process p_read;
+136
+
+────────────────────────────────────────────────────────────────────────────────
+ 82         s_axi_awready_r <= '1';
+ 83         s_axi_wready_r <= '1';
+ 84
+ 85         if wr_index < G_REGISTERS then
+ 86           -- Byte strobes: ignoring them corrupts a
+ 87           -- read-modify-write from software.
+ 88           for byte in 0 to 3 loop
+ 89             if s_axi_wstrb(byte) = '1' then
+ 90               reg_file_r(wr_index)(byte * 8 + 7 downto byte * 8) <=
+ 91                 s_axi_wdata(byte * 8 + 7 downto byte * 8);
+ 92             end if;
+ 93           end loop;
+ 94           s_axi_bresp_r <= "00";
+ 95         else
+ 96           -- Outside the register file: DECERR rather than a
+ 97           -- silent alias, so a bad address is visible.
+ 98           s_axi_bresp_r <= "11";
+ 99         end if;
+100
+101         s_axi_bvalid_r <= '1';
+102       end if;
+103     end if;
+104   end process p_write;
+105
+106   p_read : process (clk, rst_n) is
+107   begin
+108     if rst_n = '0' then
+109       s_axi_arready_r <= '0';
+110       s_axi_rvalid_r <= '0';
+111       s_axi_rresp_r <= "00";
+112       s_axi_rdata_r <= (others => '0');
+113     elsif rising_edge(clk) then
+114       s_axi_arready_r <= '0';
+115
+116       if s_axi_rvalid_r = '1' and s_axi_rready = '1' then
+117         s_axi_rvalid_r <= '0';
+118       end if;
+119
+120       if s_axi_arvalid = '1' and s_axi_arready_r = '0'
+121           and (s_axi_rvalid_r = '0' or s_axi_rready = '1') then
+122         s_axi_arready_r <= '1';
+123
+124         if rd_index < G_REGISTERS then
+125           s_axi_rdata_r <= reg_file_r(rd_index);
+126           s_axi_rresp_r <= "00";
+127         else
+128           s_axi_rdata_r <= (others => '0');
+129           s_axi_rresp_r <= "11";
+130         end if;
+131
+132         s_axi_rvalid_r <= '1';
+133       end if;
+134     end if;
+135   end process p_read;
+136
+
+────────────────────────────────────────────────────────────────────────────────

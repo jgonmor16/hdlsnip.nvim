@@ -34,6 +34,10 @@ M.scopes = {
   statement = true,
   --- Sequential statements, for inside a process.
   sequential = true,
+  --- Both: declarations for above `begin` and statements for below it. The
+  --- render function returns a table rather than a string, since the two
+  --- halves go to different places.
+  mixed = true,
 }
 
 --- Categories a template may belong to. Used for grouping in the picker.

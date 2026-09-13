@@ -51,12 +51,19 @@ describe("config merge", function()
       local c = fresh()
       c.setup({ reset = { polarity = "high" } })
       assert.are.equal(
-        "rst",
-        c.setup({ reset = { polarity = "high" } }).reset.name
+        "rst_n",
+        c.setup({ reset = { polarity = "low" } }).reset.name
       )
-      assert.are.equal("rst_n", c.setup({}).reset.name)
     end
   )
+
+  it("keeps options a later setup does not mention", function()
+    local c = fresh()
+    c.setup({ clock = { name = "axi_aclk" } })
+    local cfg = c.setup({ keyword_case = "upper" })
+    assert.are.equal("axi_aclk", cfg.clock.name)
+    assert.are.equal("upper", cfg.keyword_case)
+  end)
 end)
 
 describe("config validation", function()
@@ -129,5 +136,16 @@ describe("config setup rejection", function()
     assert.are.equal(1, #notifications)
     assert.matches("reset%.polarity", notifications[1].msg)
     assert.are.equal(vim.log.levels.ERROR, notifications[1].level)
+  end)
+end)
+
+describe("config.get on a buffer with no file", function()
+  it("falls back to the global configuration", function()
+    local bufnr = vim.api.nvim_create_buf(false, true)
+    local cfg
+    assert.has_no.errors(function()
+      cfg = config.get(bufnr)
+    end)
+    assert.are.equal("clk", cfg.clock.name)
   end)
 end)

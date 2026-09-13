@@ -1,10 +1,12 @@
---- Interactive selection and prompting.
+--- Choosing a template.
 ---
---- Everything goes through `vim.ui.select` and `vim.ui.input`, so whatever
---- the user has installed -- telescope, fzf-lua, snacks, or the built-in
---- prompts -- is what they get. No picker is bundled and none is required.
+--- Goes through `vim.ui.select`, so whatever picker the user has installed --
+--- telescope, fzf-lua, snacks, or the built-in prompt -- is what they get.
+--- None is bundled and none is required.
+---
+--- Parameters are asked for by `hdlsnip.form`, which shows every field at
+--- once rather than a question at a time.
 local registry = require("hdlsnip.registry")
-local template = require("hdlsnip.template")
 
 local M = {}
 
@@ -35,72 +37,6 @@ function M.select_template(filter, on_choice)
       on_choice(choice)
     end
   end)
-end
-
---- Prompt for every parameter in order, then hand back the values.
----
---- Invalid input re-prompts for the same parameter instead of failing at the
---- end. Discovering that a width had to be at least 1 only after answering
---- four more questions would be its own small punishment.
----@param tpl table
----@param cfg table
----@param on_done fun(params: table)
-function M.prompt_params(tpl, cfg, on_done)
-  local values = {}
-
-  local function step(index)
-    local param = tpl.params and tpl.params[index]
-    if not param then
-      return on_done(values)
-    end
-
-    local label = ("%s (%s)"):format(param.desc, param.name)
-
-    if param.type == "boolean" or param.type == "choice" then
-      local choices
-      if param.type == "boolean" then
-        -- Offer the default first, so hitting enter keeps it.
-        choices = param.default and { "true", "false" } or { "false", "true" }
-      else
-        choices = { param.default }
-        for _, choice in ipairs(param.choices) do
-          if choice ~= param.default then
-            choices[#choices + 1] = choice
-          end
-        end
-      end
-
-      vim.ui.select(choices, { prompt = label }, function(choice)
-        if choice == nil then
-          return
-        end
-        values[param.name] = choice
-        step(index + 1)
-      end)
-      return
-    end
-
-    vim.ui.input({
-      prompt = label .. ": ",
-      default = tostring(param.default),
-    }, function(input)
-      if input == nil then
-        return
-      end
-      local value, err = template.coerce(param, input, cfg)
-      if err then
-        vim.notify(
-          ("hdlsnip: %s: %s"):format(param.name, err),
-          vim.log.levels.WARN
-        )
-        return step(index) -- ask again for the same parameter
-      end
-      values[param.name] = value
-      step(index + 1)
-    end)
-  end
-
-  step(1)
 end
 
 return M

@@ -52,6 +52,24 @@ M.defaults = {
 
   --- Optional file header. Receives a context table, returns lines.
   header = nil, ---@type fun(ctx: table): string[]|nil
+
+  --- Offer templates through an in-process LSP server, so they appear in
+  --- whatever completion menu is already in use. Costs nothing when idle:
+  --- the server is a Lua table, not a process.
+  lsp = true,
+
+  --- Mappings created by `setup()`. Every entry is `false` by default: a
+  --- plugin that claims keys on install is a plugin people uninstall.
+  keys = {
+    expand = false, ---@type string|false trigger word before the cursor
+    jump_next = false, ---@type string|false next tabstop
+    jump_prev = false, ---@type string|false previous tabstop
+
+    --- Moving between fields in the parameter dialog. Buffer local to that
+    --- window, so these do not affect anything else.
+    field_next = { "<Tab>", "<C-k>" }, ---@type string|string[]|false
+    field_prev = { "<S-Tab>", "<C-j>" }, ---@type string|string[]|false
+  },
 }
 
 -- ---------------------------------------------------------------------------
@@ -69,6 +87,24 @@ local function is_identifier(v, std)
   end
   if keywords.is_reserved(v, std) then
     return false, ("'%s' is a VHDL-%s reserved word"):format(v, std)
+  end
+  return true
+end
+
+local function keymap(v)
+  if v == false then
+    return true
+  end
+  if type(v) == "table" then
+    for _, key in ipairs(v) do
+      if type(key) ~= "string" or key == "" then
+        return false, 'every entry must be a mapping such as "<Tab>"'
+      end
+    end
+    return #v > 0, #v > 0 and nil or "must not be an empty list"
+  end
+  if type(v) ~= "string" or v == "" then
+    return false, 'must be a mapping such as "<C-k>", or false'
   end
   return true
 end
@@ -119,7 +155,15 @@ local schema = {
   },
   vendor = { one_of = { "generic", "amd", "intel", "lattice", "microchip" } },
   align_ports = { type = "boolean" },
+  lsp = { type = "boolean" },
   header = { type = "function", optional = true },
+  keys = {
+    expand = { check = keymap },
+    jump_next = { check = keymap },
+    jump_prev = { check = keymap },
+    field_next = { check = keymap },
+    field_prev = { check = keymap },
+  },
 }
 
 local function is_leaf(spec)
@@ -236,13 +280,20 @@ end
 local raw = vim.deepcopy(M.defaults)
 local current = M.resolve(vim.deepcopy(raw))
 
---- Apply user options. Invalid options are reported and ignored; the previous
---- configuration is kept so a bad `setup()` cannot leave templates rendering
---- from a half-applied table.
+--- Apply user options.
+---
+--- Partial: options not given keep the value they already have, so calling
+--- `setup()` twice accumulates rather than resetting everything not repeated
+--- in the second call. Changing `keyword_case` must not silently unmap your
+--- keys.
+---
+--- Invalid options are reported and ignored, and the previous configuration
+--- is kept, so a bad `setup()` cannot leave templates rendering from a
+--- half-applied table.
 ---@param user table?
 ---@return table cfg the configuration now in effect
 function M.setup(user)
-  local candidate_raw = M.merge(M.defaults, user)
+  local candidate_raw = M.merge(raw, user)
   local candidate = M.resolve(vim.deepcopy(candidate_raw))
   local ok, errors = M.validate(candidate)
   if not ok then
@@ -255,6 +306,13 @@ function M.setup(user)
   end
   raw, current = candidate_raw, candidate
   M.clear_cache() -- project overrides were merged onto the old options
+  return current
+end
+
+--- Configuration without any project override, so callers that must not
+--- trigger a trust prompt have something to read.
+---@return table
+function M.get_global()
   return current
 end
 
@@ -281,8 +339,16 @@ local project_cache = {}
 ---@param bufnr integer?
 ---@return table? cfg nil when there is no project override
 function M.project(bufnr)
-  local root = vim.fs.root(bufnr or 0, { ".hdlsnip.lua" })
-  if not root then
+  bufnr = bufnr or 0
+
+  -- vim.fs.root needs a path to search from, and a scratch buffer has none.
+  -- Opening :HdlSnip in one is ordinary, so this must not throw.
+  if vim.api.nvim_buf_get_name(bufnr) == "" then
+    return nil
+  end
+
+  local ok, root = pcall(vim.fs.root, bufnr, { ".hdlsnip.lua" })
+  if not ok or not root then
     return nil
   end
   local path = root .. "/.hdlsnip.lua"
