@@ -347,6 +347,236 @@ function M.open(opts)
   return true
 end
 
+--- Choose from a list, by typing to narrow it.
+---
+--- Two windows, matching the parameter dialog: the choices above, a field
+--- below. Typing filters and renumbers, so the numbers are there to count by
+--- rather than to address -- a digit narrows like any other character, which
+--- is what lets `fifo_2` be typed at all.
+---
+--- Tab and C-k move down the choices, S-Tab and C-j up, CR takes the
+--- highlighted one, and Esc or q cancels. The same keys as the dialog, doing
+--- the same thing to a list.
+---@param items table[]
+---@param opts table `{ prompt, format_item, cfg }`
+---@param on_choice fun(item: table?)
+function M.select(items, opts, on_choice)
+  M.close()
+
+  local format = opts.format_item or tostring
+
+  local labels = {}
+  for index, item in ipairs(items) do
+    labels[index] = format(item)
+  end
+
+  local origin = vim.api.nvim_get_current_win()
+  -- `selected` indexes `matches`; `offset` is the first line on screen. The
+  -- list scrolls rather than growing, so a project with forty entities does
+  -- not cover the code the choice is about to go into.
+  local matches, selected, offset = {}, 1, 1
+
+  -- Sized once from the widest entry, so the windows do not resize while
+  -- typing, which reads as flicker.
+  local width = #(opts.prompt or "") + 6
+  for _, label in ipairs(labels) do
+    width = math.max(width, #label + 6)
+  end
+  width = math.max(width, 34)
+
+  local configured_height = (opts.cfg and opts.cfg.picker_height) or 10
+  -- Never taller than a third of the screen, whatever the configuration says.
+  local visible = math.max(1, math.min(configured_height, vim.o.lines - 6))
+
+  local list_buf = vim.api.nvim_create_buf(false, true)
+  vim.bo[list_buf].buftype = "nofile"
+
+  vim.bo[list_buf].bufhidden = "wipe"
+
+  local field_buf = vim.api.nvim_create_buf(false, true)
+  vim.bo[field_buf].buftype = "nofile"
+  vim.bo[field_buf].bufhidden = "wipe"
+  vim.bo[field_buf].filetype = "hdlsnip-select"
+
+  local field_win = vim.api.nvim_open_win(field_buf, true, {
+    relative = "editor",
+    anchor = "SE",
+    row = vim.o.lines - 2,
+    col = vim.o.columns - 2,
+    width = width,
+    height = 1,
+    style = "minimal",
+    border = "rounded",
+  })
+
+  local list_win = vim.api.nvim_open_win(list_buf, false, {
+    relative = "editor",
+    anchor = "SE",
+    row = vim.o.lines - 5,
+    col = vim.o.columns - 2,
+    width = width,
+    height = math.max(1, math.min(visible, #labels)),
+    style = "minimal",
+    border = "rounded",
+    title = (" %s "):format(opts.prompt or "select"),
+    title_pos = "center",
+    focusable = false,
+  })
+  vim.wo[list_win].cursorline = true
+
+  open_form = { win = field_win, buf = field_buf }
+
+  local function close(item)
+    if vim.api.nvim_win_is_valid(list_win) then
+      vim.api.nvim_win_close(list_win, true)
+    end
+
+    M.close_window(field_win)
+    if origin and vim.api.nvim_win_is_valid(origin) then
+      vim.api.nvim_set_current_win(origin)
+    end
+    on_choice(item)
+  end
+
+  --- Draw the visible slice, and put the cursor on the selection.
+  local function draw()
+    -- Constant height, so the window does not jump when the last page is
+    -- short or the filter narrows.
+    local height = math.max(1, math.min(visible, #matches))
+    local lines = {}
+
+    for row = 1, height do
+      local match = matches[offset + row - 1]
+      -- Numbered by position in the filtered list, so what is on screen
+      -- reads 1..n rather than jumping when it scrolls.
+      lines[row] = match and ("%2d  %s"):format(offset + row - 1, match.label)
+        or ""
+    end
+    if #matches == 0 then
+      lines = { "  no match" }
+    end
+
+    vim.bo[list_buf].modifiable = true
+    vim.api.nvim_buf_set_lines(list_buf, 0, -1, false, lines)
+    vim.bo[list_buf].modifiable = false
+
+    if vim.api.nvim_win_is_valid(list_win) then
+      vim.api.nvim_win_set_config(list_win, {
+        relative = "editor",
+        anchor = "SE",
+        row = vim.o.lines - 5,
+        col = vim.o.columns - 2,
+        width = width,
+        height = #lines,
+      })
+      if #matches > 0 then
+        vim.api.nvim_win_set_cursor(list_win, { selected - offset + 1, 0 })
+      end
+    end
+  end
+
+  --- Redraw for the current filter, from the top.
+  local function refresh()
+    local filter = (vim.api.nvim_buf_get_lines(field_buf, 0, 1, false)[1] or ""):lower()
+
+    matches = {}
+    for index, label in ipairs(labels) do
+      if filter == "" or label:lower():find(filter, 1, true) then
+        matches[#matches + 1] = { index = index, label = label }
+      end
+    end
+
+    -- Back to the top on every change: keeping the selection where it was
+    -- can leave it on something the filter has just hidden.
+    selected, offset = 1, 1
+    draw()
+  end
+
+  --- Move the selection, scrolling when it would leave the window.
+  local function move(delta)
+    if #matches == 0 then
+      return
+    end
+    selected = math.max(1, math.min(#matches, selected + delta))
+    if selected < offset then
+      offset = selected
+    elseif selected >= offset + visible then
+      offset = selected - visible + 1
+    end
+    draw()
+  end
+
+  local function accept()
+    -- Nothing to take is not the same as cancelling, which is what Esc does.
+    if #matches == 0 then
+      return
+    end
+    vim.cmd.stopinsert()
+    close(items[matches[selected].index])
+  end
+
+  vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI" }, {
+    buffer = field_buf,
+    desc = "hdlsnip: narrow the choices",
+    callback = refresh,
+  })
+
+  vim.keymap.set({ "n", "i" }, "<CR>", accept, { buffer = field_buf })
+  for _, key in ipairs({ "q", "<Esc>" }) do
+    vim.keymap.set("n", key, function()
+      close(nil)
+    end, { buffer = field_buf, nowait = true })
+  end
+
+  local configured = (opts.cfg and opts.cfg.keys) or {}
+  local function map_move(setting, fallback, delta)
+    local keys = setting or fallback
+    if not keys then
+      return
+    end
+    for _, key in ipairs(type(keys) == "table" and keys or { keys }) do
+      vim.keymap.set({ "n", "i" }, key, function()
+        move(delta)
+      end, { buffer = field_buf, nowait = true })
+    end
+  end
+  map_move(configured.field_next, { "<Tab>", "<C-k>" }, 1)
+  map_move(configured.field_prev, { "<S-Tab>", "<C-j>" }, -1)
+
+  --- Move a whole page, landing on its first entry.
+  ---
+  --- The page boundary is what moved, so keeping the selection at the same
+  --- screen row would land it somewhere arbitrary. The top of the new page
+  --- is predictable.
+  ---
+  --- Wraps: with three pages, paging past the last returns to the first.
+  --- Clamping would leave the key doing nothing, and a short list has no
+  --- meaningful end to stop at.
+  local function page(direction)
+    if #matches == 0 then
+      return
+    end
+    local pages = math.ceil(#matches / visible)
+    local current = math.floor((offset - 1) / visible)
+    -- Modulo over the page index rather than the offset, so the last page
+    -- being short does not shift every boundary.
+    local next_page = (current + direction) % pages
+    offset = next_page * visible + 1
+    selected = offset
+    draw()
+  end
+
+  for key, direction in pairs({ ["<C-d>"] = 1, ["<C-u>"] = -1 }) do
+    vim.keymap.set({ "n", "i" }, key, function()
+      page(direction)
+    end, { buffer = field_buf, nowait = true })
+  end
+
+  refresh()
+  vim.cmd.startinsert({ bang = true })
+  return true
+end
+
 --- Ask for a template's parameters before inserting it.
 ---@param tpl table
 ---@param cfg table

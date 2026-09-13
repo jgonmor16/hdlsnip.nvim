@@ -102,6 +102,7 @@ With [lazy.nvim](https://github.com/folke/lazy.nvim):
 | --- | --- |
 | `:HdlSnip [name]` | Prompt for parameters and insert. Picker when no name is given |
 | `:HdlSnipExpand [name]` | Expand as a snippet, with tabstops |
+| `:HdlSnipInstantiate[!] [name]` | Instantiate an entity from the project; `!` adds its signals |
 | `:HdlSnipReload` | Rescan the runtimepath for templates |
 | `:checkhealth hdlsnip` | Templates found, configuration in effect, anything skipped |
 | `:HdlSnipEdit` | Change the parameters of the template under the cursor |
@@ -214,6 +215,32 @@ than having it overwritten later.
        alt="Opening HdlSnipEdit on an inserted synchroniser and changing the stage count and entity name, with the block re-rendering as the dialog is edited" />
 </p>
 
+## Instantiating what you already have
+
+The interface of a design already exists in a file. `:HdlSnipInstantiate` finds
+the entities in your project, offers them, and writes the instantiation for the
+one you pick — named association throughout, since positional compiles happily
+with two same-typed ports swapped and you find out in simulation.
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/756fc349-0907-4ef8-80a7-85957b64c896" width="900"
+       alt="Choosing among fourteen entities by paging and filtering, then instantiating two of them into one architecture with their signals declared above begin" />
+</p>
+
+Typing in the picker narrows the list; `<C-d>` and `<C-u>` page through it,
+`<C-k>` and `<C-j>` move one at a time. With telescope, fzf-lua or snacks
+installed you get yours instead — `picker = "hdlsnip"` forces this one.
+
+`:HdlSnipInstantiate!` adds the port signals too. They go above the
+architecture's `begin` while the instance goes below it, and they are named
+exactly as the instantiation maps them, so the two halves cannot disagree.
+Generic values are substituted into the subtypes, since the instantiating scope
+has no `G_WIDTH` of its own.
+
+A generic with no default is mapped to its own name. That will not analyse,
+deliberately: it is a value you have to supply, and a wrong guess would be
+worse than an obvious gap.
+
 ## Configuration
 
 Defaults, in full:
@@ -241,6 +268,8 @@ Defaults, in full:
   vendor = "generic",       -- "generic" | "amd" | "intel" | "lattice" | "microchip"
   align_ports = true,
   lsp = true,               -- offer templates in the completion menu
+  picker = "auto",          -- "auto" | "hdlsnip" | "ui"
+  picker_height = 10,
   keys = {
     expand = false,         -- trigger word before the cursor
     jump_next = false,      -- next tabstop
@@ -324,8 +353,7 @@ make ghdl          # analyse every fixture
 ## Roadmap
 
 - More templates: OSVVM scaffolding, asynchronous FIFO, Wishbone, Avalon-MM
-- Treesitter: entity to component, instantiation, signal declarations and
-  testbench
+- Generate a testbench around an entity, wired to its ports
 
 ## Contributing
 
