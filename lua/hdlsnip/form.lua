@@ -132,7 +132,9 @@ function M.open(opts)
     -- half the point.
     relative = "editor",
     anchor = "SE",
-    row = vim.o.lines - 3,
+    -- One line above the command line, so it sits at the bottom of the
+    -- window rather than floating in the middle of the code.
+    row = vim.o.lines - 1,
     col = vim.o.columns - 2,
     width = width,
     height = #lines,
@@ -177,7 +179,7 @@ function M.open(opts)
       relative = "editor",
       anchor = "SE",
       -- Above the dialog, so it stays on screen whatever the dialog's height.
-      row = vim.o.lines - 4 - #lines,
+      row = vim.o.lines - 2 - #lines,
       col = vim.o.columns - 2,
       width = error_width,
       height = #errors,
@@ -205,13 +207,20 @@ function M.open(opts)
     end
   end
 
+  local hint_width = 0
+  for _, param in ipairs(params) do
+    hint_width = math.max(hint_width, #M.hint(param))
+  end
+
   --- Hints sit immediately after the name, as inline virtual text: at the end
   --- of the line they would slide along as the value is typed.
   local function decorate()
     vim.api.nvim_buf_clear_namespace(buf, NAMESPACE, 0, -1)
     for index, param in ipairs(params) do
       vim.api.nvim_buf_set_extmark(buf, NAMESPACE, index - 1, #param.name, {
-        virt_text = { { " " .. M.hint(param) .. " ", "Comment" } },
+        virt_text = {
+          { (" %-" .. hint_width .. "s "):format(M.hint(param)), "Comment" },
+        },
         virt_text_pos = "inline",
       })
     end
@@ -301,6 +310,35 @@ function M.open(opts)
     end, { buffer = buf, nowait = true })
   end
   vim.keymap.set({ "n", "i" }, "<CR>", accept, { buffer = buf })
+
+  --- Move between fields, landing at the end of the value.
+  ---
+  --- Tab inside this window only. It is the conventional key for moving
+  --- through a form, and nothing else in the dialog wants it.
+  local function goto_field(delta)
+    local row = vim.api.nvim_win_get_cursor(win)[1]
+    local target = math.max(1, math.min(#params, row + delta))
+    local line = vim.api.nvim_buf_get_lines(buf, target - 1, target, false)[1]
+    vim.api.nvim_win_set_cursor(win, { target, #(line or "") })
+  end
+
+  --- Accepts one mapping or a list, so a user can keep both Tab and their
+  --- own key without choosing.
+  local function map_field(setting, delta)
+    if not setting then
+      return
+    end
+    local keys = type(setting) == "table" and setting or { setting }
+    for _, key in ipairs(keys) do
+      vim.keymap.set({ "n", "i" }, key, function()
+        goto_field(delta)
+      end, { buffer = buf, nowait = true })
+    end
+  end
+
+  local configured = (opts.cfg and opts.cfg.keys) or {}
+  map_field(configured.field_next or { "<Tab>", "<C-k>" }, 1)
+  map_field(configured.field_prev or { "<S-Tab>", "<C-j>" }, -1)
 
   -- At the end of the first value, in insert mode: typing replaces or
   -- extends it without first having to move.
