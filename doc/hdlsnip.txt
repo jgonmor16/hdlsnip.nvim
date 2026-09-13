@@ -207,16 +207,16 @@ A `mixed` template is not tracked: it lands in two places, and tracking half
 of it would be worse than tracking none.
 
 ==============================================================================
-7. INSTANTIATING AN ENTITY                              *hdlsnip-instantiate*
+7. INSTANTIATING AN ENTITY                               *hdlsnip-instantiate*
 
 |:HdlSnipInstantiate| reads an entity from elsewhere in the project and writes
 its instantiation, rather than having you retype an interface that already
 exists.
 
 Entities are found by searching from the project root, identified by `.git`,
-`vhdl_ls.toml` or `.hdlsnip.lua`, and files nearer the current buffer are
-offered first. An entity with no ports is skipped: legal, but there is nothing
-to instantiate.
+`vhdl_ls.toml` or `.hdlsnip.lua`, with files nearer the current buffer offered
+first. Generated output and vendor build directories are skipped. An entity
+with no ports is skipped too: legal, but there is nothing to instantiate.
 
 Association is always named. Positional association compiles with two ports of
 the same type swapped, and the result is found in simulation rather than at
@@ -232,6 +232,19 @@ Generic values are substituted into the port subtypes, since the instantiating
 scope has no `G_WIDTH` of its own. A generic with no default is mapped to its
 own name, which will not analyse -- deliberately, since it is a value you have
 to supply.
+
+                                                              *hdlsnip-picker*
+The list is shown in a window matching the parameter dialog. Typing narrows
+it, `<C-d>` and `<C-u>` page through it and wrap at either end, and `<C-k>`
+and `<C-j>` move one entry at a time. `picker_height` sets how many are shown
+at once.
+
+A digit narrows like any other character rather than selecting, which is what
+lets a name ending in a digit be typed at all.
+
+When `vim.ui.select` has been replaced -- telescope, fzf-lua, snacks -- that is
+used instead. `picker` overrides the choice: "hdlsnip" always uses this window,
+"ui" always uses `vim.ui.select`.
 
 ==============================================================================
 8. CONFIGURATION                                       *hdlsnip-configuration*
@@ -256,6 +269,8 @@ Calling `setup()` is optional; the defaults are used otherwise. >lua
       vendor = "generic",
       align_ports = true,
       lsp = true,
+      picker = "auto",
+      picker_height = 10,
       keys = {
         expand = false,
         jump_next = false,
@@ -296,6 +311,11 @@ align_ports     Align the columns of generated declarations.
 
 lsp             Offer templates through the in-process completion server.
                 See |hdlsnip-completion|.
+
+picker          "auto" | "hdlsnip" | "ui". Which window chooses a template
+                or an entity. See |hdlsnip-picker|.
+
+picker_height   How many choices hdlsnip's own picker shows at once.
 
 keys            Mappings created by `setup()`. See |hdlsnip-mappings|.
 
@@ -380,7 +400,7 @@ body        A string with `{{marker}}` substitutions, for a static template.
 render      `function(params, cfg): string`, for a dynamic one. Requires
             `dynamic = true`. Mutually exclusive with `body`.
 
-Parameters:                                                 *hdlsnip-params*
+Parameters:                                                   *hdlsnip-params*
 
 name        Required, lower_snake_case.
 type        string | identifier | integer | number | boolean | choice.
@@ -413,7 +433,7 @@ Example: >lua
       body = "signal {{sig}} : unsigned({{width}} - 1 downto 0);{{cursor}}",
     }
 <
-                                                        *hdlsnip-mixed-scope*
+                                                         *hdlsnip-mixed-scope*
 A `mixed` template emits declarations and statements, which belong in
 different parts of an architecture. Its render function returns a table
 rather than a string: >lua
@@ -429,56 +449,56 @@ the processes below it.
 ==============================================================================
 12. LUA API                                                      *hdlsnip-api*
 
-                                                          *hdlsnip.setup()*
+                                                              *hdlsnip.setup()*
 require("hdlsnip").setup({opts})
         Apply configuration. Optional.
 
-                                                         *hdlsnip.insert()*
+                                                             *hdlsnip.insert()*
 require("hdlsnip").insert([{name}, {params}])
         Insert a template. Without {name}, a picker opens. Without {params},
         each parameter is prompted for. Supplying {params} prompts for
         nothing, which is the path for mappings.
 
-                                                         *hdlsnip.expand()*
+                                                             *hdlsnip.expand()*
 require("hdlsnip").expand([{name}])
         Expand as a snippet. Falls back to |hdlsnip.insert()| for a dynamic
         template.
 
-                                               *hdlsnip.expand_at_cursor()*
+                                                   *hdlsnip.expand_at_cursor()*
 require("hdlsnip").expand_at_cursor()
         Expand the trigger word before the cursor. When there is no trigger
         but a snippet is active, jumps forward instead. Returns false when
         neither applies, so a mapping can fall through.
 
-                                                         *hdlsnip.reload()*
+                                                             *hdlsnip.reload()*
 require("hdlsnip").reload()
         Rescan the runtimepath.
 
-                                              *hdlsnip.instantiate()*
+                                                        *hdlsnip.instantiate()*
 require("hdlsnip.instantiate").instantiate([{name}, {opts}])
         Instantiate an entity. {opts} takes `signals`, `label`, `library`
         and `component`.
 
-                                                *hdlsnip.vhdl.entity*
+                                                          *hdlsnip.vhdl.entity*
 require("hdlsnip.vhdl.entity").parse({lines})
         Read an entity declaration, returning `{ name, generics, ports }`
         or nil and a reason.
 
-                                                     *hdlsnip.edit.at()*
+                                                            *hdlsnip.edit.at()*
 require("hdlsnip.edit").at({bufnr}, {row})
         The tracked block containing {row}, as `id, entry`, or nil.
 
-                                                 *hdlsnip.edit.update()*
+                                                        *hdlsnip.edit.update()*
 require("hdlsnip.edit").update({bufnr}, {id}, {changes})
         Re-render a tracked block with changed parameters. Returns
         `ok, errors`. Leaves the buffer untouched when a change does not
         validate.
 
-                                                   *hdlsnip.form.open()*
-require("hdlsnip.form").open({bufnr})
+                                                          *hdlsnip.form.edit()*
+require("hdlsnip.form").edit({bufnr})
         Open the parameter form for the block under the cursor.
 
-                                              *hdlsnip.registry.register()*
+                                                  *hdlsnip.registry.register()*
 require("hdlsnip.registry").register({tpl})
         Register a template built in Lua rather than discovered from a file.
         Returns `ok, errors`.

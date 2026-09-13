@@ -222,6 +222,15 @@ the entities in your project, offers them, and writes the instantiation for the
 one you pick — named association throughout, since positional compiles happily
 with two same-typed ports swapped and you find out in simulation.
 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/756fc349-0907-4ef8-80a7-85957b64c896" width="900"
+       alt="Choosing among fourteen entities by paging and filtering, then instantiating two of them into one architecture with their signals declared above begin" />
+</p>
+
+Typing in the picker narrows the list; `<C-d>` and `<C-u>` page through it,
+`<C-k>` and `<C-j>` move one at a time. With telescope, fzf-lua or snacks
+installed you get yours instead — `picker = "hdlsnip"` forces this one.
+
 `:HdlSnipInstantiate!` adds the port signals too. They go above the
 architecture's `begin` while the instance goes below it, and they are named
 exactly as the instantiation maps them, so the two halves cannot disagree.
@@ -259,6 +268,8 @@ Defaults, in full:
   vendor = "generic",       -- "generic" | "amd" | "intel" | "lattice" | "microchip"
   align_ports = true,
   lsp = true,               -- offer templates in the completion menu
+  picker = "auto",          -- "auto" | "hdlsnip" | "ui"
+  picker_height = 10,
   keys = {
     expand = false,         -- trigger word before the cursor
     jump_next = false,      -- next tabstop
