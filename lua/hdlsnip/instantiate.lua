@@ -7,8 +7,37 @@ local config = require("hdlsnip.config")
 local entity = require("hdlsnip.vhdl.entity")
 local generate = require("hdlsnip.vhdl.generate")
 local insert = require("hdlsnip.insert")
+local ui = require("hdlsnip.ui")
 
 local M = {}
+
+--- Directories whose contents are not designs anybody wants to instantiate.
+---
+--- Generated output and vendor build trees hold hundreds of VHDL files, and
+--- offering them buries the handful that matter.
+local IGNORED = {
+  "%.git/",
+  "/tests/golden/",
+  "/vunit_out/",
+  "/work%-obj",
+  "/%.Xil/",
+  "/xsim%.dir/",
+  "/db/",
+  "/incremental_db/",
+  "/output_files/",
+  "/simulation/",
+}
+
+---@param path string
+---@return boolean
+local function ignored(path)
+  for _, pattern in ipairs(IGNORED) do
+    if path:find(pattern) then
+      return true
+    end
+  end
+  return false
+end
 
 --- VHDL files in the project, nearest first.
 ---
@@ -31,8 +60,23 @@ function M.sources(bufnr)
 
   -- globpath rather than vim.fs.find: the pattern is simple, `**` already
   -- means every depth, and the predicate form of find returns nothing here.
-  local found = vim.fn.globpath(root, "**/*.vhd", false, true)
-  vim.list_extend(found, vim.fn.globpath(root, "**/*.vhdl", false, true))
+  -- Both forms of each pattern: `**` does not match a file sitting directly
+  -- in the root.
+  local found = {}
+  for _, pattern in ipairs({ "*.vhd", "*.vhdl", "**/*.vhd", "**/*.vhdl" }) do
+    vim.list_extend(found, vim.fn.globpath(root, pattern, false, true))
+  end
+
+  -- `**` matches zero directories on some systems, so the plain and the
+  -- recursive pattern return the same file and it would be offered twice.
+  local seen, kept = {}, {}
+  for _, path in ipairs(found) do
+    if not ignored(path) and not seen[path] then
+      seen[path] = true
+      kept[#kept + 1] = path
+    end
+  end
+  found = kept
 
   -- Nearest first: a file beside the buffer is likelier than one in a
   -- sibling tree.
@@ -121,7 +165,7 @@ function M.instantiate(name, opts)
     return
   end
 
-  vim.ui.select(choices, {
+  ui.choose(choices, {
     prompt = "hdlsnip: entity",
     format_item = function(choice)
       return ("%-24s %d ports  %s"):format(

@@ -141,3 +141,30 @@ describe("hdlsnip instantiate", function()
     assert.matches("no entity named", notifications[1].msg)
   end)
 end)
+
+it("skips generated and vendor directories", function()
+  local dir = vim.fn.tempname()
+  vim.fn.mkdir(dir .. "/tests/golden/vhdl", "p")
+  vim.fn.writefile({ "return {}" }, dir .. "/.hdlsnip.lua")
+  vim.fn.writefile({
+    "entity real_one is",
+    "  port (clk : in std_logic);",
+    "end entity real_one;",
+  }, dir .. "/design.vhd")
+  vim.fn.writefile({
+    "entity generated is",
+    "  port (clk : in std_logic);",
+    "end entity generated;",
+  }, dir .. "/tests/golden/vhdl/gen.vhd")
+  vim.fn.writefile({}, dir .. "/scratch.vhd")
+
+  local bufnr = vim.api.nvim_create_buf(false, true)
+  vim.api.nvim_buf_set_name(bufnr, dir .. "/scratch.vhd")
+  vim.api.nvim_win_set_buf(0, bufnr)
+
+  local names = vim.tbl_map(function(c)
+    return c.name
+  end, instantiate.entities(bufnr))
+  assert.is_true(vim.tbl_contains(names, "real_one"))
+  assert.is_false(vim.tbl_contains(names, "generated"))
+end)
