@@ -343,11 +343,15 @@ function M.project(bufnr)
 
   -- vim.fs.root needs a path to search from, and a scratch buffer has none.
   -- Opening :HdlSnip in one is ordinary, so this must not throw.
-  if vim.api.nvim_buf_get_name(bufnr) == "" then
+  local name = vim.api.nvim_buf_get_name(bufnr)
+  if name == "" then
     return nil
   end
 
-  local ok, root = pcall(vim.fs.root, bufnr, { ".hdlsnip.lua" })
+  -- By path rather than by buffer number: with a buffer named after a file
+  -- that does not exist yet, vim.fs.root falls back to the working directory
+  -- and a different project's configuration would be read.
+  local ok, root = pcall(vim.fs.root, name, { ".hdlsnip.lua" })
   if not ok or not root then
     return nil
   end
