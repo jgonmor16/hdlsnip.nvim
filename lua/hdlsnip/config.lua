@@ -64,6 +64,11 @@ M.defaults = {
     expand = false, ---@type string|false trigger word before the cursor
     jump_next = false, ---@type string|false next tabstop
     jump_prev = false, ---@type string|false previous tabstop
+
+    --- Moving between fields in the parameter dialog. Buffer local to that
+    --- window, so these do not affect anything else.
+    field_next = { "<Tab>", "<C-k>" }, ---@type string|string[]|false
+    field_prev = { "<S-Tab>", "<C-j>" }, ---@type string|string[]|false
   },
 }
 
@@ -89,6 +94,14 @@ end
 local function keymap(v)
   if v == false then
     return true
+  end
+  if type(v) == "table" then
+    for _, key in ipairs(v) do
+      if type(key) ~= "string" or key == "" then
+        return false, 'every entry must be a mapping such as "<Tab>"'
+      end
+    end
+    return #v > 0, #v > 0 and nil or "must not be an empty list"
   end
   if type(v) ~= "string" or v == "" then
     return false, 'must be a mapping such as "<C-k>", or false'
@@ -148,6 +161,8 @@ local schema = {
     expand = { check = keymap },
     jump_next = { check = keymap },
     jump_prev = { check = keymap },
+    field_next = { check = keymap },
+    field_prev = { check = keymap },
   },
 }
 

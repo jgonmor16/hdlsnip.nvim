@@ -385,8 +385,6 @@
 ~
 ~
 ~
-~
-~
 
 ────────────────────────────────────────────────────────────────────────────────
   1
@@ -418,78 +416,74 @@
 ~
 ~
 ~
-~
-~
 
 ────────────────────────────────────────────────────────────────────────────────
   1
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
 ~                                                                                               ╭───╮
 ~                                                                                               │ i │
 ~                                                                                               ╰───╯
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
 
 ────────────────────────────────────────────────────────────────────────────────
   1
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
 ~                                                                                               ╭───╮
 ~                                                                                               │ i │
 ~                                                                                               ╰───╯
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
 
 ────────────────────────────────────────────────────────────────────────────────
-  1 p
-~   pkg Snippet Package declaration
+  1 a
+~   apb  Interface APB slave with a register file  (asks for parameters)                       ╭────╮
+~   axil Interface AXI4-Lite slave with a register file  (asks for parameters)                 │ ia │
+~   axis Interface AXI-Stream register slice with backpressure  (asks for parameters)          ╰────╯
 ~
 ~
 ~
@@ -515,14 +509,12 @@
 ~
 ~
 ~
-~
-~                                                                                             ╭─────╮
-~                                                                                             │ i p │
-~                                                                                             ╰─────╯
 
 ────────────────────────────────────────────────────────────────────────────────
-  1 p
-~   pkg Snippet Package declaration
+  1 a
+~   apb  Interface APB slave with a register file  (asks for parameters)                       ╭────╮
+~   axil Interface AXI4-Lite slave with a register file  (asks for parameters)                 │ ia │
+~   axis Interface AXI-Stream register slice with backpressure  (asks for parameters)          ╰────╯
 ~
 ~
 ~
@@ -548,14 +540,42 @@
 ~
 ~
 ~
-~
-~                                                                                             ╭─────╮
-~                                                                                             │ i p │
-~                                                                                             ╰─────╯
 
 ────────────────────────────────────────────────────────────────────────────────
-  1 pk
-~   pkg Snippet Package declaration
+  1 ax
+~   axil Interface AXI4-Lite slave with a register file  (asks for parameters)               ╭──────╮
+~   axis Interface AXI-Stream register slice with backpressure  (asks for parameters)        │ ia x │
+~                                                                                            ╰──────╯
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+
+────────────────────────────────────────────────────────────────────────────────
+  1 ax
+~   axil Interface AXI4-Lite slave with a register file  (asks for parameters)
+~   axis Interface AXI-Stream register slice with backpressure  (asks for parameters)
 ~
 ~
 ~
@@ -582,9 +602,130 @@
 ~
 ~
 ~
+
+────────────────────────────────────────────────────────────────────────────────
+  1 ax
 ~                                                                                           ╭───────╮
-~                                                                                           │ i p k │
+~                                                                                           │ <Esc> │
 ~                                                                                           ╰───────╯
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+
+────────────────────────────────────────────────────────────────────────────────
+  1 ax
+~                                                                                           ╭───────╮
+~                                                                                           │ <Esc> │
+~                                                                                           ╰───────╯
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+
+────────────────────────────────────────────────────────────────────────────────
+  1
+~                                                                                        ╭──────────╮
+~                                                                                        │ <Esc> cc │
+~                                                                                        ╰──────────╯
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+
+────────────────────────────────────────────────────────────────────────────────
+  1 pk
+~   pkg Snippet Package declaration                                                    ╭────────────╮
+~                                                                                      │ <Esc> ccpk │
+~                                                                                      ╰────────────╯
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
 
 ────────────────────────────────────────────────────────────────────────────────
   1 pk
@@ -616,14 +757,10 @@
 ~
 ~
 ~
-~
-~
 
 ────────────────────────────────────────────────────────────────────────────────
   1 pk
 ~   pkg Snippet Package declaration
-~
-~
 ~
 ~
 ~
@@ -654,9 +791,9 @@
 
 ────────────────────────────────────────────────────────────────────────────────
   1 pkg
-~   pkg Snippet Package declaration library ieee;
-~                                     use ieee.std_logic_1164.all;
-~
+~   pkg Snippet Package declaration library ieee;                                           ╭───────╮
+~                                     use ieee.std_logic_1164.all;                          │ <C-N> │
+~                                                                                           ╰───────╯
 ~                                   package my_pkg is
 ~
 ~                                   end package my_pkg;
@@ -681,48 +818,13 @@
 ~
 ~
 ~
-~                                                                                           ╭───────╮
-~                                                                                           │ <C-N> │
-~                                                                                           ╰───────╯
-
-────────────────────────────────────────────────────────────────────────────────
-  1 pkg
-~   pkg Snippet Package declaration library ieee;
-~                                     use ieee.std_logic_1164.all;
 ~
-~                                   package my_pkg is
-~
-~                                   end package my_pkg;
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~                                                                                           ╭───────╮
-~                                                                                           │ <C-N> │
-~                                                                                           ╰───────╯
 
 ────────────────────────────────────────────────────────────────────────────────
   1 library ieee;
-  2   use ieee.std_logic_1164.all;
-  3
-  4 package my_pkg is
+  2   use ieee.std_logic_1164.all;                                                    ╭─────────────╮
+  3                                                                                   │ <C-N> <C-Y> │
+  4 package my_pkg is                                                                 ╰─────────────╯
   5
   6 end package my_pkg;
 ~
@@ -748,6 +850,66 @@
 ~
 ~
 ~
+
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;                                                    ╭─────────────╮
+  3                                                                                   │ <C-N> <C-Y> │
+  4 package my_pkg is                                                                 ╰─────────────╯
+  5
+  6 end package my_pkg;
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;                                       ╭──────────────────────────╮
+  3                                                                      │ <C-N> <C-Y> axi_lite_pkg │
+  4 package axi_lite_pkg is                                              ╰──────────────────────────╯
+  5
+  6 end package axi_lite_pkg;
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
 ~
 ~
 
@@ -780,15 +942,13 @@
 ~
 ~
 ~
-~                                                                                    ╭──────────────╮
-~                                                                                    │ axi_lite_pkg │
-~                                                                                    ╰──────────────╯
+~
 
 ────────────────────────────────────────────────────────────────────────────────
   1 library ieee;
-  2   use ieee.std_logic_1164.all;
-  3
-  4 package axi_lite_pkg is
+  2   use ieee.std_logic_1164.all;                                                          ╭───────╮
+  3                                                                                         │ <C-K> │
+  4 package axi_lite_pkg is                                                                 ╰───────╯
   5
   6 end package axi_lite_pkg;
 ~
@@ -814,14 +974,12 @@
 ~
 ~
 ~
-~
-~
 
 ────────────────────────────────────────────────────────────────────────────────
   1 library ieee;
-  2   use ieee.std_logic_1164.all;
-  3
-  4 package axi_lite_pkg is
+  2   use ieee.std_logic_1164.all;                                                          ╭───────╮
+  3                                                                                         │ <C-K> │
+  4 package axi_lite_pkg is                                                                 ╰───────╯
   5
   6 end package axi_lite_pkg;
 ~
@@ -846,85 +1004,15 @@
 ~
 ~
 ~
-~                                                                                           ╭───────╮
-~                                                                                           │ <C-K> │
-~                                                                                           ╰───────╯
+~
 
 ────────────────────────────────────────────────────────────────────────────────
   1 library ieee;
-  2   use ieee.std_logic_1164.all;
-  3
-  4 package axi_lite_pkg is
-  5
+  2   use ieee.std_logic_1164.all;                                ╭─────────────────────────────────╮
+  3                                                               │ positive <Space> := <Space> 32; │
+  4 package axi_lite_pkg is                                       ╰─────────────────────────────────╯
+  5   constant C_DATA_WIDTH : positive := 32;
   6 end package axi_lite_pkg;
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~                                                                                           ╭───────╮
-~                                                                                           │ <C-K> │
-~                                                                                           ╰───────╯
-
-────────────────────────────────────────────────────────────────────────────────
-  1 library ieee;
-  2   use ieee.std_logic_1164.all;
-  3
-  4 package axi_lite_pkg is
-  5   constant C_ADDR_WIDTH : positive := 32;
-  6 end package axi_lite_pkg;
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~                                                                 ╭─────────────────────────────────╮
-~                                                                 │ positive <Space> := <Space> 32; │
-~                                                                 ╰─────────────────────────────────╯
-
-────────────────────────────────────────────────────────────────────────────────
-  1 library ieee;
-  2   use ieee.std_logic_1164.all;
-  3
-  4 package axi_lite_pkg is
-  5   constant C_ADDR_WIDTH : positive := 32;
-  6 end package axi_lite_pkg;
-~
-~
 ~
 ~
 ~
@@ -954,10 +1042,70 @@
   2   use ieee.std_logic_1164.all;
   3
   4 package axi_lite_pkg is
-  5   constant C_ADDR_WIDTH : positive := 32;
+  5   constant C_DATA_WIDTH : positive := 32;
   6 end package axi_lite_pkg;
 ~
 ~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;                                                          ╭───────╮
+  3                                                                                         │ <Esc> │
+  4 package axi_lite_pkg is                                                                 ╰───────╯
+  5   constant C_DATA_WIDTH : positive := 32;
+  6 end package axi_lite_pkg;
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;                                                          ╭───────╮
+  3                                                                                         │ <Esc> │
+  4 package axi_lite_pkg is                                                                 ╰───────╯
+  5   constant C_DATA_WIDTH : positive := 32;
+  6 end package axi_lite_pkg;
 ~
 ~
 ~
@@ -987,10 +1135,39 @@
   2   use ieee.std_logic_1164.all;
   3
   4 package axi_lite_pkg is
-  5   constant C_ADDR_WIDTH : positive := 32;
+  5   constant C_DATA_WIDTH : positive := 32;
   6 end package axi_lite_pkg;
 ~
 ~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;
+  3
+  4 package axi_lite_pkg is
+  5   constant C_DATA_WIDTH : positive := 32;
+  6 end package axi_lite_pkg;
 ~
 ~
 ~

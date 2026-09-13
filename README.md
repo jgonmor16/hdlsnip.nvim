@@ -16,6 +16,13 @@ Parameterised VHDL templates for Neovim — entities, packages, clocked processe
 and CDC synchronisers, rendered from Lua rather than pasted from a static
 snippet file.
 
+Four characters and two answers:
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/940096bb-281e-45f4-ab33-b930e7af626a" width="900"
+       alt="Typing axil and pressing Ctrl-K opens a dialog for the entity name and register count; accepting it writes a complete AXI4-Lite slave" />
+</p>
+
 ```vhdl
 -- :HdlSnip process, with reset.style = "async", polarity = "low"
 p_main : process (clk, rst_n) is
@@ -34,7 +41,7 @@ That is the point: the shape of the code follows your house style, and getting
 it wrong is a synthesis mismatch rather than a syntax error.
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/2767ce9a-3e42-429f-8129-341acdbc9e16" width="900"
+  <img src="https://github.com/user-attachments/assets/33b3a86b-3e4a-47b2-975e-f8e2675e05d1" width="900"
        alt="The same process template inserted twice: an asynchronous reset outside the clock test, then a synchronous one inside it after a single configuration change" />
 </p>
 
@@ -117,6 +124,11 @@ digraph when the word before the cursor is not a trigger and no snippet is
 active. `jump_next` is only needed if you want a separate key for jumping
 forward.
 
+`field_next` and `field_prev` move between fields in the parameter dialog. They
+default to `<Tab>` and `<C-k>`, and `<S-Tab>` and `<C-j>` — set rather than
+unset, unlike the others, because they are buffer-local to a window the plugin
+opened and take nothing from you. Either takes one mapping or a list.
+
 With a plugin manager that takes an opts table, keys goes in there alongside
 the rest of the configuration.
 
@@ -140,7 +152,7 @@ Every template is offered. A static one expands as a snippet; a dynamic one
 opens a dialog for its parameters, and says so in the menu.
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/e99c760f-6eb2-4ea2-893e-193db91acd52" width="900"
+  <img src="https://github.com/user-attachments/assets/20d2aaf0-9509-4628-9242-df2b508ff5db" width="900"
        alt="Typing pk opens the completion menu; accepting pkg expands the package template, naming it updates both the declaration and the end clause, and Ctrl-K jumps into the body" />
 </p>
 
@@ -181,11 +193,6 @@ tabstop cannot decide whether a reset port exists, so dynamic templates prompt
 and insert fully formed instead — one dialog with every field, not a question
 at a time. `:HdlSnipExpand` falls back to that automatically.
 
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/63ab0a16-55ca-49c6-b411-ae905d0547ac" width="900"
-       alt="Running HdlSnip bit_sync, answering two prompts, and getting a complete synchroniser entity with the stage count as a generic" />
-</p>
-
 ## Changing your mind
 
 A dynamic template prompts once and inserts finished code, so changing a
@@ -201,6 +208,11 @@ the text is generated, so re-rendering from the parameters is enough.
 The anchor is dropped when you write the file, and as soon as the block stops
 matching what was rendered. Editing a line by hand ends the tracking rather
 than having it overwritten later.
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/4c0eda51-1d6e-495e-a1ca-e9ef8281b917" width="900"
+       alt="Opening HdlSnipEdit on an inserted synchroniser and changing the stage count and entity name, with the block re-rendering as the dialog is edited" />
+</p>
 
 ## Configuration
 
@@ -228,6 +240,14 @@ Defaults, in full:
   },
   vendor = "generic",       -- "generic" | "amd" | "intel" | "lattice" | "microchip"
   align_ports = true,
+  lsp = true,               -- offer templates in the completion menu
+  keys = {
+    expand = false,         -- trigger word before the cursor
+    jump_next = false,      -- next tabstop
+    jump_prev = false,      -- previous tabstop
+    field_next = { "<Tab>", "<C-k>" },   -- in the parameter dialog only
+    field_prev = { "<S-Tab>", "<C-j>" },
+  },
 }
 ```
 
@@ -303,9 +323,6 @@ make ghdl          # analyse every fixture
 
 ## Roadmap
 
-- Configurable keymaps for expansion and tabstop jumping ([#7](https://github.com/jgonmor16/hdlsnip.nvim/issues/7))
-- Completion menu integration through an in-process LSP server, no plugins
-  ([#8](https://github.com/jgonmor16/hdlsnip.nvim/issues/8))
 - More templates: OSVVM scaffolding, asynchronous FIFO, Wishbone, Avalon-MM
 - Treesitter: entity to component, instantiation, signal declarations and
   testbench

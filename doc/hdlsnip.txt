@@ -88,6 +88,8 @@ to `false`. >lua
         expand = false,
         jump_next = false,
         jump_prev = false,
+        field_next = { "<Tab>", "<C-k>" },
+        field_prev = { "<S-Tab>", "<C-j>" },
       },
     })
 <
@@ -100,6 +102,16 @@ jump_next       Insert and select mode. Only needed if you want a key for
                 jumping forward that is separate from `expand`.
 
 jump_prev       Insert and select mode. Jumps to the previous tabstop.
+
+field_next      Moves to the next field in the parameter dialog. Buffer local
+                to that window, so it affects nothing else. Takes one mapping
+                or a list; defaults to `<Tab>` and `<C-k>`.
+
+field_prev      The same, backwards. Defaults to `<S-Tab>` and `<C-j>`.
+
+These two default to being set, unlike the rest, because they act only inside
+a window the plugin opened and take no key away from you. Set either to
+`false` to leave the dialog to the arrow keys.
 
 Each mapping falls through when it has nothing to do, feeding the key back so
 it does whatever it otherwise would. `<C-k>` therefore still inserts a digraph
@@ -213,6 +225,8 @@ Calling `setup()` is optional; the defaults are used otherwise. >lua
         expand = false,
         jump_next = false,
         jump_prev = false,
+        field_next = { "<Tab>", "<C-k>" },
+        field_prev = { "<S-Tab>", "<C-j>" },
       },
     })
 <
