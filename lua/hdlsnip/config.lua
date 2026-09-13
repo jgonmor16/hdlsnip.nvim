@@ -58,6 +58,17 @@ M.defaults = {
   --- the server is a Lua table, not a process.
   lsp = true,
 
+  --- Which picker chooses a template or an entity.
+  ---
+  --- "auto" uses `vim.ui.select` when something has replaced it -- telescope,
+  --- fzf-lua, snacks -- and hdlsnip's own window otherwise, since the
+  --- built-in numbered prompt is nobody's preference.
+  picker = "auto", ---@type "auto"|"hdlsnip"|"ui"
+
+  --- How many choices hdlsnip's own picker shows at once. The list scrolls
+  --- past this; it does not grow to fill the screen.
+  picker_height = 10,
+
   --- Mappings created by `setup()`. Every entry is `false` by default: a
   --- plugin that claims keys on install is a plugin people uninstall.
   keys = {
@@ -156,6 +167,16 @@ local schema = {
   vendor = { one_of = { "generic", "amd", "intel", "lattice", "microchip" } },
   align_ports = { type = "boolean" },
   lsp = { type = "boolean" },
+  picker = { one_of = { "auto", "hdlsnip", "ui" } },
+  picker_height = {
+    type = "number",
+    check = function(v)
+      if v < 1 or v % 1 ~= 0 then
+        return false, "must be a whole number of lines, at least 1"
+      end
+      return true
+    end,
+  },
   header = { type = "function", optional = true },
   keys = {
     expand = { check = keymap },

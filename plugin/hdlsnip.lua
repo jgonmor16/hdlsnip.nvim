@@ -9,6 +9,10 @@ if vim.g.loaded_hdlsnip then
 end
 vim.g.loaded_hdlsnip = true
 
+-- Captured at startup, before a picker plugin replaces vim.ui.select, so
+-- hdlsnip can tell whether the user has one of their own.
+require("hdlsnip.ui").capture()
+
 local function complete(lead)
   return vim.tbl_filter(function(name)
     return name:find(lead, 1, true) == 1
