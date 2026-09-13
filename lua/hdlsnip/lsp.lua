@@ -65,7 +65,10 @@ function M.items(cfg)
         items[#items + 1] = {
           label = tpl.trig,
           filterText = tpl.trig,
-          kind = kind,
+          -- Not a snippet: nothing is inserted and a dialog opens instead.
+          -- Frontends draw an icon from the kind, so the two behave
+          -- differently and should look different.
+          kind = vim.lsp.protocol.CompletionItemKind.Interface,
           detail = tpl.desc .. "  (asks for parameters)",
           insertText = "",
           insertTextFormat = 1,
