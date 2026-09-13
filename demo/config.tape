@@ -64,7 +64,7 @@ Type "prc"
 Sleep 800ms
 Ctrl+K
 Sleep 1200ms
-Ctrl+U
+Ctrl+W
 Sleep 200ms
 Type "wr_ptr"
 Sleep 500ms

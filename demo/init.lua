@@ -96,8 +96,10 @@ local function keycast_show()
 
   local opts = {
     relative = "editor",
-    anchor = "SE",
-    row = vim.o.lines - 1,
+    -- Top right: the parameter dialog owns the bottom right corner, and the
+    -- two overlapping made both unreadable.
+    anchor = "NE",
+    row = 1,
     col = vim.o.columns - 2,
     width = vim.fn.strdisplaywidth(text),
     height = 1,
