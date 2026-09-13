@@ -35,6 +35,22 @@ vim.api.nvim_create_user_command("HdlSnipReload", function()
   require("hdlsnip").reload()
 end, { desc = "Rescan the runtimepath for templates" })
 
+vim.api.nvim_create_user_command("HdlSnipInstantiate", function(cmd)
+  require("hdlsnip.instantiate").instantiate(
+    cmd.args ~= "" and cmd.args or nil,
+    { signals = cmd.bang }
+  )
+end, {
+  nargs = "?",
+  bang = true,
+  complete = function(lead)
+    return vim.tbl_filter(function(name)
+      return name:find(lead, 1, true) == 1
+    end, require("hdlsnip.instantiate").names())
+  end,
+  desc = "Instantiate an entity from the project; ! adds its signals",
+})
+
 vim.api.nvim_create_user_command("HdlSnipEdit", function()
   require("hdlsnip.form").edit(0)
 end, { desc = "Edit the parameters of the template under the cursor" })
@@ -50,11 +66,8 @@ vim.api.nvim_create_autocmd("FileType", {
   group = vim.api.nvim_create_augroup("hdlsnip.lsp", { clear = true }),
   desc = "Attach the hdlsnip completion server",
   callback = function(ev)
-    -- Deliberately the global configuration: reading a project's
-    -- .hdlsnip.lua prompts for trust, and opening a file is too early to
-    -- ask. Completion requests resolve per buffer later, when the user has
-    -- actually asked for something.
-    if require("hdlsnip.config").get_global().lsp then
+    local ok, cfg = pcall(require("hdlsnip.config").get, ev.buf)
+    if ok and cfg.lsp then
       require("hdlsnip.lsp").attach(ev.buf)
     end
   end,
