@@ -72,6 +72,12 @@ built-in prompts are used if you have none.
                         the port signals are added too. See
                         |hdlsnip-instantiate|.
 
+                                                           *:HdlSnipTestbench*
+:HdlSnipTestbench [{name}]
+                        Write a testbench around an entity from the project.
+                        Without {name}, the entities found are offered. See
+                        |hdlsnip-instantiate|.
+
                                                               *:HdlSnipReload*
 :HdlSnipReload          Rescan the runtimepath for templates. Useful while
                         writing one.
@@ -245,6 +251,24 @@ lets a name ending in a digit be typed at all.
 When `vim.ui.select` has been replaced -- telescope, fzf-lua, snacks -- that is
 used instead. `picker` overrides the choice: "hdlsnip" always uses this window,
 "ui" always uses `vim.ui.select`.
+
+                                                           *hdlsnip-testbench*
+|:HdlSnipTestbench| writes the whole testbench rather than an instantiation: a
+signal for every port, a clock generator, a reset release, the DUT wired up
+and a stimulus process that stops the run.
+
+Clocks and resets are found by shape rather than by the configured name. A
+crossing with `src_clk` and `dst_clk` gets a generator for each, and a reset
+whose name ends in `n` is released to `'1'` while one that does not is
+released to `'0'`. Matching the configured name exactly produced a testbench
+that reported done at time zero on any design that did not use it.
+
+Every input is driven from time zero, or the design starts with `'U'` on its
+inputs and nothing downstream means anything.
+
+An empty buffer is used as it stands; otherwise `tb_{name}.vhd` is opened
+beside the entity's source. A testbench that already has content is not
+overwritten.
 
 ==============================================================================
 8. CONFIGURATION                                       *hdlsnip-configuration*
@@ -478,6 +502,11 @@ require("hdlsnip").reload()
 require("hdlsnip.instantiate").instantiate([{name}, {opts}])
         Instantiate an entity. {opts} takes `signals`, `label`, `library`
         and `component`.
+
+                                                          *hdlsnip.testbench()*
+require("hdlsnip.instantiate").testbench([{name}, {opts}])
+        Write a testbench around an entity. {opts} takes `period_ns` and
+        `library`.
 
                                                           *hdlsnip.vhdl.entity*
 require("hdlsnip.vhdl.entity").parse({lines})
