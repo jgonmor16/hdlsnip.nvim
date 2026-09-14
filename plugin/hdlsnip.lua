@@ -55,6 +55,18 @@ end, {
   desc = "Instantiate an entity from the project; ! adds its signals",
 })
 
+vim.api.nvim_create_user_command("HdlSnipTestbench", function(cmd)
+  require("hdlsnip.instantiate").testbench(cmd.args ~= "" and cmd.args or nil)
+end, {
+  nargs = "?",
+  complete = function(lead)
+    return vim.tbl_filter(function(name)
+      return name:find(lead, 1, true) == 1
+    end, require("hdlsnip.instantiate").names())
+  end,
+  desc = "Write a testbench around an entity from the project",
+})
+
 vim.api.nvim_create_user_command("HdlSnipEdit", function()
   require("hdlsnip.form").edit(0)
 end, { desc = "Edit the parameters of the template under the cursor" })
