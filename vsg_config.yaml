@@ -1,13 +1,122 @@
 # VHDL Style Guide configuration for the golden fixtures.
 #
-# The fixtures are generated, so any finding here is a bug in a template
-# rather than in a hand-written file. Kept deliberately small for now: the
-# rule set is tuned as templates land, not guessed at up front.
+# The fixtures are generated, so a finding here is a bug in a template rather
+# than in a hand-written file. Only the fixtures rendered with the default
+# configuration are linted: VSG encodes one house style, and the other
+# variants exist to prove the configuration options work, not to match it.
+#
+# Every rule below is disabled deliberately, with the reason. Everything else
+# is enabled, including the keyword case rules -- a stray upper case keyword
+# under the default configuration is a template bug.
+
 rule:
   global:
-    indentSize: 2
+    indent_size: 2
 
-  # Generated files carry a two-line provenance header before the library
-  # clause; the header rules expect a different shape.
-  header_lines_of_code_rules:
+  # `if (a = '1') then` rather than `if a = '1' then`. A house style split
+  # with no correctness argument either way, and the plugin follows the
+  # unparenthesised form, which is the more common one in the wild.
+  if_002:
+    disable: true
+
+  # Signals are initialised on purpose: `signal count_r : unsigned := (others
+  # => '0')`. On an FPGA the initial value sets the power-up state and is
+  # honoured by every major tool; VSG's default forbids it because it is
+  # meaningless on an ASIC. The plugin targets FPGAs.
+  signal_007:
+    disable: true
+
+  # `full_o <= '1' when count = DEPTH else '0';` on one line. Splitting at
+  # the `else` makes a two-line statement out of something that reads as one
+  # thought.
+  conditional_waveforms_001:
+    disable: true
+
+  # A fixed number of spaces after the mode keyword. Port columns are aligned
+  # instead, against whatever the longest name happens to be, which is why
+  # the count varies.
+  port_007:
+    disable: true
+
+  # A long assignment is split across lines rather than run past the right
+  # margin. The byte lane assignments in the bus slaves are the case this
+  # exists for.
+  sequential_008:
+    disable: true
+
+  # `report "..." severity note;` on one line. Putting the severity on its
+  # own line is VSG's preference and nobody else's.
+  report_statement_002:
+    disable: true
+
+  # The same alignment argument as port_007, for the `out` mode.
+  port_008:
+    disable: true
+
+  # A blank line after a process's `begin` and before its `end process`. The
+  # templates already put blank lines around a process; adding them inside as
+  # well makes a four line process eight lines long.
+  process_022:
+    disable: true
+  process_023:
+    disable: true
+
+  # Generics are named G_WIDTH rather than g_width. The prefix and the case
+  # are configurable through `naming.generic_prefix`, and upper case is the
+  # widespread convention.
+  generic_007:
+    disable: true
+
+  # Blank lines around every if, loop and type declaration. Inside a clocked
+  # process that turns a six line body into twelve, and the templates already
+  # separate the statements that are worth separating.
+  if_030:
+    disable: true
+  if_031:
+    disable: true
+  loop_statement_200:
+    disable: true
+  loop_statement_201:
+    disable: true
+  loop_statement_202:
+    disable: true
+  loop_statement_203:
+    disable: true
+  type_010:
+    disable: true
+
+  # A blank line between an entity and the comment block above it. The
+  # comment documents that entity -- on bit_sync it says the crossing is
+  # single bit and must be constrained -- so it belongs attached to it.
+  entity_003:
+    disable: true
+
+  # Constants are named C_CLK_PERIOD rather than c_clk_period, for the same
+  # reason as generic_007: the prefix is configurable and upper case is the
+  # widespread convention.
+  constant_004:
+    disable: true
+
+  # Alignment of `<=`, `:` and `:=` within a block, and the indent of a
+  # continued line. The templates align declaration and port columns already,
+  # against the longest name in the group rather than across the whole
+  # architecture, and a continued line is indented by one level rather than
+  # aligned under the operator, which keeps it readable at any width.
+  process_400:
+    disable: true
+  architecture_026:
+    disable: true
+  declarative_part_400:
+    disable: true
+  concurrent_006:
+    disable: true
+  entity_017:
+    disable: true
+  entity_018:
+    disable: true
+  if_009:
+    disable: true
+  sequential_004:
+    disable: true
+  concurrent_009:
     disable: true

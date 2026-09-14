@@ -87,6 +87,38 @@ local function association(keyword, entries, values, cfg, depth)
   return lines
 end
 
+--- Signal names for every port, with the configured direction suffixes
+--- dropped: a signal driving `wr_en_i` is not itself an input to anything.
+---
+--- A port pair like `wb_dat_i` and `wb_dat_o` would collapse to one name, so
+--- stripping is abandoned for any base that more than one port shares.
+---@param parsed table
+---@param cfg table
+---@return table<string, string>
+local function signal_names(parsed, cfg)
+  local function strip(name)
+    for _, suffix in ipairs({ cfg.naming.in_suffix, cfg.naming.out_suffix }) do
+      if suffix ~= "" and name:sub(-#suffix) == suffix then
+        return name:sub(1, -#suffix - 1)
+      end
+    end
+    return name
+  end
+
+  local count = {}
+  for _, port in ipairs(parsed.ports) do
+    local base = strip(port.name)
+    count[base] = (count[base] or 0) + 1
+  end
+
+  local names = {}
+  for _, port in ipairs(parsed.ports) do
+    local base = strip(port.name)
+    names[port.name] = count[base] > 1 and port.name or base
+  end
+  return names
+end
+
 --- Instantiate an entity.
 ---
 --- Direct instantiation by default -- `entity work.name` -- which needs no
@@ -201,18 +233,14 @@ end
 function M.signals(parsed, cfg, values)
   local kw = style.kw(cfg)
   local generics = M.generic_values(parsed, values)
+  local names = signal_names(parsed, cfg)
   local rows = {}
 
   for _, port in ipairs(parsed.ports) do
-    local name = port.name
-    for _, suffix in ipairs({ cfg.naming.in_suffix, cfg.naming.out_suffix }) do
-      if suffix ~= "" and name:sub(-#suffix) == suffix then
-        name = name:sub(1, -#suffix - 1)
-        break
-      end
-    end
-    rows[#rows + 1] =
-      { name, (": %s;"):format(resolve(port.subtype, parsed, generics)) }
+    rows[#rows + 1] = {
+      names[port.name],
+      (": %s;"):format(resolve(port.subtype, parsed, generics)),
+    }
   end
 
   local lines = {}
@@ -227,18 +255,7 @@ end
 ---@param cfg table
 ---@return table<string, string>
 function M.signal_values(parsed, cfg)
-  local values = {}
-  for _, port in ipairs(parsed.ports) do
-    local name = port.name
-    for _, suffix in ipairs({ cfg.naming.in_suffix, cfg.naming.out_suffix }) do
-      if suffix ~= "" and name:sub(-#suffix) == suffix then
-        name = name:sub(1, -#suffix - 1)
-        break
-      end
-    end
-    values[port.name] = name
-  end
-  return values
+  return signal_names(parsed, cfg)
 end
 
 return M
