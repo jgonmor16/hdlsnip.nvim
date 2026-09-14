@@ -103,6 +103,7 @@ With [lazy.nvim](https://github.com/folke/lazy.nvim):
 | `:HdlSnip [name]` | Prompt for parameters and insert. Picker when no name is given |
 | `:HdlSnipExpand [name]` | Expand as a snippet, with tabstops |
 | `:HdlSnipInstantiate[!] [name]` | Instantiate an entity from the project; `!` adds its signals |
+| `:HdlSnipTestbench [name]` | Write a testbench around an entity from the project |
 | `:HdlSnipReload` | Rescan the runtimepath for templates |
 | `:checkhealth hdlsnip` | Templates found, configuration in effect, anything skipped |
 | `:HdlSnipEdit` | Change the parameters of the template under the cursor |
@@ -241,6 +242,15 @@ A generic with no default is mapped to its own name. That will not analyse,
 deliberately: it is a value you have to supply, and a wrong guess would be
 worse than an obvious gap.
 
+`:HdlSnipTestbench` goes further and writes the whole testbench: a signal for
+every port, the clock generated, the reset released, the DUT wired up and a
+stimulus process that stops the run. Clocks and resets are found by shape
+rather than by name, so a crossing with `src_clk` and `dst_clk` gets both, and
+a reset ending in `n` is released to `'1'`.
+
+Every input is driven from time zero. Without that the design starts with `'U'`
+on its inputs and nothing downstream means anything.
+
 ## Configuration
 
 Defaults, in full:
@@ -353,7 +363,6 @@ make ghdl          # analyse every fixture
 ## Roadmap
 
 - More templates: OSVVM scaffolding, asynchronous FIFO, Wishbone, Avalon-MM
-- Generate a testbench around an entity, wired to its ports
 
 ## Contributing
 

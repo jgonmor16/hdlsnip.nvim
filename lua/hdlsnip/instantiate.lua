@@ -8,6 +8,7 @@ local entity = require("hdlsnip.vhdl.entity")
 local generate = require("hdlsnip.vhdl.generate")
 local insert = require("hdlsnip.insert")
 local ui = require("hdlsnip.ui")
+local testbench = require("hdlsnip.vhdl.testbench")
 
 local M = {}
 
@@ -178,6 +179,88 @@ function M.instantiate(name, opts)
   }, function(choice)
     if choice then
       place(choice, bufnr, opts)
+    end
+  end)
+end
+
+--- Write a testbench for `choice` into a buffer.
+---
+--- A testbench is a whole file, so it does not go in at the cursor. An empty
+--- buffer is used as it stands; anything else gets a new one named after the
+--- entity, beside its source.
+---@param choice table from `M.entities`
+---@param opts table?
+local function place_testbench(choice, opts)
+  local cfg = config.get(vim.api.nvim_get_current_buf())
+  local text = testbench.build(choice.entity, cfg, opts)
+  local lines = vim.split(text, "\n", { plain = true })
+
+  local current = vim.api.nvim_get_current_buf()
+  local empty = vim.api.nvim_buf_get_name(current) == ""
+    and vim.api.nvim_buf_line_count(current) == 1
+    and vim.api.nvim_buf_get_lines(current, 0, 1, false)[1] == ""
+
+  if not empty then
+    local path = ("%s/tb_%s.vhd"):format(
+      vim.fs.dirname(choice.path),
+      choice.entity.name
+    )
+    vim.cmd.edit(vim.fn.fnameescape(path))
+    current = vim.api.nvim_get_current_buf()
+    if vim.api.nvim_buf_line_count(current) > 1 then
+      vim.notify(
+        ("hdlsnip: %s already exists"):format(vim.fn.fnamemodify(path, ":.")),
+        vim.log.levels.WARN
+      )
+      return
+    end
+  end
+
+  vim.api.nvim_buf_set_lines(current, 0, -1, false, lines)
+  vim.bo[current].filetype = "vhdl"
+end
+
+--- Write a testbench around an entity, choosing one when no name is given.
+---@param name string?
+---@param opts table? `{ period_ns, library }`
+function M.testbench(name, opts)
+  local bufnr = vim.api.nvim_get_current_buf()
+  local choices = M.entities(bufnr)
+
+  if #choices == 0 then
+    vim.notify(
+      "hdlsnip: no entity with ports found in the project",
+      vim.log.levels.WARN
+    )
+    return
+  end
+
+  if name then
+    for _, choice in ipairs(choices) do
+      if choice.name == name then
+        return place_testbench(choice, opts)
+      end
+    end
+    vim.notify(
+      ("hdlsnip: no entity named %q in the project"):format(name),
+      vim.log.levels.ERROR
+    )
+    return
+  end
+
+  ui.choose(choices, {
+    prompt = "hdlsnip: testbench for",
+    format_item = function(choice)
+      return ("%-24s %d ports  %s"):format(
+        choice.name,
+        #choice.entity.ports,
+        vim.fn.fnamemodify(choice.path, ":.")
+      )
+    end,
+    kind = "hdlsnip.entity",
+  }, function(choice)
+    if choice then
+      place_testbench(choice, opts)
     end
   end)
 end

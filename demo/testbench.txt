@@ -1,0 +1,1069 @@
+>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;
+  3
+  4 entity fifo_sync is
+  5   generic (
+  6     G_WIDTH : positive := 8;
+  7     G_DEPTH : positive := 16
+  8   );
+  9   port (
+ 10     clk       : in  std_logic;
+ 11     rst_n     : in  std_logic;
+ 12     wr_en_i   : in  std_logic;
+ 13     wr_data_i : in  std_logic_vector(G_WIDTH - 1 downto 0);
+ 14     full_o    : out std_logic;
+ 15     rd_en_i   : in  std_logic;
+ 16     rd_data_o : out std_logic_vector(G_WIDTH - 1 downto 0);
+ 17     empty_o   : out std_logic
+ 18   );
+ 19 end entity fifo_sync;
+ 20
+ 21 architecture rtl of fifo_sync is
+ 22
+ 23   type t_memory is array (0 to G_DEPTH - 1) of std_logic_vector(G_WIDTH - 1 downto 0);
+ 24
+ 25   signal memory_r : t_memory;
+ 26
+ 27   signal wr_ptr_r : natural range 0 to G_DEPTH - 1 := 0;
+ 28   signal rd_ptr_r : natural range 0 to G_DEPTH - 1 := 0;
+ 29   signal count_r  : natural range 0 to G_DEPTH := 0;
+ 30
+ 31   signal wr_go : boolean;
+ 32   signal rd_go : boolean;
+ 33
+ 34 begin
+ 35
+ 36   -- A write to a full FIFO, or a read from an empty one, is
+ 37   -- ignored: a misbehaving master must not desynchronise it.
+ 38   wr_go <= wr_en_i = '1' and count_r < G_DEPTH;
+ 39   rd_go <= rd_en_i = '1' and count_r > 0;
+ 40
+ 41   -- No reset here: a reset on every element prevents block RAM
+ 42   -- inference on most tools.
+ 43   p_memory : process (clk) is
+ 44   begin
+ 45     if rising_edge(clk) then
+ 46       if wr_go then
+ 47         memory_r(wr_ptr_r) <= wr_data_i;
+ 48       end if;
+ 49     end if;
+
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;
+  3
+  4 entity fifo_sync is
+  5   generic (
+  6     G_WIDTH : positive := 8;
+  7     G_DEPTH : positive := 16
+  8   );
+  9   port (
+ 10     clk       : in  std_logic;
+ 11     rst_n     : in  std_logic;
+ 12     wr_en_i   : in  std_logic;
+ 13     wr_data_i : in  std_logic_vector(G_WIDTH - 1 downto 0);
+ 14     full_o    : out std_logic;
+ 15     rd_en_i   : in  std_logic;
+ 16     rd_data_o : out std_logic_vector(G_WIDTH - 1 downto 0);
+ 17     empty_o   : out std_logic
+ 18   );
+ 19 end entity fifo_sync;
+ 20
+ 21 architecture rtl of fifo_sync is
+ 22
+ 23   type t_memory is array (0 to G_DEPTH - 1) of std_logic_vector(G_WIDTH - 1 downto 0);
+ 24
+ 25   signal memory_r : t_memory;
+ 26
+ 27   signal wr_ptr_r : natural range 0 to G_DEPTH - 1 := 0;
+ 28   signal rd_ptr_r : natural range 0 to G_DEPTH - 1 := 0;
+ 29   signal count_r  : natural range 0 to G_DEPTH := 0;
+ 30
+ 31   signal wr_go : boolean;
+ 32   signal rd_go : boolean;
+ 33
+ 34 begin
+ 35
+ 36   -- A write to a full FIFO, or a read from an empty one, is
+ 37   -- ignored: a misbehaving master must not desynchronise it.
+ 38   wr_go <= wr_en_i = '1' and count_r < G_DEPTH;
+ 39   rd_go <= rd_en_i = '1' and count_r > 0;
+ 40
+ 41   -- No reset here: a reset on every element prevents block RAM
+ 42   -- inference on most tools.
+ 43   p_memory : process (clk) is
+ 44   begin
+ 45     if rising_edge(clk) then
+ 46       if wr_go then
+ 47         memory_r(wr_ptr_r) <= wr_data_i;
+ 48       end if;
+ 49     end if;
+
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;
+  3
+  4 entity fifo_sync is
+  5   generic (
+  6     G_WIDTH : positive := 8;
+  7     G_DEPTH : positive := 16
+  8   );
+  9   port (
+ 10     clk       : in  std_logic;
+ 11     rst_n     : in  std_logic;
+ 12     wr_en_i   : in  std_logic;
+ 13     wr_data_i : in  std_logic_vector(G_WIDTH - 1 downto 0);
+ 14     full_o    : out std_logic;
+ 15     rd_en_i   : in  std_logic;
+ 16     rd_data_o : out std_logic_vector(G_WIDTH - 1 downto 0);
+ 17     empty_o   : out std_logic
+ 18   );
+ 19 end entity fifo_sync;
+ 20
+ 21 architecture rtl of fifo_sync is
+ 22
+ 23   type t_memory is array (0 to G_DEPTH - 1) of std_logic_vector(G_WIDTH - 1 downto 0);
+ 24
+ 25   signal memory_r : t_memory;
+ 26
+ 27   signal wr_ptr_r : natural range 0 to G_DEPTH - 1 := 0;
+ 28   signal rd_ptr_r : natural range 0 to G_DEPTH - 1 := 0;
+ 29   signal count_r  : natural range 0 to G_DEPTH := 0;
+ 30
+ 31   signal wr_go : boolean;
+ 32   signal rd_go : boolean;
+ 33
+ 34 begin
+ 35
+ 36   -- A write to a full FIFO, or a read from an empty one, is
+ 37   -- ignored: a misbehaving master must not desynchronise it.
+ 38   wr_go <= wr_en_i = '1' and count_r < G_DEPTH;
+ 39   rd_go <= rd_en_i = '1' and count_r > 0;
+ 40
+ 41   -- No reset here: a reset on every element prevents block RAM
+ 42   -- inference on most tools.
+ 43   p_memory : process (clk) is
+ 44   begin
+ 45     if rising_edge(clk) then
+ 46       if wr_go then
+ 47         memory_r(wr_ptr_r) <= wr_data_i;
+ 48       end if;
+ 49     end if;
+:HdlSnipTestbench
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;                                                     ╭────────────────────────╮
+  3                                                                                    │ :HdlSnipTestbench <CR> │
+  4 entity fifo_sync is                                                                ╰────────────────────────╯
+  5   generic (
+  6     G_WIDTH : positive := 8;
+  7     G_DEPTH : positive := 16
+  8   );
+  9   port (
+ 10     clk       : in  std_logic;
+ 11     rst_n     : in  std_logic;
+ 12     wr_en_i   : in  std_logic;
+ 13     wr_data_i : in  std_logic_vector(G_WIDTH - 1 downto 0);
+ 14     full_o    : out std_logic;
+ 15     rd_en_i   : in  std_logic;
+ 16     rd_data_o : out std_logic_vector(G_WIDTH - 1 downto 0);
+ 17     empty_o   : out std_logic
+ 18   );
+ 19 end entity fifo_sync;
+ 20
+ 21 architecture rtl of fifo_sync is
+ 22
+ 23   type t_memory is array (0 to G_DEPTH - 1) of std_logic_vector(G_WIDTH - 1 downto 0);
+ 24
+ 25   signal memory_r : t_memory;
+ 26
+ 27   signal wr_ptr_r : natural range 0 to G_DEPTH - 1 := 0;
+ 28   signal rd_ptr_r : natural range 0 to G_DEPTH - 1 := 0;
+ 29   signal count_r  : natural range 0 to G_DEPTH := 0;
+ 30
+ 31   signal wr_go : boolean;
+ 32   signal rd_go : boolean;
+ 33
+ 34 begin
+ 35
+ 36   -- A write to a full FIFO, or a read from an empty one, is
+ 37   -- ignored: a misbehaving master must not desynchronise it.
+ 38   wr_go <= wr_en_i = '1' and count_r < G_DEPTH;
+ 39   rd_go <= rd_en_i = '1' and count_r > 0;
+ 40
+ 41   -- No reset here: a reset on every element prevents block RAM
+ 42   -- inference on most tools.
+ 43   p_memory : process (clk) is                          ╭────────────── hdlsnip: testbench for ──────────────╮
+ 44   begin                                                │ 1  fifo_sync                8 ports  src/fifo.vhd  │
+ 45     if rising_edge(clk) then                           ╰────────────────────────────────────────────────────╯
+ 46       if wr_go then                                    ╭────────────────────────────────────────────────────╮
+ 47         memory_r(wr_ptr_r) <= wr_data_i;               │                                                    │
+ 48       end if;                                          ╰────────────────────────────────────────────────────╯
+ 49     end if;
+:HdlSnipTestbench
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;
+  3
+  4 entity fifo_sync is
+  5   generic (
+  6     G_WIDTH : positive := 8;
+  7     G_DEPTH : positive := 16
+  8   );
+  9   port (
+ 10     clk       : in  std_logic;
+ 11     rst_n     : in  std_logic;
+ 12     wr_en_i   : in  std_logic;
+ 13     wr_data_i : in  std_logic_vector(G_WIDTH - 1 downto 0);
+ 14     full_o    : out std_logic;
+ 15     rd_en_i   : in  std_logic;
+ 16     rd_data_o : out std_logic_vector(G_WIDTH - 1 downto 0);
+ 17     empty_o   : out std_logic
+ 18   );
+ 19 end entity fifo_sync;
+ 20
+ 21 architecture rtl of fifo_sync is
+ 22
+ 23   type t_memory is array (0 to G_DEPTH - 1) of std_logic_vector(G_WIDTH - 1 downto 0);
+ 24
+ 25   signal memory_r : t_memory;
+ 26
+ 27   signal wr_ptr_r : natural range 0 to G_DEPTH - 1 := 0;
+ 28   signal rd_ptr_r : natural range 0 to G_DEPTH - 1 := 0;
+ 29   signal count_r  : natural range 0 to G_DEPTH := 0;
+ 30
+ 31   signal wr_go : boolean;
+ 32   signal rd_go : boolean;
+ 33
+ 34 begin
+ 35
+ 36   -- A write to a full FIFO, or a read from an empty one, is
+ 37   -- ignored: a misbehaving master must not desynchronise it.
+ 38   wr_go <= wr_en_i = '1' and count_r < G_DEPTH;
+ 39   rd_go <= rd_en_i = '1' and count_r > 0;
+ 40
+ 41   -- No reset here: a reset on every element prevents block RAM
+ 42   -- inference on most tools.
+ 43   p_memory : process (clk) is                          ╭────────────── hdlsnip: testbench for ──────────────╮
+ 44   begin                                                │ 1  fifo_sync                8 ports  src/fifo.vhd  │
+ 45     if rising_edge(clk) then                           ╰────────────────────────────────────────────────────╯
+ 46       if wr_go then                                    ╭────────────────────────────────────────────────────╮
+ 47         memory_r(wr_ptr_r) <= wr_data_i;               │                                                    │
+ 48       end if;                                          ╰────────────────────────────────────────────────────╯
+ 49     end if;
+:HdlSnipTestbench
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;                                                                       ╭──────╮
+  3   use ieee.numeric_std.all;                                                                          │ <CR> │
+  4                                                                                                      ╰──────╯
+  5 library std;
+  6   use std.env.finish;
+  7
+  8 entity tb_fifo_sync is
+  9 end entity tb_fifo_sync;
+ 10
+ 11 architecture tb of tb_fifo_sync is
+ 12
+ 13   constant C_CLK_PERIOD : time := 10 ns;
+ 14
+ 15   signal clk     : std_logic := '0';
+ 16   signal rst_n   : std_logic := '0';
+ 17   signal wr_en   : std_logic := '0';
+ 18   signal wr_data : std_logic_vector(8 - 1 downto 0) := (others => '0');
+ 19   signal full    : std_logic;
+ 20   signal rd_en   : std_logic := '0';
+ 21   signal rd_data : std_logic_vector(8 - 1 downto 0);
+ 22   signal empty   : std_logic;
+ 23
+ 24   signal running : boolean := true;
+ 25
+ 26 begin
+ 27
+ 28   -- Stopped by the stimulus process, so the run ends.
+ 29   clk <= not clk after C_CLK_PERIOD / 2 when running else '0';
+ 30
+ 31   rst_n <= '1' after 4 * C_CLK_PERIOD;
+ 32
+ 33   dut : entity work.fifo_sync
+ 34     generic map (
+ 35       G_WIDTH => 8,
+ 36       G_DEPTH => 16
+ 37     )
+ 38     port map (
+ 39       clk       => clk,
+ 40       rst_n     => rst_n,
+ 41       wr_en_i   => wr_en,
+ 42       wr_data_i => wr_data,
+ 43       full_o    => full,
+ 44       rd_en_i   => rd_en,
+ 45       rd_data_o => rd_data,
+ 46       empty_o   => empty
+ 47     );
+ 48
+ 49   p_stim : process is
+
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;
+  3   use ieee.numeric_std.all;
+  4
+  5 library std;
+  6   use std.env.finish;
+  7
+  8 entity tb_fifo_sync is
+  9 end entity tb_fifo_sync;
+ 10
+ 11 architecture tb of tb_fifo_sync is
+ 12
+ 13   constant C_CLK_PERIOD : time := 10 ns;
+ 14
+ 15   signal clk     : std_logic := '0';
+ 16   signal rst_n   : std_logic := '0';
+ 17   signal wr_en   : std_logic := '0';
+ 18   signal wr_data : std_logic_vector(8 - 1 downto 0) := (others => '0');
+ 19   signal full    : std_logic;
+ 20   signal rd_en   : std_logic := '0';
+ 21   signal rd_data : std_logic_vector(8 - 1 downto 0);
+ 22   signal empty   : std_logic;
+ 23
+ 24   signal running : boolean := true;
+ 25
+ 26 begin
+ 27
+ 28   -- Stopped by the stimulus process, so the run ends.
+ 29   clk <= not clk after C_CLK_PERIOD / 2 when running else '0';
+ 30
+ 31   rst_n <= '1' after 4 * C_CLK_PERIOD;
+ 32
+ 33   dut : entity work.fifo_sync
+ 34     generic map (
+ 35       G_WIDTH => 8,
+ 36       G_DEPTH => 16
+ 37     )
+ 38     port map (
+ 39       clk       => clk,
+ 40       rst_n     => rst_n,
+ 41       wr_en_i   => wr_en,
+ 42       wr_data_i => wr_data,
+ 43       full_o    => full,
+ 44       rd_en_i   => rd_en,
+ 45       rd_data_o => rd_data,
+ 46       empty_o   => empty
+ 47     );
+ 48
+ 49   p_stim : process is
+
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;                                                                         ╭────╮
+  3   use ieee.numeric_std.all;                                                                            │ gg │
+  4                                                                                                        ╰────╯
+  5 library std;
+  6   use std.env.finish;
+  7
+  8 entity tb_fifo_sync is
+  9 end entity tb_fifo_sync;
+ 10
+ 11 architecture tb of tb_fifo_sync is
+ 12
+ 13   constant C_CLK_PERIOD : time := 10 ns;
+ 14
+ 15   signal clk     : std_logic := '0';
+ 16   signal rst_n   : std_logic := '0';
+ 17   signal wr_en   : std_logic := '0';
+ 18   signal wr_data : std_logic_vector(8 - 1 downto 0) := (others => '0');
+ 19   signal full    : std_logic;
+ 20   signal rd_en   : std_logic := '0';
+ 21   signal rd_data : std_logic_vector(8 - 1 downto 0);
+ 22   signal empty   : std_logic;
+ 23
+ 24   signal running : boolean := true;
+ 25
+ 26 begin
+ 27
+ 28   -- Stopped by the stimulus process, so the run ends.
+ 29   clk <= not clk after C_CLK_PERIOD / 2 when running else '0';
+ 30
+ 31   rst_n <= '1' after 4 * C_CLK_PERIOD;
+ 32
+ 33   dut : entity work.fifo_sync
+ 34     generic map (
+ 35       G_WIDTH => 8,
+ 36       G_DEPTH => 16
+ 37     )
+ 38     port map (
+ 39       clk       => clk,
+ 40       rst_n     => rst_n,
+ 41       wr_en_i   => wr_en,
+ 42       wr_data_i => wr_data,
+ 43       full_o    => full,
+ 44       rd_en_i   => rd_en,
+ 45       rd_data_o => rd_data,
+ 46       empty_o   => empty
+ 47     );
+ 48
+ 49   p_stim : process is
+
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;
+  3   use ieee.numeric_std.all;
+  4
+  5 library std;
+  6   use std.env.finish;
+  7
+  8 entity tb_fifo_sync is
+  9 end entity tb_fifo_sync;
+ 10
+ 11 architecture tb of tb_fifo_sync is
+ 12
+ 13   constant C_CLK_PERIOD : time := 10 ns;
+ 14
+ 15   signal clk     : std_logic := '0';
+ 16   signal rst_n   : std_logic := '0';
+ 17   signal wr_en   : std_logic := '0';
+ 18   signal wr_data : std_logic_vector(8 - 1 downto 0) := (others => '0');
+ 19   signal full    : std_logic;
+ 20   signal rd_en   : std_logic := '0';
+ 21   signal rd_data : std_logic_vector(8 - 1 downto 0);
+ 22   signal empty   : std_logic;
+ 23
+ 24   signal running : boolean := true;
+ 25
+ 26 begin
+ 27
+ 28   -- Stopped by the stimulus process, so the run ends.
+ 29   clk <= not clk after C_CLK_PERIOD / 2 when running else '0';
+ 30
+ 31   rst_n <= '1' after 4 * C_CLK_PERIOD;
+ 32
+ 33   dut : entity work.fifo_sync
+ 34     generic map (
+ 35       G_WIDTH => 8,
+ 36       G_DEPTH => 16
+ 37     )
+ 38     port map (
+ 39       clk       => clk,
+ 40       rst_n     => rst_n,
+ 41       wr_en_i   => wr_en,
+ 42       wr_data_i => wr_data,
+ 43       full_o    => full,
+ 44       rd_en_i   => rd_en,
+ 45       rd_data_o => rd_data,
+ 46       empty_o   => empty
+ 47     );
+ 48
+ 49   p_stim : process is
+
+────────────────────────────────────────────────────────────────────────────────
+ 13   constant C_CLK_PERIOD : time := 10 ns;
+ 14                                                                                                     ╭───────╮
+ 15   signal clk     : std_logic := '0';                                                                │ <C-D> │
+ 16   signal rst_n   : std_logic := '0';                                                                ╰───────╯
+ 17   signal wr_en   : std_logic := '0';
+ 18   signal wr_data : std_logic_vector(8 - 1 downto 0) := (others => '0');
+ 19   signal full    : std_logic;
+ 20   signal rd_en   : std_logic := '0';
+ 21   signal rd_data : std_logic_vector(8 - 1 downto 0);
+ 22   signal empty   : std_logic;
+ 23
+ 24   signal running : boolean := true;
+ 25
+ 26 begin
+ 27
+ 28   -- Stopped by the stimulus process, so the run ends.
+ 29   clk <= not clk after C_CLK_PERIOD / 2 when running else '0';
+ 30
+ 31   rst_n <= '1' after 4 * C_CLK_PERIOD;
+ 32
+ 33   dut : entity work.fifo_sync
+ 34     generic map (
+ 35       G_WIDTH => 8,
+ 36       G_DEPTH => 16
+ 37     )
+ 38     port map (
+ 39       clk       => clk,
+ 40       rst_n     => rst_n,
+ 41       wr_en_i   => wr_en,
+ 42       wr_data_i => wr_data,
+ 43       full_o    => full,
+ 44       rd_en_i   => rd_en,
+ 45       rd_data_o => rd_data,
+ 46       empty_o   => empty
+ 47     );
+ 48
+ 49   p_stim : process is
+ 50   begin
+ 51     wait until rst_n = '1';
+ 52     wait until rising_edge(clk);
+ 53
+ 54     -- stimulus and checks
+ 55
+ 56     report "tb_fifo_sync: done" severity note;
+ 57     running <= false;
+ 58     finish;
+ 59   end process p_stim;
+ 60
+ 61 end architecture tb;
+
+────────────────────────────────────────────────────────────────────────────────
+ 13   constant C_CLK_PERIOD : time := 10 ns;
+ 14
+ 15   signal clk     : std_logic := '0';
+ 16   signal rst_n   : std_logic := '0';
+ 17   signal wr_en   : std_logic := '0';
+ 18   signal wr_data : std_logic_vector(8 - 1 downto 0) := (others => '0');
+ 19   signal full    : std_logic;
+ 20   signal rd_en   : std_logic := '0';
+ 21   signal rd_data : std_logic_vector(8 - 1 downto 0);
+ 22   signal empty   : std_logic;
+ 23
+ 24   signal running : boolean := true;
+ 25
+ 26 begin
+ 27
+ 28   -- Stopped by the stimulus process, so the run ends.
+ 29   clk <= not clk after C_CLK_PERIOD / 2 when running else '0';
+ 30
+ 31   rst_n <= '1' after 4 * C_CLK_PERIOD;
+ 32
+ 33   dut : entity work.fifo_sync
+ 34     generic map (
+ 35       G_WIDTH => 8,
+ 36       G_DEPTH => 16
+ 37     )
+ 38     port map (
+ 39       clk       => clk,
+ 40       rst_n     => rst_n,
+ 41       wr_en_i   => wr_en,
+ 42       wr_data_i => wr_data,
+ 43       full_o    => full,
+ 44       rd_en_i   => rd_en,
+ 45       rd_data_o => rd_data,
+ 46       empty_o   => empty
+ 47     );
+ 48
+ 49   p_stim : process is
+ 50   begin
+ 51     wait until rst_n = '1';
+ 52     wait until rising_edge(clk);
+ 53
+ 54     -- stimulus and checks
+ 55
+ 56     report "tb_fifo_sync: done" severity note;
+ 57     running <= false;
+ 58     finish;
+ 59   end process p_stim;
+ 60
+ 61 end architecture tb;
+
+────────────────────────────────────────────────────────────────────────────────
+ 13   constant C_CLK_PERIOD : time := 10 ns;
+ 14
+ 15   signal clk     : std_logic := '0';
+ 16   signal rst_n   : std_logic := '0';
+ 17   signal wr_en   : std_logic := '0';
+ 18   signal wr_data : std_logic_vector(8 - 1 downto 0) := (others => '0');
+ 19   signal full    : std_logic;
+ 20   signal rd_en   : std_logic := '0';
+ 21   signal rd_data : std_logic_vector(8 - 1 downto 0);
+ 22   signal empty   : std_logic;
+ 23
+ 24   signal running : boolean := true;
+ 25
+ 26 begin
+ 27
+ 28   -- Stopped by the stimulus process, so the run ends.
+ 29   clk <= not clk after C_CLK_PERIOD / 2 when running else '0';
+ 30
+ 31   rst_n <= '1' after 4 * C_CLK_PERIOD;
+ 32
+ 33   dut : entity work.fifo_sync
+ 34     generic map (
+ 35       G_WIDTH => 8,
+ 36       G_DEPTH => 16
+ 37     )
+ 38     port map (
+ 39       clk       => clk,
+ 40       rst_n     => rst_n,
+ 41       wr_en_i   => wr_en,
+ 42       wr_data_i => wr_data,
+ 43       full_o    => full,
+ 44       rd_en_i   => rd_en,
+ 45       rd_data_o => rd_data,
+ 46       empty_o   => empty
+ 47     );
+ 48
+ 49   p_stim : process is
+ 50   begin
+ 51     wait until rst_n = '1';
+ 52     wait until rising_edge(clk);
+ 53
+ 54     -- stimulus and checks
+ 55
+ 56     report "tb_fifo_sync: done" severity note;
+ 57     running <= false;
+ 58     finish;
+ 59   end process p_stim;
+ 60
+ 61 end architecture tb;
+
+────────────────────────────────────────────────────────────────────────────────
+ 13   constant C_CLK_PERIOD : time := 10 ns;
+ 14
+ 15   signal clk     : std_logic := '0';
+ 16   signal rst_n   : std_logic := '0';
+ 17   signal wr_en   : std_logic := '0';
+ 18   signal wr_data : std_logic_vector(8 - 1 downto 0) := (others => '0');
+ 19   signal full    : std_logic;
+ 20   signal rd_en   : std_logic := '0';
+ 21   signal rd_data : std_logic_vector(8 - 1 downto 0);
+ 22   signal empty   : std_logic;
+ 23
+ 24   signal running : boolean := true;
+ 25
+ 26 begin
+ 27
+ 28   -- Stopped by the stimulus process, so the run ends.
+ 29   clk <= not clk after C_CLK_PERIOD / 2 when running else '0';
+ 30
+ 31   rst_n <= '1' after 4 * C_CLK_PERIOD;
+ 32
+ 33   dut : entity work.fifo_sync
+ 34     generic map (
+ 35       G_WIDTH => 8,
+ 36       G_DEPTH => 16
+ 37     )
+ 38     port map (
+ 39       clk       => clk,
+ 40       rst_n     => rst_n,
+ 41       wr_en_i   => wr_en,
+ 42       wr_data_i => wr_data,
+ 43       full_o    => full,
+ 44       rd_en_i   => rd_en,
+ 45       rd_data_o => rd_data,
+ 46       empty_o   => empty
+ 47     );
+ 48
+ 49   p_stim : process is
+ 50   begin
+ 51     wait until rst_n = '1';
+ 52     wait until rising_edge(clk);
+ 53
+ 54     -- stimulus and checks
+ 55
+ 56     report "tb_fifo_sync: done" severity note;
+ 57     running <= false;
+ 58     finish;
+ 59   end process p_stim;
+ 60
+ 61 end architecture tb;
+
+────────────────────────────────────────────────────────────────────────────────
