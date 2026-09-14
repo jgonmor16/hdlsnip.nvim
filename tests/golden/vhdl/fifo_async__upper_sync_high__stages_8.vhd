@@ -123,7 +123,11 @@ BEGIN
 
   -- Full when the write pointer has lapped the read pointer: the
   -- same address with the top two bits inverted.
-  full <= '1' WHEN wr_gray_r = ((NOT rd_gray_wr_r(G_STAGES)(G_ADDR_WIDTH)) & (NOT rd_gray_wr_r(G_STAGES)(G_ADDR_WIDTH - 1)) & rd_gray_wr_r(G_STAGES)(G_ADDR_WIDTH - 2 DOWNTO 0)) ELSE '0';
+  full <= '1' WHEN wr_gray_r = (
+      (NOT rd_gray_wr_r(G_STAGES)(G_ADDR_WIDTH)) &
+      (NOT rd_gray_wr_r(G_STAGES)(G_ADDR_WIDTH - 1)) &
+      rd_gray_wr_r(G_STAGES)(G_ADDR_WIDTH - 2 DOWNTO 0)
+    ) ELSE '0';
 
   full_o <= full;
   empty_o <= empty;

@@ -476,30 +476,16 @@ return {
     push(1, "-- same address with the top two bits inverted.")
     -- Built as one string: split across two format calls it was a
     -- placeholder short, which the fixture matrix caught immediately.
-    local lapped = ("(%s %s(%s)(%s)) & (%s %s(%s)(%s - 1)) & %s(%s)(%s - 2 %s 0)"):format(
-      kw("not"),
-      rd_sync,
-      stages,
-      addr,
-      kw("not"),
-      rd_sync,
-      stages,
-      addr,
-      rd_sync,
-      stages,
-      addr,
-      kw("downto")
-    )
-    push(
-      1,
-      ("%s <= '1' %s %s = (%s) %s '0';"):format(
-        full,
-        kw("when"),
-        wr_gray_r,
-        lapped,
-        kw("else")
-      )
-    )
+    local lapped = {
+      ("(%s %s(%s)(%s)) &"):format(kw("not"), rd_sync, stages, addr),
+      ("(%s %s(%s)(%s - 1)) &"):format(kw("not"), rd_sync, stages, addr),
+      ("%s(%s)(%s - 2 %s 0)"):format(rd_sync, stages, addr, kw("downto")),
+    }
+    push(1, ("%s <= '1' %s %s = ("):format(full, kw("when"), wr_gray_r))
+    for _, term in ipairs(lapped) do
+      push(3, term)
+    end
+    push(2, (") %s '0';"):format(kw("else")))
     push(0, "")
     push(1, ("%s <= %s;"):format(name("full", "output"), full))
     push(1, ("%s <= %s;"):format(name("empty", "output"), empty))

@@ -109,6 +109,22 @@ describe("generate.signals", function()
     assert.are.equal("full", values.full_o)
     assert.are.equal("clk", values.clk)
   end)
+
+  it("keeps the port name when stripping would collide", function()
+    -- wb_dat_i and wb_dat_o both strip to wb_dat, which is one signal
+    -- declared twice.
+    local pair = entity.parse(source([[
+entity bus_if is
+  port (
+    wb_dat_i : in  std_logic_vector(31 downto 0);
+    wb_dat_o : out std_logic_vector(31 downto 0)
+  );
+end entity bus_if;
+]]))
+    local values = generate.signal_values(pair, cfg())
+    assert.are.equal("wb_dat_i", values.wb_dat_i)
+    assert.are.equal("wb_dat_o", values.wb_dat_o)
+  end)
 end)
 
 describe("generate.component", function()
