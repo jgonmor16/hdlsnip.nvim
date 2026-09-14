@@ -61,6 +61,8 @@ Static templates still render as ordinary LSP snippets, so nothing is lost.
 ## Requirements
 
 - Neovim >= 0.10 (`vim.snippet`)
+- Neovim >= 0.11 for the completion menu (`vim.lsp.completion`); everything
+  else works on 0.10
 - Neovim >= 0.12 if installing with `vim.pack`; the plugin itself still works on
   0.10 with any other manager
 - No plugins. Pickers and prompts go through `vim.ui`, so telescope, fzf-lua or
@@ -102,6 +104,8 @@ With [lazy.nvim](https://github.com/folke/lazy.nvim):
 | --- | --- |
 | `:HdlSnip [name]` | Prompt for parameters and insert. Picker when no name is given |
 | `:HdlSnipExpand [name]` | Expand as a snippet, with tabstops |
+| `:HdlSnipInstantiate[!] [name]` | Instantiate an entity from the project; `!` adds its signals |
+| `:HdlSnipTestbench [name]` | Write a testbench around an entity from the project |
 | `:HdlSnipReload` | Rescan the runtimepath for templates |
 | `:checkhealth hdlsnip` | Templates found, configuration in effect, anything skipped |
 | `:HdlSnipEdit` | Change the parameters of the template under the cursor |
@@ -180,12 +184,16 @@ off with `lsp = false`.
 | `cdc` | `bit_sync` | cdc | Single-bit CDC synchroniser |
 | `hs` | `cdc_handshake` | cdc | Multi-bit CDC by request and acknowledge |
 | `fifo` | `fifo_sync` | mem | Synchronous FIFO with count-based flags |
+| `afifo` | `fifo_async` | mem | Asynchronous FIFO with gray-coded pointers |
 | `ram` | `ram_dp` | mem | Simple dual-port RAM, read-first |
 | `axil` | `axi4lite_slave` | bus | AXI4-Lite slave with a register file |
 | `axis` | `axis_skid` | bus | AXI-Stream register slice with backpressure |
 | `apb` | `apb_slave` | bus | APB slave with a register file |
+| `wb` | `wishbone_slave` | bus | Wishbone B4 classic slave with a register file |
+| `avmm` | `avalon_mm_slave` | bus | Avalon-MM slave with a register file |
 | `tb` | `testbench` | tb | Self-checking testbench skeleton |
 | `vtb` | `tb_vunit` | tb | VUnit testbench with a test suite |
+| `otb` | `tb_osvvm` | tb | OSVVM testbench with alerts and logs |
 
 Templates are either **static**, rendering as a snippet with tabstops, or
 **dynamic**, where the output depends on configuration or on a parameter. A
@@ -214,6 +222,41 @@ than having it overwritten later.
        alt="Opening HdlSnipEdit on an inserted synchroniser and changing the stage count and entity name, with the block re-rendering as the dialog is edited" />
 </p>
 
+## Instantiating what you already have
+
+The interface of a design already exists in a file. `:HdlSnipInstantiate` finds
+the entities in your project, offers them, and writes the instantiation for the
+one you pick — named association throughout, since positional compiles happily
+with two same-typed ports swapped and you find out in simulation.
+
+Typing in the picker narrows the list; `<C-d>` and `<C-u>` page through it,
+`<C-k>` and `<C-j>` move one at a time. With telescope, fzf-lua or snacks
+installed you get yours instead — `picker = "hdlsnip"` forces this one.
+
+`:HdlSnipInstantiate!` adds the port signals too. They go above the
+architecture's `begin` while the instance goes below it, and they are named
+exactly as the instantiation maps them, so the two halves cannot disagree.
+Generic values are substituted into the subtypes, since the instantiating scope
+has no `G_WIDTH` of its own.
+
+A generic with no default is mapped to its own name. That will not analyse,
+deliberately: it is a value you have to supply, and a wrong guess would be
+worse than an obvious gap.
+
+`:HdlSnipTestbench` goes further and writes the whole testbench: a signal for
+every port, the clock generated, the reset released, the DUT wired up and a
+stimulus process that stops the run. Clocks and resets are found by shape
+rather than by name, so a crossing with `src_clk` and `dst_clk` gets both, and
+a reset ending in `n` is released to `'1'`.
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/f40520f1-fcbd-43b7-956e-d01700b96f13" width="900"
+       alt="Paging and filtering through twelve designs, then generating a testbench for an asynchronous FIFO with both clock domains driven" />
+</p>
+
+Every input is driven from time zero. Without that the design starts with `'U'`
+on its inputs and nothing downstream means anything.
+
 ## Configuration
 
 Defaults, in full:
@@ -241,6 +284,8 @@ Defaults, in full:
   vendor = "generic",       -- "generic" | "amd" | "intel" | "lattice" | "microchip"
   align_ports = true,
   lsp = true,               -- offer templates in the completion menu
+  picker = "auto",          -- "auto" | "hdlsnip" | "ui"
+  picker_height = 10,
   keys = {
     expand = false,         -- trigger word before the cursor
     jump_next = false,      -- next tabstop
@@ -304,28 +349,37 @@ anything needing logic; set `dynamic = true` alongside it.
 
 ## Correctness
 
-Every template is rendered across seven configuration variants and one case per
-parameter alternative — 518 files, committed under `tests/golden/` — and every
-one that does not need an external library is analysed with GHDL in CI. A
-change to generated VHDL shows up as a reviewable diff rather than hiding
+Every template is rendered across seven configuration variants and one case
+per parameter alternative — 651 files, committed under `tests/golden/` — and
+every one that does not need an external library is analysed with GHDL in CI.
+A change to generated VHDL shows up as a reviewable diff rather than hiding
 inside a Lua change.
 
 Where behaviour rather than syntax is the point, the output has also been
-simulated: the FIFO, the AXI4-Lite slave, the APB slave, the CDC handshake, the
-AXI-Stream slice and the testbench skeleton each run against a testbench and
-pass.
+simulated: both FIFOs, the AXI4-Lite, APB, Wishbone and Avalon-MM slaves, the
+CDC handshake, the AXI-Stream slice and the testbench skeleton each run
+against a testbench and pass. The asynchronous FIFO crosses 200 words in order
+under four clock ratios.
+
+The generated VHDL is also style checked with VSG against a reviewed rule set:
+861 rules enabled, 28 disabled as house style with the reason recorded in
+`vsg_config.yaml`.
 
 ```bash
 make test          # spec suite
 make golden        # regenerate fixtures
 make ghdl          # analyse every fixture
+make vsg
 ```
 
 ## Roadmap
 
-- More templates: OSVVM scaffolding, asynchronous FIFO, Wishbone, Avalon-MM
-- Treesitter: entity to component, instantiation, signal declarations and
-  testbench
+The library, the engine and the entity tooling are complete. What comes next
+depends on what people ask for — open an issue.
+
+Deliberately out of scope: SystemVerilog (the engine allows it, nobody has
+asked), and synthesis or simulation from inside the editor, which is what your
+build system is for.
 
 ## Contributing
 

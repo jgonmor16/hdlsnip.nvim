@@ -91,8 +91,12 @@ function M.insert_sections(bufnr, sections, cfg)
 
   -- Statements first: inserting the declarations would shift every row below
   -- them, including the one the statements are measured against.
-  local statements = indented(sections.statements or "")
-  statements[#statements + 1] = ""
+  --
+  -- The blank line goes above rather than below. Below, a second insertion
+  -- adds another and they accumulate before `end architecture`; above, each
+  -- block separates itself from whatever precedes it, including `begin`.
+  local statements = { "" }
+  vim.list_extend(statements, indented(sections.statements or ""))
   vim.api.nvim_buf_set_lines(
     bufnr,
     found.begin_row,
@@ -101,7 +105,20 @@ function M.insert_sections(bufnr, sections, cfg)
     statements
   )
 
-  local declaration_lines = indented(declarations)
+  -- Declarations need separating from `begin` below them, and from whatever
+  -- is above only when that is not already blank -- an empty architecture
+  -- has a blank line there and a second one reads as a gap.
+  local above = vim.api.nvim_buf_get_lines(
+    bufnr,
+    found.begin_row - 2,
+    found.begin_row - 1,
+    false
+  )[1]
+  local declaration_lines = {}
+  if above and above:match("%S") then
+    declaration_lines[1] = ""
+  end
+  vim.list_extend(declaration_lines, indented(declarations))
   declaration_lines[#declaration_lines + 1] = ""
   vim.api.nvim_buf_set_lines(
     bufnr,

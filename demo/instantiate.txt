@@ -1,0 +1,2875 @@
+>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;
+  3   use ieee.numeric_std.all;
+  4
+  5 entity top is
+  6   port (
+  7     clk   : in std_logic;
+  8     rst_n : in std_logic
+  9   );
+ 10 end entity top;
+ 11
+ 12 architecture rtl of top is
+ 13
+ 14 begin
+ 15
+ 16 end architecture rtl;
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+/begin                                                                                                                    [1/1]
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;
+  3   use ieee.numeric_std.all;
+  4
+  5 entity top is
+  6   port (
+  7     clk   : in std_logic;
+  8     rst_n : in std_logic
+  9   );
+ 10 end entity top;
+ 11
+ 12 architecture rtl of top is
+ 13
+ 14 begin
+ 15
+ 16 end architecture rtl;
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+/begin                                                                                                                    [1/1]
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;
+  3   use ieee.numeric_std.all;
+  4
+  5 entity top is
+  6   port (
+  7     clk   : in std_logic;
+  8     rst_n : in std_logic
+  9   );
+ 10 end entity top;
+ 11
+ 12 architecture rtl of top is
+ 13
+ 14 begin
+ 15
+ 16 end architecture rtl;
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+:HdlSnipInstantiate!
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;                                                                ╭───────────────────────────╮
+  3   use ieee.numeric_std.all;                                                                   │ :HdlSnipInstantiate! <CR> │
+  4                                                                                               ╰───────────────────────────╯
+  5 entity top is
+  6   port (
+  7     clk   : in std_logic;
+  8     rst_n : in std_logic
+  9   );
+ 10 end entity top;
+ 11
+ 12 architecture rtl of top is
+ 13
+ 14 begin
+ 15
+ 16 end architecture rtl;
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
+~                                                                │ 1  apb_regs                 10 ports  src/apb.vhd          │
+~                                                                │ 2  fifo_sync                8 ports  src/buffer.vhd        │
+~                                                                │ 3  cfg_cross                9 ports  src/cfg_cross.vhd     │
+~                                                                │ 4  cdc_handshake            9 ports  src/cross.vhd         │
+~                                                                │ 5  ctrl_regs                10 ports  src/ctrl_regs.vhd    │
+~                                                                │ 6  irq_sync                 4 ports  src/irq_sync.vhd      │
+~                                                                │ 7  line_buffer              6 ports  src/line_buffer.vhd   │
+~                                                                │ 8  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 9  axi_regs                 19 ports  src/regs.vhd         │
+~                                                                │10  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~                                                                ╭────────────────────────────────────────────────────────────╮
+~                                                                │                                                            │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~
+:HdlSnipInstantiate!
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;
+  3   use ieee.numeric_std.all;
+  4
+  5 entity top is
+  6   port (
+  7     clk   : in std_logic;
+  8     rst_n : in std_logic
+  9   );
+ 10 end entity top;
+ 11
+ 12 architecture rtl of top is
+ 13
+ 14 begin
+ 15
+ 16 end architecture rtl;
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
+~                                                                │ 1  apb_regs                 10 ports  src/apb.vhd          │
+~                                                                │ 2  fifo_sync                8 ports  src/buffer.vhd        │
+~                                                                │ 3  cfg_cross                9 ports  src/cfg_cross.vhd     │
+~                                                                │ 4  cdc_handshake            9 ports  src/cross.vhd         │
+~                                                                │ 5  ctrl_regs                10 ports  src/ctrl_regs.vhd    │
+~                                                                │ 6  irq_sync                 4 ports  src/irq_sync.vhd      │
+~                                                                │ 7  line_buffer              6 ports  src/line_buffer.vhd   │
+~                                                                │ 8  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 9  axi_regs                 19 ports  src/regs.vhd         │
+~                                                                │10  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~                                                                ╭────────────────────────────────────────────────────────────╮
+~                                                                │                                                            │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~
+:HdlSnipInstantiate!
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;                                                                                    ╭───────╮
+  3   use ieee.numeric_std.all;                                                                                       │ <C-D> │
+  4                                                                                                                   ╰───────╯
+  5 entity top is
+  6   port (
+  7     clk   : in std_logic;
+  8     rst_n : in std_logic
+  9   );
+ 10 end entity top;
+ 11
+ 12 architecture rtl of top is
+ 13
+ 14 begin
+ 15
+ 16 end architecture rtl;
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
+~                                                                │11  status_regs              19 ports  src/status_regs.vhd  │
+~                                                                │12  axis_skid                10 ports  src/stream.vhd       │
+~                                                                │13  bit_sync                 4 ports  src/sync.vhd          │
+~                                                                │14  tx_fifo                  8 ports  src/tx_fifo.vhd       │
+~                                                                │                                                            │
+~                                                                │                                                            │
+~                                                                │                                                            │
+~                                                                │                                                            │
+~                                                                │                                                            │
+~                                                                │                                                            │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~                                                                ╭────────────────────────────────────────────────────────────╮
+~                                                                │                                                            │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~
+:HdlSnipInstantiate!
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;                                                                                    ╭───────╮
+  3   use ieee.numeric_std.all;                                                                                       │ <C-D> │
+  4                                                                                                                   ╰───────╯
+  5 entity top is
+  6   port (
+  7     clk   : in std_logic;
+  8     rst_n : in std_logic
+  9   );
+ 10 end entity top;
+ 11
+ 12 architecture rtl of top is
+ 13
+ 14 begin
+ 15
+ 16 end architecture rtl;
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
+~                                                                │11  status_regs              19 ports  src/status_regs.vhd  │
+~                                                                │12  axis_skid                10 ports  src/stream.vhd       │
+~                                                                │13  bit_sync                 4 ports  src/sync.vhd          │
+~                                                                │14  tx_fifo                  8 ports  src/tx_fifo.vhd       │
+~                                                                │                                                            │
+~                                                                │                                                            │
+~                                                                │                                                            │
+~                                                                │                                                            │
+~                                                                │                                                            │
+~                                                                │                                                            │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~                                                                ╭────────────────────────────────────────────────────────────╮
+~                                                                │                                                            │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~
+:HdlSnipInstantiate!
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;                                                                              ╭─────────────╮
+  3   use ieee.numeric_std.all;                                                                                 │ <C-D> <C-D> │
+  4                                                                                                             ╰─────────────╯
+  5 entity top is
+  6   port (
+  7     clk   : in std_logic;
+  8     rst_n : in std_logic
+  9   );
+ 10 end entity top;
+ 11
+ 12 architecture rtl of top is
+ 13
+ 14 begin
+ 15
+ 16 end architecture rtl;
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
+~                                                                │ 1  apb_regs                 10 ports  src/apb.vhd          │
+~                                                                │ 2  fifo_sync                8 ports  src/buffer.vhd        │
+~                                                                │ 3  cfg_cross                9 ports  src/cfg_cross.vhd     │
+~                                                                │ 4  cdc_handshake            9 ports  src/cross.vhd         │
+~                                                                │ 5  ctrl_regs                10 ports  src/ctrl_regs.vhd    │
+~                                                                │ 6  irq_sync                 4 ports  src/irq_sync.vhd      │
+~                                                                │ 7  line_buffer              6 ports  src/line_buffer.vhd   │
+~                                                                │ 8  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 9  axi_regs                 19 ports  src/regs.vhd         │
+~                                                                │10  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~                                                                ╭────────────────────────────────────────────────────────────╮
+~                                                                │                                                            │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~
+:HdlSnipInstantiate!
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;
+  3   use ieee.numeric_std.all;
+  4
+  5 entity top is
+  6   port (
+  7     clk   : in std_logic;
+  8     rst_n : in std_logic
+  9   );
+ 10 end entity top;
+ 11
+ 12 architecture rtl of top is
+ 13
+ 14 begin
+ 15
+ 16 end architecture rtl;
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
+~                                                                │ 1  apb_regs                 10 ports  src/apb.vhd          │
+~                                                                │ 2  fifo_sync                8 ports  src/buffer.vhd        │
+~                                                                │ 3  cfg_cross                9 ports  src/cfg_cross.vhd     │
+~                                                                │ 4  cdc_handshake            9 ports  src/cross.vhd         │
+~                                                                │ 5  ctrl_regs                10 ports  src/ctrl_regs.vhd    │
+~                                                                │ 6  irq_sync                 4 ports  src/irq_sync.vhd      │
+~                                                                │ 7  line_buffer              6 ports  src/line_buffer.vhd   │
+~                                                                │ 8  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 9  axi_regs                 19 ports  src/regs.vhd         │
+~                                                                │10  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~                                                                ╭────────────────────────────────────────────────────────────╮
+~                                                                │                                                            │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~
+:HdlSnipInstantiate!
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;                                                                                    ╭───────╮
+  3   use ieee.numeric_std.all;                                                                                       │ <C-K> │
+  4                                                                                                                   ╰───────╯
+  5 entity top is
+  6   port (
+  7     clk   : in std_logic;
+  8     rst_n : in std_logic
+  9   );
+ 10 end entity top;
+ 11
+ 12 architecture rtl of top is
+ 13
+ 14 begin
+ 15
+ 16 end architecture rtl;
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
+~                                                                │ 1  apb_regs                 10 ports  src/apb.vhd          │
+~                                                                │ 2  fifo_sync                8 ports  src/buffer.vhd        │
+~                                                                │ 3  cfg_cross                9 ports  src/cfg_cross.vhd     │
+~                                                                │ 4  cdc_handshake            9 ports  src/cross.vhd         │
+~                                                                │ 5  ctrl_regs                10 ports  src/ctrl_regs.vhd    │
+~                                                                │ 6  irq_sync                 4 ports  src/irq_sync.vhd      │
+~                                                                │ 7  line_buffer              6 ports  src/line_buffer.vhd   │
+~                                                                │ 8  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 9  axi_regs                 19 ports  src/regs.vhd         │
+~                                                                │10  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~                                                                ╭────────────────────────────────────────────────────────────╮
+~                                                                │                                                            │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~
+:HdlSnipInstantiate!
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;                                                                                    ╭───────╮
+  3   use ieee.numeric_std.all;                                                                                       │ <C-K> │
+  4                                                                                                                   ╰───────╯
+  5 entity top is
+  6   port (
+  7     clk   : in std_logic;
+  8     rst_n : in std_logic
+  9   );
+ 10 end entity top;
+ 11
+ 12 architecture rtl of top is
+ 13
+ 14 begin
+ 15
+ 16 end architecture rtl;
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
+~                                                                │ 1  apb_regs                 10 ports  src/apb.vhd          │
+~                                                                │ 2  fifo_sync                8 ports  src/buffer.vhd        │
+~                                                                │ 3  cfg_cross                9 ports  src/cfg_cross.vhd     │
+~                                                                │ 4  cdc_handshake            9 ports  src/cross.vhd         │
+~                                                                │ 5  ctrl_regs                10 ports  src/ctrl_regs.vhd    │
+~                                                                │ 6  irq_sync                 4 ports  src/irq_sync.vhd      │
+~                                                                │ 7  line_buffer              6 ports  src/line_buffer.vhd   │
+~                                                                │ 8  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 9  axi_regs                 19 ports  src/regs.vhd         │
+~                                                                │10  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~                                                                ╭────────────────────────────────────────────────────────────╮
+~                                                                │                                                            │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~
+:HdlSnipInstantiate!
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;                                                                              ╭─────────────╮
+  3   use ieee.numeric_std.all;                                                                                 │ <C-K> <C-K> │
+  4                                                                                                             ╰─────────────╯
+  5 entity top is
+  6   port (
+  7     clk   : in std_logic;
+  8     rst_n : in std_logic
+  9   );
+ 10 end entity top;
+ 11
+ 12 architecture rtl of top is
+ 13
+ 14 begin
+ 15
+ 16 end architecture rtl;
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
+~                                                                │ 1  apb_regs                 10 ports  src/apb.vhd          │
+~                                                                │ 2  fifo_sync                8 ports  src/buffer.vhd        │
+~                                                                │ 3  cfg_cross                9 ports  src/cfg_cross.vhd     │
+~                                                                │ 4  cdc_handshake            9 ports  src/cross.vhd         │
+~                                                                │ 5  ctrl_regs                10 ports  src/ctrl_regs.vhd    │
+~                                                                │ 6  irq_sync                 4 ports  src/irq_sync.vhd      │
+~                                                                │ 7  line_buffer              6 ports  src/line_buffer.vhd   │
+~                                                                │ 8  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 9  axi_regs                 19 ports  src/regs.vhd         │
+~                                                                │10  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~                                                                ╭────────────────────────────────────────────────────────────╮
+~                                                                │                                                            │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~
+:HdlSnipInstantiate!
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;                                                                              ╭─────────────╮
+  3   use ieee.numeric_std.all;                                                                                 │ <C-K> <C-K> │
+  4                                                                                                             ╰─────────────╯
+  5 entity top is
+  6   port (
+  7     clk   : in std_logic;
+  8     rst_n : in std_logic
+  9   );
+ 10 end entity top;
+ 11
+ 12 architecture rtl of top is
+ 13
+ 14 begin
+ 15
+ 16 end architecture rtl;
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
+~                                                                │ 1  apb_regs                 10 ports  src/apb.vhd          │
+~                                                                │ 2  fifo_sync                8 ports  src/buffer.vhd        │
+~                                                                │ 3  cfg_cross                9 ports  src/cfg_cross.vhd     │
+~                                                                │ 4  cdc_handshake            9 ports  src/cross.vhd         │
+~                                                                │ 5  ctrl_regs                10 ports  src/ctrl_regs.vhd    │
+~                                                                │ 6  irq_sync                 4 ports  src/irq_sync.vhd      │
+~                                                                │ 7  line_buffer              6 ports  src/line_buffer.vhd   │
+~                                                                │ 8  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 9  axi_regs                 19 ports  src/regs.vhd         │
+~                                                                │10  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~                                                                ╭────────────────────────────────────────────────────────────╮
+~                                                                │                                                            │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~
+:HdlSnipInstantiate!
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;                                                                        ╭───────────────────╮
+  3   use ieee.numeric_std.all;                                                                           │ <C-K> <C-K> <C-K> │
+  4                                                                                                       ╰───────────────────╯
+  5 entity top is
+  6   port (
+  7     clk   : in std_logic;
+  8     rst_n : in std_logic
+  9   );
+ 10 end entity top;
+ 11
+ 12 architecture rtl of top is
+ 13
+ 14 begin
+ 15
+ 16 end architecture rtl;
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
+~                                                                │ 1  apb_regs                 10 ports  src/apb.vhd          │
+~                                                                │ 2  fifo_sync                8 ports  src/buffer.vhd        │
+~                                                                │ 3  cfg_cross                9 ports  src/cfg_cross.vhd     │
+~                                                                │ 4  cdc_handshake            9 ports  src/cross.vhd         │
+~                                                                │ 5  ctrl_regs                10 ports  src/ctrl_regs.vhd    │
+~                                                                │ 6  irq_sync                 4 ports  src/irq_sync.vhd      │
+~                                                                │ 7  line_buffer              6 ports  src/line_buffer.vhd   │
+~                                                                │ 8  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 9  axi_regs                 19 ports  src/regs.vhd         │
+~                                                                │10  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~                                                                ╭────────────────────────────────────────────────────────────╮
+~                                                                │                                                            │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~
+:HdlSnipInstantiate!
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;                                                                        ╭───────────────────╮
+  3   use ieee.numeric_std.all;                                                                           │ <C-K> <C-K> <C-K> │
+  4                                                                                                       ╰───────────────────╯
+  5 entity top is
+  6   port (
+  7     clk   : in std_logic;
+  8     rst_n : in std_logic
+  9   );
+ 10 end entity top;
+ 11
+ 12 architecture rtl of top is
+ 13
+ 14 begin
+ 15
+ 16 end architecture rtl;
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
+~                                                                │ 1  apb_regs                 10 ports  src/apb.vhd          │
+~                                                                │ 2  fifo_sync                8 ports  src/buffer.vhd        │
+~                                                                │ 3  cfg_cross                9 ports  src/cfg_cross.vhd     │
+~                                                                │ 4  cdc_handshake            9 ports  src/cross.vhd         │
+~                                                                │ 5  ctrl_regs                10 ports  src/ctrl_regs.vhd    │
+~                                                                │ 6  irq_sync                 4 ports  src/irq_sync.vhd      │
+~                                                                │ 7  line_buffer              6 ports  src/line_buffer.vhd   │
+~                                                                │ 8  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 9  axi_regs                 19 ports  src/regs.vhd         │
+~                                                                │10  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~                                                                ╭────────────────────────────────────────────────────────────╮
+~                                                                │                                                            │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~
+:HdlSnipInstantiate!
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;                                                                  ╭─────────────────────────╮
+  3   use ieee.numeric_std.all;                                                                     │ <C-K> <C-K> <C-K> <C-K> │
+  4                                                                                                 ╰─────────────────────────╯
+  5 entity top is
+  6   port (
+  7     clk   : in std_logic;
+  8     rst_n : in std_logic
+  9   );
+ 10 end entity top;
+ 11
+ 12 architecture rtl of top is
+ 13
+ 14 begin
+ 15
+ 16 end architecture rtl;
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
+~                                                                │ 1  apb_regs                 10 ports  src/apb.vhd          │
+~                                                                │ 2  fifo_sync                8 ports  src/buffer.vhd        │
+~                                                                │ 3  cfg_cross                9 ports  src/cfg_cross.vhd     │
+~                                                                │ 4  cdc_handshake            9 ports  src/cross.vhd         │
+~                                                                │ 5  ctrl_regs                10 ports  src/ctrl_regs.vhd    │
+~                                                                │ 6  irq_sync                 4 ports  src/irq_sync.vhd      │
+~                                                                │ 7  line_buffer              6 ports  src/line_buffer.vhd   │
+~                                                                │ 8  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 9  axi_regs                 19 ports  src/regs.vhd         │
+~                                                                │10  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~                                                                ╭────────────────────────────────────────────────────────────╮
+~                                                                │                                                            │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~
+:HdlSnipInstantiate!
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;                                                                  ╭─────────────────────────╮
+  3   use ieee.numeric_std.all;                                                                     │ <C-K> <C-K> <C-K> <C-K> │
+  4                                                                                                 ╰─────────────────────────╯
+  5 entity top is
+  6   port (
+  7     clk   : in std_logic;
+  8     rst_n : in std_logic
+  9   );
+ 10 end entity top;
+ 11
+ 12 architecture rtl of top is
+ 13
+ 14 begin
+ 15
+ 16 end architecture rtl;
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
+~                                                                │ 1  apb_regs                 10 ports  src/apb.vhd          │
+~                                                                │ 2  fifo_sync                8 ports  src/buffer.vhd        │
+~                                                                │ 3  cfg_cross                9 ports  src/cfg_cross.vhd     │
+~                                                                │ 4  cdc_handshake            9 ports  src/cross.vhd         │
+~                                                                │ 5  ctrl_regs                10 ports  src/ctrl_regs.vhd    │
+~                                                                │ 6  irq_sync                 4 ports  src/irq_sync.vhd      │
+~                                                                │ 7  line_buffer              6 ports  src/line_buffer.vhd   │
+~                                                                │ 8  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 9  axi_regs                 19 ports  src/regs.vhd         │
+~                                                                │10  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~                                                                ╭────────────────────────────────────────────────────────────╮
+~                                                                │                                                            │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~
+:HdlSnipInstantiate!
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;                                                                  ╭─────────────────────────╮
+  3   use ieee.numeric_std.all;                                                                     │ <C-K> <C-K> <C-K> <C-K> │
+  4                                                                                                 ╰─────────────────────────╯
+  5 entity top is
+  6   port (
+  7     clk   : in std_logic;
+  8     rst_n : in std_logic
+  9   );
+ 10 end entity top;
+ 11
+ 12 architecture rtl of top is
+ 13
+ 14 begin
+ 15
+ 16 end architecture rtl;
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
+~                                                                │ 1  apb_regs                 10 ports  src/apb.vhd          │
+~                                                                │ 2  fifo_sync                8 ports  src/buffer.vhd        │
+~                                                                │ 3  cfg_cross                9 ports  src/cfg_cross.vhd     │
+~                                                                │ 4  cdc_handshake            9 ports  src/cross.vhd         │
+~                                                                │ 5  ctrl_regs                10 ports  src/ctrl_regs.vhd    │
+~                                                                │ 6  irq_sync                 4 ports  src/irq_sync.vhd      │
+~                                                                │ 7  line_buffer              6 ports  src/line_buffer.vhd   │
+~                                                                │ 8  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 9  axi_regs                 19 ports  src/regs.vhd         │
+~                                                                │10  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~                                                                ╭────────────────────────────────────────────────────────────╮
+~                                                                │                                                            │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~
+:HdlSnipInstantiate!
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;                                                            ╭───────────────────────────────╮
+  3   use ieee.numeric_std.all;                                                               │ <C-K> <C-K> <C-K> <C-K> <C-K> │
+  4                                                                                           ╰───────────────────────────────╯
+  5 entity top is
+  6   port (
+  7     clk   : in std_logic;
+  8     rst_n : in std_logic
+  9   );
+ 10 end entity top;
+ 11
+ 12 architecture rtl of top is
+ 13
+ 14 begin
+ 15
+ 16 end architecture rtl;
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
+~                                                                │ 1  apb_regs                 10 ports  src/apb.vhd          │
+~                                                                │ 2  fifo_sync                8 ports  src/buffer.vhd        │
+~                                                                │ 3  cfg_cross                9 ports  src/cfg_cross.vhd     │
+~                                                                │ 4  cdc_handshake            9 ports  src/cross.vhd         │
+~                                                                │ 5  ctrl_regs                10 ports  src/ctrl_regs.vhd    │
+~                                                                │ 6  irq_sync                 4 ports  src/irq_sync.vhd      │
+~                                                                │ 7  line_buffer              6 ports  src/line_buffer.vhd   │
+~                                                                │ 8  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 9  axi_regs                 19 ports  src/regs.vhd         │
+~                                                                │10  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~                                                                ╭────────────────────────────────────────────────────────────╮
+~                                                                │                                                            │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~
+:HdlSnipInstantiate!
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;                                                            ╭───────────────────────────────╮
+  3   use ieee.numeric_std.all;                                                               │ <C-K> <C-K> <C-K> <C-K> <C-K> │
+  4                                                                                           ╰───────────────────────────────╯
+  5 entity top is
+  6   port (
+  7     clk   : in std_logic;
+  8     rst_n : in std_logic
+  9   );
+ 10 end entity top;
+ 11
+ 12 architecture rtl of top is
+ 13
+ 14 begin
+ 15
+ 16 end architecture rtl;
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
+~                                                                │ 1  apb_regs                 10 ports  src/apb.vhd          │
+~                                                                │ 2  fifo_sync                8 ports  src/buffer.vhd        │
+~                                                                │ 3  cfg_cross                9 ports  src/cfg_cross.vhd     │
+~                                                                │ 4  cdc_handshake            9 ports  src/cross.vhd         │
+~                                                                │ 5  ctrl_regs                10 ports  src/ctrl_regs.vhd    │
+~                                                                │ 6  irq_sync                 4 ports  src/irq_sync.vhd      │
+~                                                                │ 7  line_buffer              6 ports  src/line_buffer.vhd   │
+~                                                                │ 8  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 9  axi_regs                 19 ports  src/regs.vhd         │
+~                                                                │10  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~                                                                ╭────────────────────────────────────────────────────────────╮
+~                                                                │                                                            │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~
+:HdlSnipInstantiate!
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;                                                            ╭───────────────────────────────╮
+  3   use ieee.numeric_std.all;                                                               │ <C-K> <C-K> <C-K> <C-K> <C-K> │
+  4                                                                                           ╰───────────────────────────────╯
+  5 entity top is
+  6   port (
+  7     clk   : in std_logic;
+  8     rst_n : in std_logic
+  9   );
+ 10 end entity top;
+ 11
+ 12 architecture rtl of top is
+ 13
+ 14 begin
+ 15
+ 16 end architecture rtl;
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
+~                                                                │ 1  apb_regs                 10 ports  src/apb.vhd          │
+~                                                                │ 2  fifo_sync                8 ports  src/buffer.vhd        │
+~                                                                │ 3  cfg_cross                9 ports  src/cfg_cross.vhd     │
+~                                                                │ 4  cdc_handshake            9 ports  src/cross.vhd         │
+~                                                                │ 5  ctrl_regs                10 ports  src/ctrl_regs.vhd    │
+~                                                                │ 6  irq_sync                 4 ports  src/irq_sync.vhd      │
+~                                                                │ 7  line_buffer              6 ports  src/line_buffer.vhd   │
+~                                                                │ 8  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 9  axi_regs                 19 ports  src/regs.vhd         │
+~                                                                │10  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~                                                                ╭────────────────────────────────────────────────────────────╮
+~                                                                │                                                            │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~
+:HdlSnipInstantiate!
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;                                                            ╭───────────────────────────────╮
+  3   use ieee.numeric_std.all;                                                               │ <C-K> <C-K> <C-K> <C-K> <C-K> │
+  4                                                                                           ╰───────────────────────────────╯
+  5 entity top is
+  6   port (
+  7     clk   : in std_logic;
+  8     rst_n : in std_logic
+  9   );
+ 10 end entity top;
+ 11
+ 12 architecture rtl of top is
+ 13
+ 14 begin
+ 15
+ 16 end architecture rtl;
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
+~                                                                │ 1  apb_regs                 10 ports  src/apb.vhd          │
+~                                                                │ 2  fifo_sync                8 ports  src/buffer.vhd        │
+~                                                                │ 3  cfg_cross                9 ports  src/cfg_cross.vhd     │
+~                                                                │ 4  cdc_handshake            9 ports  src/cross.vhd         │
+~                                                                │ 5  ctrl_regs                10 ports  src/ctrl_regs.vhd    │
+~                                                                │ 6  irq_sync                 4 ports  src/irq_sync.vhd      │
+~                                                                │ 7  line_buffer              6 ports  src/line_buffer.vhd   │
+~                                                                │ 8  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 9  axi_regs                 19 ports  src/regs.vhd         │
+~                                                                │10  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~                                                                ╭────────────────────────────────────────────────────────────╮
+~                                                                │                                                            │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~
+:HdlSnipInstantiate!
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;                                                             ╭──────────────────────────────╮
+  3   use ieee.numeric_std.all;                                                                │ <C-K> <C-K> <C-K> <C-K> <NL> │
+  4                                                                                            ╰──────────────────────────────╯
+  5 entity top is
+  6   port (
+  7     clk   : in std_logic;
+  8     rst_n : in std_logic
+  9   );
+ 10 end entity top;
+ 11
+ 12 architecture rtl of top is
+ 13
+ 14 begin
+ 15
+ 16 end architecture rtl;
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
+~                                                                │ 1  apb_regs                 10 ports  src/apb.vhd          │
+~                                                                │ 2  fifo_sync                8 ports  src/buffer.vhd        │
+~                                                                │ 3  cfg_cross                9 ports  src/cfg_cross.vhd     │
+~                                                                │ 4  cdc_handshake            9 ports  src/cross.vhd         │
+~                                                                │ 5  ctrl_regs                10 ports  src/ctrl_regs.vhd    │
+~                                                                │ 6  irq_sync                 4 ports  src/irq_sync.vhd      │
+~                                                                │ 7  line_buffer              6 ports  src/line_buffer.vhd   │
+~                                                                │ 8  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 9  axi_regs                 19 ports  src/regs.vhd         │
+~                                                                │10  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~                                                                ╭────────────────────────────────────────────────────────────╮
+~                                                                │                                                            │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~
+:HdlSnipInstantiate!
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;                                                              ╭─────────────────────────────╮
+  3   use ieee.numeric_std.all;                                                                 │ <C-K> <C-K> <C-K> <NL> <CR> │
+  4                                                                                             ╰─────────────────────────────╯
+  5 entity top is
+  6   port (
+  7     clk   : in std_logic;
+  8     rst_n : in std_logic
+  9   );
+ 10 end entity top;
+ 11
+ 12 architecture rtl of top is
+ 13
+ 14   signal clk   : std_logic;
+ 15   signal rst_n : std_logic;
+ 16   signal d     : std_logic;
+ 17   signal q     : std_logic;
+ 18
+ 19 begin
+ 20
+ 21   irq_sync_inst : entity work.irq_sync
+ 22     generic map (
+ 23       G_STAGES => 3,
+ 24       G_INIT   => '0'
+ 25     )
+ 26     port map (
+ 27       clk   => clk,
+ 28       rst_n => rst_n,
+ 29       d_i   => d,
+ 30       q_o   => q
+ 31     );
+ 32
+ 33 end architecture rtl;
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;
+  3   use ieee.numeric_std.all;
+  4
+  5 entity top is
+  6   port (
+  7     clk   : in std_logic;
+  8     rst_n : in std_logic
+  9   );
+ 10 end entity top;
+ 11
+ 12 architecture rtl of top is
+ 13
+ 14   signal clk   : std_logic;
+ 15   signal rst_n : std_logic;
+ 16   signal d     : std_logic;
+ 17   signal q     : std_logic;
+ 18
+ 19 begin
+ 20
+ 21   irq_sync_inst : entity work.irq_sync
+ 22     generic map (
+ 23       G_STAGES => 3,
+ 24       G_INIT   => '0'
+ 25     )
+ 26     port map (
+ 27       clk   => clk,
+ 28       rst_n => rst_n,
+ 29       d_i   => d,
+ 30       q_o   => q
+ 31     );
+ 32
+ 33 end architecture rtl;
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;                                                                                        ╭───╮
+  3   use ieee.numeric_std.all;                                                                                           │ G │
+  4                                                                                                                       ╰───╯
+  5 entity top is
+  6   port (
+  7     clk   : in std_logic;
+  8     rst_n : in std_logic
+  9   );
+ 10 end entity top;
+ 11
+ 12 architecture rtl of top is
+ 13
+ 14   signal clk   : std_logic;
+ 15   signal rst_n : std_logic;
+ 16   signal d     : std_logic;
+ 17   signal q     : std_logic;
+ 18
+ 19 begin
+ 20
+ 21   irq_sync_inst : entity work.irq_sync
+ 22     generic map (
+ 23       G_STAGES => 3,
+ 24       G_INIT   => '0'
+ 25     )
+ 26     port map (
+ 27       clk   => clk,
+ 28       rst_n => rst_n,
+ 29       d_i   => d,
+ 30       q_o   => q
+ 31     );
+ 32
+ 33 end architecture rtl;
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;                                                                                       ╭────╮
+  3   use ieee.numeric_std.all;                                                                                          │ Gk │
+  4                                                                                                                      ╰────╯
+  5 entity top is
+  6   port (
+  7     clk   : in std_logic;
+  8     rst_n : in std_logic
+  9   );
+ 10 end entity top;
+ 11
+ 12 architecture rtl of top is
+ 13
+ 14   signal clk   : std_logic;
+ 15   signal rst_n : std_logic;
+ 16   signal d     : std_logic;
+ 17   signal q     : std_logic;
+ 18
+ 19 begin
+ 20
+ 21   irq_sync_inst : entity work.irq_sync
+ 22     generic map (
+ 23       G_STAGES => 3,
+ 24       G_INIT   => '0'
+ 25     )
+ 26     port map (
+ 27       clk   => clk,
+ 28       rst_n => rst_n,
+ 29       d_i   => d,
+ 30       q_o   => q
+ 31     );
+ 32
+ 33 end architecture rtl;
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;                                                                                       ╭────╮
+  3   use ieee.numeric_std.all;                                                                                          │ Gk │
+  4                                                                                                                      ╰────╯
+  5 entity top is
+  6   port (
+  7     clk   : in std_logic;
+  8     rst_n : in std_logic
+  9   );
+ 10 end entity top;
+ 11
+ 12 architecture rtl of top is
+ 13
+ 14   signal clk   : std_logic;
+ 15   signal rst_n : std_logic;
+ 16   signal d     : std_logic;
+ 17   signal q     : std_logic;
+ 18
+ 19 begin
+ 20
+ 21   irq_sync_inst : entity work.irq_sync
+ 22     generic map (
+ 23       G_STAGES => 3,
+ 24       G_INIT   => '0'
+ 25     )
+ 26     port map (
+ 27       clk   => clk,
+ 28       rst_n => rst_n,
+ 29       d_i   => d,
+ 30       q_o   => q
+ 31     );
+ 32
+ 33 end architecture rtl;
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;                                                                                       ╭────╮
+  3   use ieee.numeric_std.all;                                                                                          │ Gk │
+  4                                                                                                                      ╰────╯
+  5 entity top is
+  6   port (
+  7     clk   : in std_logic;
+  8     rst_n : in std_logic
+  9   );
+ 10 end entity top;
+ 11
+ 12 architecture rtl of top is
+ 13
+ 14   signal clk   : std_logic;
+ 15   signal rst_n : std_logic;
+ 16   signal d     : std_logic;
+ 17   signal q     : std_logic;
+ 18
+ 19 begin
+ 20
+ 21   irq_sync_inst : entity work.irq_sync
+ 22     generic map (
+ 23       G_STAGES => 3,
+ 24       G_INIT   => '0'
+ 25     )
+ 26     port map (
+ 27       clk   => clk,
+ 28       rst_n => rst_n,
+ 29       d_i   => d,
+ 30       q_o   => q
+ 31     );
+ 32
+ 33 end architecture rtl;
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+:HdlSnipInstantiate!
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;                                                             ╭──────────────────────────────╮
+  3   use ieee.numeric_std.all;                                                                │ Gk :HdlSnipInstantiate! <CR> │
+  4                                                                                            ╰──────────────────────────────╯
+  5 entity top is
+  6   port (
+  7     clk   : in std_logic;
+  8     rst_n : in std_logic
+  9   );
+ 10 end entity top;
+ 11
+ 12 architecture rtl of top is
+ 13
+ 14   signal clk   : std_logic;
+ 15   signal rst_n : std_logic;
+ 16   signal d     : std_logic;
+ 17   signal q     : std_logic;
+ 18
+ 19 begin
+ 20
+ 21   irq_sync_inst : entity work.irq_sync
+ 22     generic map (
+ 23       G_STAGES => 3,
+ 24       G_INIT   => '0'
+ 25     )
+ 26     port map (
+ 27       clk   => clk,
+ 28       rst_n => rst_n,
+ 29       d_i   => d,
+ 30       q_o   => q
+ 31     );
+ 32
+ 33 end architecture rtl;
+~
+~
+~
+~
+~
+~
+~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
+~                                                                │ 1  apb_regs                 10 ports  src/apb.vhd          │
+~                                                                │ 2  fifo_sync                8 ports  src/buffer.vhd        │
+~                                                                │ 3  cfg_cross                9 ports  src/cfg_cross.vhd     │
+~                                                                │ 4  cdc_handshake            9 ports  src/cross.vhd         │
+~                                                                │ 5  ctrl_regs                10 ports  src/ctrl_regs.vhd    │
+~                                                                │ 6  irq_sync                 4 ports  src/irq_sync.vhd      │
+~                                                                │ 7  line_buffer              6 ports  src/line_buffer.vhd   │
+~                                                                │ 8  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 9  axi_regs                 19 ports  src/regs.vhd         │
+~                                                                │10  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~                                                                ╭────────────────────────────────────────────────────────────╮
+~                                                                │                                                            │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~
+:HdlSnipInstantiate!
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;
+  3   use ieee.numeric_std.all;
+  4
+  5 entity top is
+  6   port (
+  7     clk   : in std_logic;
+  8     rst_n : in std_logic
+  9   );
+ 10 end entity top;
+ 11
+ 12 architecture rtl of top is
+ 13
+ 14   signal clk   : std_logic;
+ 15   signal rst_n : std_logic;
+ 16   signal d     : std_logic;
+ 17   signal q     : std_logic;
+ 18
+ 19 begin
+ 20
+ 21   irq_sync_inst : entity work.irq_sync
+ 22     generic map (
+ 23       G_STAGES => 3,
+ 24       G_INIT   => '0'
+ 25     )
+ 26     port map (
+ 27       clk   => clk,
+ 28       rst_n => rst_n,
+ 29       d_i   => d,
+ 30       q_o   => q
+ 31     );
+ 32
+ 33 end architecture rtl;
+~
+~
+~
+~
+~
+~
+~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
+~                                                                │ 1  apb_regs                 10 ports  src/apb.vhd          │
+~                                                                │ 2  fifo_sync                8 ports  src/buffer.vhd        │
+~                                                                │ 3  cfg_cross                9 ports  src/cfg_cross.vhd     │
+~                                                                │ 4  cdc_handshake            9 ports  src/cross.vhd         │
+~                                                                │ 5  ctrl_regs                10 ports  src/ctrl_regs.vhd    │
+~                                                                │ 6  irq_sync                 4 ports  src/irq_sync.vhd      │
+~                                                                │ 7  line_buffer              6 ports  src/line_buffer.vhd   │
+~                                                                │ 8  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 9  axi_regs                 19 ports  src/regs.vhd         │
+~                                                                │10  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~                                                                ╭────────────────────────────────────────────────────────────╮
+~                                                                │                                                            │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~
+:HdlSnipInstantiate!
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;                                                                                     ╭──────╮
+  3   use ieee.numeric_std.all;                                                                                        │ fifo │
+  4                                                                                                                    ╰──────╯
+  5 entity top is
+  6   port (
+  7     clk   : in std_logic;
+  8     rst_n : in std_logic
+  9   );
+ 10 end entity top;
+ 11
+ 12 architecture rtl of top is
+ 13
+ 14   signal clk   : std_logic;
+ 15   signal rst_n : std_logic;
+ 16   signal d     : std_logic;
+ 17   signal q     : std_logic;
+ 18
+ 19 begin
+ 20
+ 21   irq_sync_inst : entity work.irq_sync
+ 22     generic map (
+ 23       G_STAGES => 3,
+ 24       G_INIT   => '0'
+ 25     )
+ 26     port map (
+ 27       clk   => clk,
+ 28       rst_n => rst_n,
+ 29       d_i   => d,
+ 30       q_o   => q
+ 31     );
+ 32
+ 33 end architecture rtl;
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
+~                                                                │ 1  fifo_sync                8 ports  src/buffer.vhd        │
+~                                                                │ 2  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                │ 3  tx_fifo                  8 ports  src/tx_fifo.vhd       │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~                                                                ╭────────────────────────────────────────────────────────────╮
+~                                                                │fifo                                                        │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~
+:HdlSnipInstantiate!
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;
+  3   use ieee.numeric_std.all;
+  4
+  5 entity top is
+  6   port (
+  7     clk   : in std_logic;
+  8     rst_n : in std_logic
+  9   );
+ 10 end entity top;
+ 11
+ 12 architecture rtl of top is
+ 13
+ 14   signal clk   : std_logic;
+ 15   signal rst_n : std_logic;
+ 16   signal d     : std_logic;
+ 17   signal q     : std_logic;
+ 18
+ 19 begin
+ 20
+ 21   irq_sync_inst : entity work.irq_sync
+ 22     generic map (
+ 23       G_STAGES => 3,
+ 24       G_INIT   => '0'
+ 25     )
+ 26     port map (
+ 27       clk   => clk,
+ 28       rst_n => rst_n,
+ 29       d_i   => d,
+ 30       q_o   => q
+ 31     );
+ 32
+ 33 end architecture rtl;
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
+~                                                                │ 1  fifo_sync                8 ports  src/buffer.vhd        │
+~                                                                │ 2  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                │ 3  tx_fifo                  8 ports  src/tx_fifo.vhd       │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~                                                                ╭────────────────────────────────────────────────────────────╮
+~                                                                │fifo                                                        │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~
+:HdlSnipInstantiate!
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;
+  3   use ieee.numeric_std.all;
+  4
+  5 entity top is
+  6   port (
+  7     clk   : in std_logic;
+  8     rst_n : in std_logic
+  9   );
+ 10 end entity top;
+ 11
+ 12 architecture rtl of top is
+ 13
+ 14   signal clk   : std_logic;
+ 15   signal rst_n : std_logic;
+ 16   signal d     : std_logic;
+ 17   signal q     : std_logic;
+ 18
+ 19 begin
+ 20
+ 21   irq_sync_inst : entity work.irq_sync
+ 22     generic map (
+ 23       G_STAGES => 3,
+ 24       G_INIT   => '0'
+ 25     )
+ 26     port map (
+ 27       clk   => clk,
+ 28       rst_n => rst_n,
+ 29       d_i   => d,
+ 30       q_o   => q
+ 31     );
+ 32
+ 33 end architecture rtl;
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
+~                                                                │ 1  fifo_sync                8 ports  src/buffer.vhd        │
+~                                                                │ 2  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                │ 3  tx_fifo                  8 ports  src/tx_fifo.vhd       │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~                                                                ╭────────────────────────────────────────────────────────────╮
+~                                                                │fifo                                                        │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~
+:HdlSnipInstantiate!
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;                                                                                    ╭───────╮
+  3   use ieee.numeric_std.all;                                                                                       │ <C-K> │
+  4                                                                                                                   ╰───────╯
+  5 entity top is
+  6   port (
+  7     clk   : in std_logic;
+  8     rst_n : in std_logic
+  9   );
+ 10 end entity top;
+ 11
+ 12 architecture rtl of top is
+ 13
+ 14   signal clk   : std_logic;
+ 15   signal rst_n : std_logic;
+ 16   signal d     : std_logic;
+ 17   signal q     : std_logic;
+ 18
+ 19 begin
+ 20
+ 21   irq_sync_inst : entity work.irq_sync
+ 22     generic map (
+ 23       G_STAGES => 3,
+ 24       G_INIT   => '0'
+ 25     )
+ 26     port map (
+ 27       clk   => clk,
+ 28       rst_n => rst_n,
+ 29       d_i   => d,
+ 30       q_o   => q
+ 31     );
+ 32
+ 33 end architecture rtl;
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
+~                                                                │ 1  fifo_sync                8 ports  src/buffer.vhd        │
+~                                                                │ 2  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                │ 3  tx_fifo                  8 ports  src/tx_fifo.vhd       │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~                                                                ╭────────────────────────────────────────────────────────────╮
+~                                                                │fifo                                                        │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~
+:HdlSnipInstantiate!
+────────────────────────────────────────────────────────────────────────────────
+  3   use ieee.numeric_std.all;
+  4                                                                                                              ╭────────────╮
+  5 entity top is                                                                                                │ <C-K> <CR> │
+  6   port (                                                                                                     ╰────────────╯
+  7     clk   : in std_logic;
+  8     rst_n : in std_logic
+  9   );
+ 10 end entity top;
+ 11
+ 12 architecture rtl of top is
+ 13
+ 14   signal clk   : std_logic;
+ 15   signal rst_n : std_logic;
+ 16   signal d     : std_logic;
+ 17   signal q     : std_logic;
+ 18
+ 19   signal clk     : std_logic;
+ 20   signal rst_n   : std_logic;
+ 21   signal wr_en   : std_logic;
+ 22   signal wr_data : std_logic_vector(32 - 1 downto 0);
+ 23   signal full    : std_logic;
+ 24   signal rd_en   : std_logic;
+ 25   signal rd_data : std_logic_vector(32 - 1 downto 0);
+ 26   signal empty   : std_logic;
+ 27
+ 28 begin
+ 29
+ 30   rx_fifo_inst : entity work.rx_fifo
+ 31     generic map (
+ 32       G_WIDTH => 32,
+ 33       G_DEPTH => 512
+ 34     )
+ 35     port map (
+ 36       clk       => clk,
+ 37       rst_n     => rst_n,
+ 38       wr_en_i   => wr_en,
+ 39       wr_data_i => wr_data,
+ 40       full_o    => full,
+ 41       rd_en_i   => rd_en,
+ 42       rd_data_o => rd_data,
+ 43       empty_o   => empty
+ 44     );
+ 45
+ 46   irq_sync_inst : entity work.irq_sync
+ 47     generic map (
+ 48       G_STAGES => 3,
+ 49       G_INIT   => '0'
+ 50     )
+ 51     port map (
+ 52       clk   => clk,
+ 53       rst_n => rst_n,
+ 54       d_i   => d,
+ 55       q_o   => q
+ 56     );
+ 57
+
+────────────────────────────────────────────────────────────────────────────────
+  3   use ieee.numeric_std.all;
+  4                                                                                                              ╭────────────╮
+  5 entity top is                                                                                                │ <C-K> <CR> │
+  6   port (                                                                                                     ╰────────────╯
+  7     clk   : in std_logic;
+  8     rst_n : in std_logic
+  9   );
+ 10 end entity top;
+ 11
+ 12 architecture rtl of top is
+ 13
+ 14   signal clk   : std_logic;
+ 15   signal rst_n : std_logic;
+ 16   signal d     : std_logic;
+ 17   signal q     : std_logic;
+ 18
+ 19   signal clk     : std_logic;
+ 20   signal rst_n   : std_logic;
+ 21   signal wr_en   : std_logic;
+ 22   signal wr_data : std_logic_vector(32 - 1 downto 0);
+ 23   signal full    : std_logic;
+ 24   signal rd_en   : std_logic;
+ 25   signal rd_data : std_logic_vector(32 - 1 downto 0);
+ 26   signal empty   : std_logic;
+ 27
+ 28 begin
+ 29
+ 30   rx_fifo_inst : entity work.rx_fifo
+ 31     generic map (
+ 32       G_WIDTH => 32,
+ 33       G_DEPTH => 512
+ 34     )
+ 35     port map (
+ 36       clk       => clk,
+ 37       rst_n     => rst_n,
+ 38       wr_en_i   => wr_en,
+ 39       wr_data_i => wr_data,
+ 40       full_o    => full,
+ 41       rd_en_i   => rd_en,
+ 42       rd_data_o => rd_data,
+ 43       empty_o   => empty
+ 44     );
+ 45
+ 46   irq_sync_inst : entity work.irq_sync
+ 47     generic map (
+ 48       G_STAGES => 3,
+ 49       G_INIT   => '0'
+ 50     )
+ 51     port map (
+ 52       clk   => clk,
+ 53       rst_n => rst_n,
+ 54       d_i   => d,
+ 55       q_o   => q
+ 56     );
+ 57
+
+────────────────────────────────────────────────────────────────────────────────
+  3   use ieee.numeric_std.all;
+  4                                                                                                            ╭──────────────╮
+  5 entity top is                                                                                              │ <C-K> <CR> 0 │
+  6   port (                                                                                                   ╰──────────────╯
+  7     clk   : in std_logic;
+  8     rst_n : in std_logic
+  9   );
+ 10 end entity top;
+ 11
+ 12 architecture rtl of top is
+ 13
+ 14   signal clk   : std_logic;
+ 15   signal rst_n : std_logic;
+ 16   signal d     : std_logic;
+ 17   signal q     : std_logic;
+ 18
+ 19   signal clk     : std_logic;
+ 20   signal rst_n   : std_logic;
+ 21   signal wr_en   : std_logic;
+ 22   signal wr_data : std_logic_vector(32 - 1 downto 0);
+ 23   signal full    : std_logic;
+ 24   signal rd_en   : std_logic;
+ 25   signal rd_data : std_logic_vector(32 - 1 downto 0);
+ 26   signal empty   : std_logic;
+ 27
+ 28 begin
+ 29
+ 30   rx_fifo_inst : entity work.rx_fifo
+ 31     generic map (
+ 32       G_WIDTH => 32,
+ 33       G_DEPTH => 512
+ 34     )
+ 35     port map (
+ 36       clk       => clk,
+ 37       rst_n     => rst_n,
+ 38       wr_en_i   => wr_en,
+ 39       wr_data_i => wr_data,
+ 40       full_o    => full,
+ 41       rd_en_i   => rd_en,
+ 42       rd_data_o => rd_data,
+ 43       empty_o   => empty
+ 44     );
+ 45
+ 46   irq_sync_inst : entity work.irq_sync
+ 47     generic map (
+ 48       G_STAGES => 3,
+ 49       G_INIT   => '0'
+ 50     )
+ 51     port map (
+ 52       clk   => clk,
+ 53       rst_n => rst_n,
+ 54       d_i   => d,
+ 55       q_o   => q
+ 56     );
+ 57
+
+────────────────────────────────────────────────────────────────────────────────
+  3   use ieee.numeric_std.all;
+  4                                                                                                            ╭──────────────╮
+  5 entity top is                                                                                              │ <C-K> <CR> 0 │
+  6   port (                                                                                                   ╰──────────────╯
+  7     clk   : in std_logic;
+  8     rst_n : in std_logic
+  9   );
+ 10 end entity top;
+ 11
+ 12 architecture rtl of top is
+ 13
+ 14   signal clk   : std_logic;
+ 15   signal rst_n : std_logic;
+ 16   signal d     : std_logic;
+ 17   signal q     : std_logic;
+ 18
+ 19   signal clk     : std_logic;
+ 20   signal rst_n   : std_logic;
+ 21   signal wr_en   : std_logic;
+ 22   signal wr_data : std_logic_vector(32 - 1 downto 0);
+ 23   signal full    : std_logic;
+ 24   signal rd_en   : std_logic;
+ 25   signal rd_data : std_logic_vector(32 - 1 downto 0);
+ 26   signal empty   : std_logic;
+ 27
+ 28 begin
+ 29
+ 30   rx_fifo_inst : entity work.rx_fifo
+ 31     generic map (
+ 32       G_WIDTH => 32,
+ 33       G_DEPTH => 512
+ 34     )
+ 35     port map (
+ 36       clk       => clk,
+ 37       rst_n     => rst_n,
+ 38       wr_en_i   => wr_en,
+ 39       wr_data_i => wr_data,
+ 40       full_o    => full,
+ 41       rd_en_i   => rd_en,
+ 42       rd_data_o => rd_data,
+ 43       empty_o   => empty
+ 44     );
+ 45
+ 46   irq_sync_inst : entity work.irq_sync
+ 47     generic map (
+ 48       G_STAGES => 3,
+ 49       G_INIT   => '0'
+ 50     )
+ 51     port map (
+ 52       clk   => clk,
+ 53       rst_n => rst_n,
+ 54       d_i   => d,
+ 55       q_o   => q
+ 56     );
+ 57
+
+────────────────────────────────────────────────────────────────────────────────
+  4
+  5 entity top is                                                                                        ╭────────────────────╮
+  6   port (                                                                                             │ <C-K> <CR> 0 <C-D> │
+  7     clk   : in std_logic;                                                                            ╰────────────────────╯
+  8     rst_n : in std_logic
+  9   );
+ 10 end entity top;
+ 11
+ 12 architecture rtl of top is
+ 13
+ 14   signal clk   : std_logic;
+ 15   signal rst_n : std_logic;
+ 16   signal d     : std_logic;
+ 17   signal q     : std_logic;
+ 18
+ 19   signal clk     : std_logic;
+ 20   signal rst_n   : std_logic;
+ 21   signal wr_en   : std_logic;
+ 22   signal wr_data : std_logic_vector(32 - 1 downto 0);
+ 23   signal full    : std_logic;
+ 24   signal rd_en   : std_logic;
+ 25   signal rd_data : std_logic_vector(32 - 1 downto 0);
+ 26   signal empty   : std_logic;
+ 27
+ 28 begin
+ 29
+ 30   rx_fifo_inst : entity work.rx_fifo
+ 31     generic map (
+ 32       G_WIDTH => 32,
+ 33       G_DEPTH => 512
+ 34     )
+ 35     port map (
+ 36       clk       => clk,
+ 37       rst_n     => rst_n,
+ 38       wr_en_i   => wr_en,
+ 39       wr_data_i => wr_data,
+ 40       full_o    => full,
+ 41       rd_en_i   => rd_en,
+ 42       rd_data_o => rd_data,
+ 43       empty_o   => empty
+ 44     );
+ 45
+ 46   irq_sync_inst : entity work.irq_sync
+ 47     generic map (
+ 48       G_STAGES => 3,
+ 49       G_INIT   => '0'
+ 50     )
+ 51     port map (
+ 52       clk   => clk,
+ 53       rst_n => rst_n,
+ 54       d_i   => d,
+ 55       q_o   => q
+ 56     );
+ 57
+ 58 end architecture rtl;
+
+────────────────────────────────────────────────────────────────────────────────
+  4
+  5 entity top is
+  6   port (
+  7     clk   : in std_logic;
+  8     rst_n : in std_logic
+  9   );
+ 10 end entity top;
+ 11
+ 12 architecture rtl of top is
+ 13
+ 14   signal clk   : std_logic;
+ 15   signal rst_n : std_logic;
+ 16   signal d     : std_logic;
+ 17   signal q     : std_logic;
+ 18
+ 19   signal clk     : std_logic;
+ 20   signal rst_n   : std_logic;
+ 21   signal wr_en   : std_logic;
+ 22   signal wr_data : std_logic_vector(32 - 1 downto 0);
+ 23   signal full    : std_logic;
+ 24   signal rd_en   : std_logic;
+ 25   signal rd_data : std_logic_vector(32 - 1 downto 0);
+ 26   signal empty   : std_logic;
+ 27
+ 28 begin
+ 29
+ 30   rx_fifo_inst : entity work.rx_fifo
+ 31     generic map (
+ 32       G_WIDTH => 32,
+ 33       G_DEPTH => 512
+ 34     )
+ 35     port map (
+ 36       clk       => clk,
+ 37       rst_n     => rst_n,
+ 38       wr_en_i   => wr_en,
+ 39       wr_data_i => wr_data,
+ 40       full_o    => full,
+ 41       rd_en_i   => rd_en,
+ 42       rd_data_o => rd_data,
+ 43       empty_o   => empty
+ 44     );
+ 45
+ 46   irq_sync_inst : entity work.irq_sync
+ 47     generic map (
+ 48       G_STAGES => 3,
+ 49       G_INIT   => '0'
+ 50     )
+ 51     port map (
+ 52       clk   => clk,
+ 53       rst_n => rst_n,
+ 54       d_i   => d,
+ 55       q_o   => q
+ 56     );
+ 57
+ 58 end architecture rtl;
+
+────────────────────────────────────────────────────────────────────────────────
+  4
+  5 entity top is
+  6   port (
+  7     clk   : in std_logic;
+  8     rst_n : in std_logic
+  9   );
+ 10 end entity top;
+ 11
+ 12 architecture rtl of top is
+ 13
+ 14   signal clk   : std_logic;
+ 15   signal rst_n : std_logic;
+ 16   signal d     : std_logic;
+ 17   signal q     : std_logic;
+ 18
+ 19   signal clk     : std_logic;
+ 20   signal rst_n   : std_logic;
+ 21   signal wr_en   : std_logic;
+ 22   signal wr_data : std_logic_vector(32 - 1 downto 0);
+ 23   signal full    : std_logic;
+ 24   signal rd_en   : std_logic;
+ 25   signal rd_data : std_logic_vector(32 - 1 downto 0);
+ 26   signal empty   : std_logic;
+ 27
+ 28 begin
+ 29
+ 30   rx_fifo_inst : entity work.rx_fifo
+ 31     generic map (
+ 32       G_WIDTH => 32,
+ 33       G_DEPTH => 512
+ 34     )
+ 35     port map (
+ 36       clk       => clk,
+ 37       rst_n     => rst_n,
+ 38       wr_en_i   => wr_en,
+ 39       wr_data_i => wr_data,
+ 40       full_o    => full,
+ 41       rd_en_i   => rd_en,
+ 42       rd_data_o => rd_data,
+ 43       empty_o   => empty
+ 44     );
+ 45
+ 46   irq_sync_inst : entity work.irq_sync
+ 47     generic map (
+ 48       G_STAGES => 3,
+ 49       G_INIT   => '0'
+ 50     )
+ 51     port map (
+ 52       clk   => clk,
+ 53       rst_n => rst_n,
+ 54       d_i   => d,
+ 55       q_o   => q
+ 56     );
+ 57
+ 58 end architecture rtl;
+
+────────────────────────────────────────────────────────────────────────────────
+  4
+  5 entity top is
+  6   port (
+  7     clk   : in std_logic;
+  8     rst_n : in std_logic
+  9   );
+ 10 end entity top;
+ 11
+ 12 architecture rtl of top is
+ 13
+ 14   signal clk   : std_logic;
+ 15   signal rst_n : std_logic;
+ 16   signal d     : std_logic;
+ 17   signal q     : std_logic;
+ 18
+ 19   signal clk     : std_logic;
+ 20   signal rst_n   : std_logic;
+ 21   signal wr_en   : std_logic;
+ 22   signal wr_data : std_logic_vector(32 - 1 downto 0);
+ 23   signal full    : std_logic;
+ 24   signal rd_en   : std_logic;
+ 25   signal rd_data : std_logic_vector(32 - 1 downto 0);
+ 26   signal empty   : std_logic;
+ 27
+ 28 begin
+ 29
+ 30   rx_fifo_inst : entity work.rx_fifo
+ 31     generic map (
+ 32       G_WIDTH => 32,
+ 33       G_DEPTH => 512
+ 34     )
+ 35     port map (
+ 36       clk       => clk,
+ 37       rst_n     => rst_n,
+ 38       wr_en_i   => wr_en,
+ 39       wr_data_i => wr_data,
+ 40       full_o    => full,
+ 41       rd_en_i   => rd_en,
+ 42       rd_data_o => rd_data,
+ 43       empty_o   => empty
+ 44     );
+ 45
+ 46   irq_sync_inst : entity work.irq_sync
+ 47     generic map (
+ 48       G_STAGES => 3,
+ 49       G_INIT   => '0'
+ 50     )
+ 51     port map (
+ 52       clk   => clk,
+ 53       rst_n => rst_n,
+ 54       d_i   => d,
+ 55       q_o   => q
+ 56     );
+ 57
+ 58 end architecture rtl;
+
+────────────────────────────────────────────────────────────────────────────────

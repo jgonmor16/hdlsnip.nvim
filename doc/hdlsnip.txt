@@ -13,12 +13,13 @@ CONTENTS                                                    *hdlsnip-contents*
     4. Mappings ............................... |hdlsnip-mappings|
     5. Completion ............................. |hdlsnip-completion|
     6. Changing a parameter ................... |hdlsnip-editing|
-    7. Configuration .......................... |hdlsnip-configuration|
-    8. Project configuration .................. |hdlsnip-project-config|
-    9. Templates .............................. |hdlsnip-templates|
-   10. Writing a template ..................... |hdlsnip-writing-templates|
-   11. Lua API ................................ |hdlsnip-api|
-   12. Health ................................. |hdlsnip-health|
+    7. Instantiating an entity ................ |hdlsnip-instantiate|
+    8. Configuration .......................... |hdlsnip-configuration|
+    9. Project configuration .................. |hdlsnip-project-config|
+   10. Templates .............................. |hdlsnip-templates|
+   11. Writing a template ..................... |hdlsnip-writing-templates|
+   12. Lua API ................................ |hdlsnip-api|
+   13. Health ................................. |hdlsnip-health|
 
 ==============================================================================
 1. INTRODUCTION                                         *hdlsnip-introduction*
@@ -63,6 +64,19 @@ built-in prompts are used if you have none.
                         Expand a template as a snippet, so its parameters
                         become tabstops. A dynamic template cannot be a
                         snippet, so it prompts and inserts instead.
+
+                                                         *:HdlSnipInstantiate*
+:HdlSnipInstantiate [{name}]
+                        Instantiate an entity from the project. Without
+                        {name}, the entities found are offered. With a bang,
+                        the port signals are added too. See
+                        |hdlsnip-instantiate|.
+
+                                                           *:HdlSnipTestbench*
+:HdlSnipTestbench [{name}]
+                        Write a testbench around an entity from the project.
+                        Without {name}, the entities found are offered. See
+                        |hdlsnip-testbench|.
 
                                                               *:HdlSnipReload*
 :HdlSnipReload          Rescan the runtimepath for templates. Useful while
@@ -199,7 +213,65 @@ A `mixed` template is not tracked: it lands in two places, and tracking half
 of it would be worse than tracking none.
 
 ==============================================================================
-7. CONFIGURATION                                       *hdlsnip-configuration*
+7. INSTANTIATING AN ENTITY                               *hdlsnip-instantiate*
+
+|:HdlSnipInstantiate| reads an entity from elsewhere in the project and writes
+its instantiation, rather than having you retype an interface that already
+exists.
+
+Entities are found by searching from the project root, identified by `.git`,
+`vhdl_ls.toml` or `.hdlsnip.lua`, with files nearer the current buffer offered
+first. Generated output and vendor build directories are skipped. An entity
+with no ports is skipped too: legal, but there is nothing to instantiate.
+
+Association is always named. Positional association compiles with two ports of
+the same type swapped, and the result is found in simulation rather than at
+analysis.
+
+With a bang, the port signals are declared as well. They go above the
+architecture's `begin` while the instance goes below it, and they carry the
+names the instantiation maps them to, so the two halves cannot disagree. The
+configured direction suffixes are dropped: a signal driving `wr_en_i` is not
+itself an input to anything.
+
+Generic values are substituted into the port subtypes, since the instantiating
+scope has no `G_WIDTH` of its own. A generic with no default is mapped to its
+own name, which will not analyse -- deliberately, since it is a value you have
+to supply.
+
+                                                              *hdlsnip-picker*
+The list is shown in a window matching the parameter dialog. Typing narrows
+it, `<C-d>` and `<C-u>` page through it and wrap at either end, and `<C-k>`
+and `<C-j>` move one entry at a time. `picker_height` sets how many are shown
+at once.
+
+A digit narrows like any other character rather than selecting, which is what
+lets a name ending in a digit be typed at all.
+
+When `vim.ui.select` has been replaced -- telescope, fzf-lua, snacks -- that
+is used instead. `picker` overrides the choice: "hdlsnip" always uses this
+window, "ui" always uses `vim.ui.select`.
+
+                                                           *hdlsnip-testbench*
+|:HdlSnipTestbench| writes the whole testbench rather than an instantiation: a
+signal for every port, a clock generator, a reset release, the DUT wired up
+and a stimulus process that stops the run.
+
+Clocks and resets are found by shape rather than by the configured name. A
+crossing with `src_clk` and `dst_clk` gets a generator for each, and a reset
+whose name ends in `n` is released to `'1'` while one that does not is
+released to `'0'`. Matching the configured name exactly produced a testbench
+that reported done at time zero on any design that did not use it.
+
+Every input is driven from time zero, or the design starts with `'U'` on its
+inputs and nothing downstream means anything.
+
+An empty buffer is used as it stands; otherwise `tb_{name}.vhd` is opened
+beside the entity's source. A testbench that already has content is not
+overwritten.
+
+==============================================================================
+8. CONFIGURATION                                       *hdlsnip-configuration*
 
 Calling `setup()` is optional; the defaults are used otherwise. >lua
 
@@ -221,6 +293,8 @@ Calling `setup()` is optional; the defaults are used otherwise. >lua
       vendor = "generic",
       align_ports = true,
       lsp = true,
+      picker = "auto",
+      picker_height = 10,
       keys = {
         expand = false,
         jump_next = false,
@@ -262,6 +336,11 @@ align_ports     Align the columns of generated declarations.
 lsp             Offer templates through the in-process completion server.
                 See |hdlsnip-completion|.
 
+picker          "auto" | "hdlsnip" | "ui". Which window chooses a template
+                or an entity. See |hdlsnip-picker|.
+
+picker_height   How many choices hdlsnip's own picker shows at once.
+
 keys            Mappings created by `setup()`. See |hdlsnip-mappings|.
 
 `setup()` may be called more than once. It is partial: an option it does not
@@ -272,7 +351,7 @@ Invalid options are reported with the path that is wrong, and the previous
 configuration is kept rather than half-applied.
 
 ==============================================================================
-8. PROJECT CONFIGURATION                              *hdlsnip-project-config*
+9. PROJECT CONFIGURATION                              *hdlsnip-project-config*
 
 A `.hdlsnip.lua` at the project root overrides the global configuration for
 buffers beneath it: >lua
@@ -293,7 +372,7 @@ Derived values are recomputed, not inherited. A project that sets
 `reset.polarity = "high"` gets `rst`, not the `rst_n` derived globally.
 
 ==============================================================================
-9. TEMPLATES                                               *hdlsnip-templates*
+10. TEMPLATES                                              *hdlsnip-templates*
 
 Shipped templates:
 
@@ -308,15 +387,19 @@ Shipped templates:
     cdc     bit_sync        cdc       Single-bit CDC synchroniser
     hs      cdc_handshake   cdc       Multi-bit CDC by handshake
     fifo    fifo_sync       mem       Synchronous FIFO
+    afifo   fifo_async      mem       Asynchronous FIFO, gray pointers
     ram     ram_dp          mem       Simple dual-port RAM, read-first
     axil    axi4lite_slave  bus       AXI4-Lite slave, register file
     axis    axis_skid       bus       AXI-Stream slice with backpressure
     apb     apb_slave       bus       APB slave, register file
+    wb      wishbone_slave  bus       Wishbone B4 classic slave
+    avmm    avalon_mm_slave bus       Avalon-MM slave, register file
     tb      testbench       tb        Self-checking testbench skeleton
     vtb     tb_vunit        tb        VUnit testbench with a test suite
+    otb     tb_osvvm        tb        OSVVM testbench with alerts and logs
 
 ==============================================================================
-10. WRITING A TEMPLATE                             *hdlsnip-writing-templates*
+11. WRITING A TEMPLATE                             *hdlsnip-writing-templates*
 
 Templates are discovered on the 'runtimepath' at: >
 
@@ -338,14 +421,23 @@ desc        Required. Shown in the picker.
 trig        Optional trigger word, 2 to 12 characters, unique across
             templates, and never a VHDL reserved word: typing `entity` in
             ordinary code must not fire a snippet.
-scope       Where the output belongs: design_unit (default), declarative,
-            statement, sequential or mixed.
+scope       Where the output belongs. See |hdlsnip-scope|.
 params      List of parameters. See below.
 body        A string with `{{marker}}` substitutions, for a static template.
 render      `function(params, cfg): string`, for a dynamic one. Requires
-            `dynamic = true`. Mutually exclusive with `body`.
+            `dynamic = true`. Mutually exclusive with `body`. May return a
+            table instead of a string; see |hdlsnip-scope|.
 
-Parameters:                                                 *hdlsnip-params*
+fixture_declarations
+            Optional `function(cfg, params): string[]`. Declarations the
+            golden fixture wrapper must add for the output to analyse. See
+            |hdlsnip-fixtures|.
+
+external_libraries
+            Optional boolean. Set when the output needs a library CI does
+            not have, such as VUnit or OSVVM. See |hdlsnip-fixtures|.
+
+Parameters:                                                   *hdlsnip-params*
 
 name        Required, lower_snake_case.
 type        string | identifier | integer | number | boolean | choice.
@@ -378,68 +470,127 @@ Example: >lua
       body = "signal {{sig}} : unsigned({{width}} - 1 downto 0);{{cursor}}",
     }
 <
-                                                        *hdlsnip-mixed-scope*
-A `mixed` template emits declarations and statements, which belong in
-different parts of an architecture. Its render function returns a table
-rather than a string: >lua
+                                                               *hdlsnip-scope*
+`scope` says where a template's output belongs, which decides where it is
+inserted and how it is wrapped for analysis.
+
+design_unit   A complete file: entity, package, context, configuration. The
+              default.
+declarative   Declarations, for the part above `begin`.
+statement     Concurrent statements, for the architecture body.
+sequential    Sequential statements, for inside a process.
+mixed         Both declarations and statements.
+
+A `mixed` template's render function returns a table rather than a string,
+because the two halves go to different places: >lua
 
     return {
       declarations = "signal count_r : unsigned(7 downto 0);",
       statements = "p_count : process (clk) is ...",
     }
 
-A state machine is the obvious case: the state type goes above `begin` and
-the processes below it.
+A state machine is the case this exists for: the state type belongs above
+`begin` and the processes below it. On insertion the halves are placed either
+side of the architecture's `begin`; when the architecture cannot be
+identified, both go in at the cursor.
+
+Any other scope returns a plain string, which is treated as `statements`.
+
+                                                            *hdlsnip-fixtures*
+Every template is rendered into `tests/golden/` across the configuration
+variants and analysed with GHDL. Two fields exist for templates that need
+help with that.
+
+A fragment may read signals it does not declare -- an edge detector reads the
+signal it watches -- so the wrapper has nothing to analyse. The template says
+what to declare, without those declarations reaching the user: >lua
+
+    fixture_declarations = function(cfg, params)
+      local sig = (params or {}).sig or "flag"
+      return { ("signal %s : std_logic;"):format(sig) }
+    end,
+
+`params` carries only what a case overrode, so fall back to the default.
+
+A template whose output needs VUnit or OSVVM cannot be analysed by a plain
+GHDL install. Setting `external_libraries = true` writes its fixtures to
+`tests/golden/external/`, which the analysis step does not scan. They are
+still generated, because they still diff.
 
 ==============================================================================
-11. LUA API                                                      *hdlsnip-api*
+12. LUA API                                                      *hdlsnip-api*
 
-                                                          *hdlsnip.setup()*
+                                                             *hdlsnip.setup()*
 require("hdlsnip").setup({opts})
         Apply configuration. Optional.
 
-                                                         *hdlsnip.insert()*
+                                                            *hdlsnip.insert()*
 require("hdlsnip").insert([{name}, {params}])
         Insert a template. Without {name}, a picker opens. Without {params},
         each parameter is prompted for. Supplying {params} prompts for
         nothing, which is the path for mappings.
 
-                                                         *hdlsnip.expand()*
+                                                            *hdlsnip.expand()*
 require("hdlsnip").expand([{name}])
         Expand as a snippet. Falls back to |hdlsnip.insert()| for a dynamic
         template.
 
-                                               *hdlsnip.expand_at_cursor()*
+                                                  *hdlsnip.expand_at_cursor()*
 require("hdlsnip").expand_at_cursor()
         Expand the trigger word before the cursor. When there is no trigger
         but a snippet is active, jumps forward instead. Returns false when
         neither applies, so a mapping can fall through.
 
-                                                         *hdlsnip.reload()*
+                                                            *hdlsnip.reload()*
 require("hdlsnip").reload()
         Rescan the runtimepath.
 
-                                                     *hdlsnip.edit.at()*
+                                                       *hdlsnip.instantiate()*
+require("hdlsnip.instantiate").instantiate([{name}, {opts}])
+        Instantiate an entity. {opts} takes `signals`, `label`, `library`
+        and `component`.
+
+                                                         *hdlsnip.testbench()*
+require("hdlsnip.instantiate").testbench([{name}, {opts}])
+        Write a testbench around an entity. {opts} takes `period_ns` and
+        `library`.
+
+                                                         *hdlsnip.vhdl.entity*
+require("hdlsnip.vhdl.entity").parse({lines})
+        Read an entity declaration, returning `{ name, generics, ports }`
+        or nil and a reason.
+
+                                                           *hdlsnip.edit.at()*
 require("hdlsnip.edit").at({bufnr}, {row})
         The tracked block containing {row}, as `id, entry`, or nil.
 
-                                                 *hdlsnip.edit.update()*
+                                                       *hdlsnip.edit.update()*
 require("hdlsnip.edit").update({bufnr}, {id}, {changes})
         Re-render a tracked block with changed parameters. Returns
         `ok, errors`. Leaves the buffer untouched when a change does not
         validate.
 
-                                                   *hdlsnip.form.open()*
-require("hdlsnip.form").open({bufnr})
+                                                         *hdlsnip.form.edit()*
+require("hdlsnip.form").edit({bufnr})
         Open the parameter form for the block under the cursor.
 
-                                              *hdlsnip.registry.register()*
+                                                 *hdlsnip.registry.register()*
 require("hdlsnip.registry").register({tpl})
         Register a template built in Lua rather than discovered from a file.
         Returns `ok, errors`.
 
+                                                              *hdlsnip.render*
+require("hdlsnip.render").values({tpl}, {params}, {cfg})
+        Render a template as plain VHDL. Returns `text, errors`.
+
+                                                   *hdlsnip.render.sections()*
+require("hdlsnip.render").sections({tpl}, {params}, {cfg})
+        Render into `{ declarations, statements }`. What `values()` is
+        built on, and what a caller placing the halves separately wants.
+
+
 ==============================================================================
-12. HEALTH                                                    *hdlsnip-health*
+13. HEALTH                                                    *hdlsnip-health*
 
 `:checkhealth hdlsnip` reports the Neovim version, how many templates were
 found and of which kinds, the configuration in effect for the current buffer,
