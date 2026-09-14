@@ -34,7 +34,10 @@ describe("testbench.build", function()
   it("declares a signal for every port", function()
     local text = testbench.build(FIFO, cfg())
     assert.matches("signal clk%s+: std_logic", text)
-    assert.matches("signal wr_data%s+: std_logic_vector%(8 %- 1 downto 0%)", text)
+    assert.matches(
+      "signal wr_data%s+: std_logic_vector%(8 %- 1 downto 0%)",
+      text
+    )
     assert.matches("signal full%s+: std_logic;", text)
   end)
 
@@ -43,14 +46,20 @@ describe("testbench.build", function()
     -- downstream means anything.
     local text = testbench.build(FIFO, cfg())
     assert.matches("signal wr_en%s+: std_logic := '0';", text)
-    assert.matches("wr_data%s+: std_logic_vector%b() := %(others => '0'%);", text)
+    assert.matches(
+      "wr_data%s+: std_logic_vector%b() := %(others => '0'%);",
+      text
+    )
     -- An output is driven by the design, so it takes no initial value.
     assert.matches("signal full%s+: std_logic;\n", text)
   end)
 
   it("generates the clock and releases the reset", function()
     local text = testbench.build(FIFO, cfg())
-    assert.matches("clk <= not clk after C_CLK_PERIOD / 2 when running else '0';", text)
+    assert.matches(
+      "clk <= not clk after C_CLK_PERIOD / 2 when running else '0';",
+      text
+    )
     assert.matches("rst_n <= '1' after 4 %* C_CLK_PERIOD;", text)
   end)
 
@@ -145,14 +154,24 @@ describe("generated testbenches run", function()
         local work = ("%s/work_%s"):format(dir, parsed.name)
         vim.fn.mkdir(work, "p")
         vim.fn.system({
-          "ghdl", "-a", "--std=08", "--workdir=" .. work, path, tb,
+          "ghdl",
+          "-a",
+          "--std=08",
+          "--workdir=" .. work,
+          path,
+          tb,
         })
         if vim.v.shell_error ~= 0 then
           failures[#failures + 1] = parsed.name .. ": analyse"
         else
           vim.fn.system({
-            "ghdl", "-e", "--std=08", "--workdir=" .. work,
-            "-o", work .. "/run", "tb_" .. parsed.name,
+            "ghdl",
+            "-e",
+            "--std=08",
+            "--workdir=" .. work,
+            "-o",
+            work .. "/run",
+            "tb_" .. parsed.name,
           })
           if vim.v.shell_error ~= 0 then
             failures[#failures + 1] = parsed.name .. ": elaborate"
