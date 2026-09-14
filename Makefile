@@ -75,8 +75,18 @@ ghdl:
 	@echo "every golden fixture analyses cleanly"
 
 ## vsg: style check the fixtures
+##
+## Default configuration fixtures only, and only those that are complete
+## design files: VSG encodes one house style, so the other variants would be
+## checked against a style they deliberately do not follow, and a wrapped
+## fragment would lint the wrapper rather than the template.
 vsg:
-	vsg -c vsg_config.yaml -f $(GOLDEN)/vhdl/*.vhd
+	@command -v vsg >/dev/null || { \
+		echo "vsg not found: pipx install vsg"; \
+		exit 1; \
+	}
+	@vsg -c vsg_config.yaml \
+		-f $$(grep -L golden_wrapper $(GOLDEN)/vhdl/*__default__*.vhd)
 
 ## demo: re-record the GIFs (needs vhs, ttyd and ffmpeg)
 demo:
