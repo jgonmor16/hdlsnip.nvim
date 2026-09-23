@@ -16,10 +16,10 @@ Parameterised VHDL templates for Neovim — entities, packages, clocked processe
 and CDC synchronisers, rendered from Lua rather than pasted from a static
 snippet file.
 
-Four characters and two answers:
+Four characters, two answers, and a prefix left at its default:
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/940096bb-281e-45f4-ab33-b930e7af626a" width="900"
+  <img src="https://github.com/user-attachments/assets/eaa915d7-cd25-4e09-8830-f1b2fc52e71b" width="900"
        alt="Typing axil and pressing Ctrl-K opens a dialog for the entity name and register count; accepting it writes a complete AXI4-Lite slave" />
 </p>
 
@@ -41,7 +41,7 @@ That is the point: the shape of the code follows your house style, and getting
 it wrong is a synthesis mismatch rather than a syntax error.
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/33b3a86b-3e4a-47b2-975e-f8e2675e05d1" width="900"
+  <img src="https://github.com/user-attachments/assets/9dfa880f-70f0-47c4-9140-6444299e42e7" width="900"
        alt="The same process template inserted twice: an asynchronous reset outside the clock test, then a synchronous one inside it after a single configuration change" />
 </p>
 
@@ -156,7 +156,7 @@ Every template is offered. A static one expands as a snippet; a dynamic one
 opens a dialog for its parameters, and says so in the menu.
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/20d2aaf0-9509-4628-9242-df2b508ff5db" width="900"
+  <img src="https://github.com/user-attachments/assets/2977d976-1fee-4acb-9f46-54e1c78677c9" width="900"
        alt="Typing pk opens the completion menu; accepting pkg expands the package template, naming it updates both the declaration and the end clause, and Ctrl-K jumps into the body" />
 </p>
 
@@ -218,7 +218,7 @@ matching what was rendered. Editing a line by hand ends the tracking rather
 than having it overwritten later.
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/4c0eda51-1d6e-495e-a1ca-e9ef8281b917" width="900"
+  <img src="https://github.com/user-attachments/assets/da8dad50-89b5-4651-8b7a-289300706abf" width="900"
        alt="Opening HdlSnipEdit on an inserted synchroniser and changing the stage count and entity name, with the block re-rendering as the dialog is edited" />
 </p>
 
@@ -250,7 +250,7 @@ rather than by name, so a crossing with `src_clk` and `dst_clk` gets both, and
 a reset ending in `n` is released to `'1'`.
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/f40520f1-fcbd-43b7-956e-d01700b96f13" width="900"
+  <img src="https://github.com/user-attachments/assets/69af5347-1609-4e03-aa10-8d3fea4a6100" width="900"
        alt="Paging and filtering through twelve designs, then generating a testbench for an asynchronous FIFO with both clock domains driven" />
 </p>
 

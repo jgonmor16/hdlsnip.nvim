@@ -871,17 +871,14 @@
 ~
 ~
 ~
-~                                                                                          ╭───────── axi4lite_slave ─────────╮
-~                                                                                          │name identifier        axi_regs   │
-~                                                                                          │registers integer 1..256   4      │
-~                                                                                          │prefix string      s_axi          │
-~                                                                                          ╰──────────────────────────────────╯
+~                                                                                       ╭────────── axi4lite_slave ───────────╮
+~                                                                                       │name      identifier       axi_regs  │
+~                                                                                       │registers integer 1..256   4         │
+~                                                                                       │prefix    string           s_axi     │
+~                                                                                       ╰─────────────────────────────────────╯
 
 ────────────────────────────────────────────────────────────────────────────────
   1
-~                                                                                                                     ╭───────╮
-~                                                                                                                     │ <C-W> │
-~                                                                                                                     ╰───────╯
 ~
 ~
 ~
@@ -928,68 +925,14 @@
 ~
 ~
 ~
-~                                                                                          ╭───────── axi4lite_slave ─────────╮
-~                                                                                          │name identifier                   │
-~                                                                                          │registers integer 1..256   4      │
-~                                                                                          │prefix string      s_axi          │
-~                                                                                          ╰──────────────────────────────────╯
-
-────────────────────────────────────────────────────────────────────────────────
-  1
-~                                                                                                           ╭─────────────────╮
-~                                                                                                           │ <C-W> ctrl_regs │
-~                                                                                                           ╰─────────────────╯
 ~
 ~
 ~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~                                                                                          ╭───────── axi4lite_slave ─────────╮
-~                                                                                          │name identifier        ctrl_regs  │
-~                                                                                          │registers integer 1..256   4      │
-~                                                                                          │prefix string      s_axi          │
-~                                                                                          ╰──────────────────────────────────╯
+~                                                                                       ╭────────── axi4lite_slave ───────────╮
+~                                                                                       │name      identifier                 │
+~                                                                                       │registers integer 1..256   4         │
+~                                                                                       │prefix    string           s_axi     │
+~                                                                                       ╰─────────────────────────────────────╯
 
 ────────────────────────────────────────────────────────────────────────────────
   1
@@ -1042,11 +985,11 @@
 ~
 ~
 ~
-~                                                                                          ╭───────── axi4lite_slave ─────────╮
-~                                                                                          │name identifier        ctrl_regs  │
-~                                                                                          │registers integer 1..256   4      │
-~                                                                                          │prefix string      s_axi          │
-~                                                                                          ╰──────────────────────────────────╯
+~                                                                                       ╭────────── axi4lite_slave ───────────╮
+~                                                                                       │name      identifier       ctrl_regs │
+~                                                                                       │registers integer 1..256   4         │
+~                                                                                       │prefix    string           s_axi     │
+~                                                                                       ╰─────────────────────────────────────╯
 
 ────────────────────────────────────────────────────────────────────────────────
   1
@@ -1099,11 +1042,68 @@
 ~
 ~
 ~
-~                                                                                          ╭───────── axi4lite_slave ─────────╮
-~                                                                                          │name identifier        ctrl_regs  │
-~                                                                                          │registers integer 1..256   4      │
-~                                                                                          │prefix string      s_axi          │
-~                                                                                          ╰──────────────────────────────────╯
+~                                                                                       ╭────────── axi4lite_slave ───────────╮
+~                                                                                       │name      identifier       ctrl_regs │
+~                                                                                       │registers integer 1..256   4         │
+~                                                                                       │prefix    string           s_axi     │
+~                                                                                       ╰─────────────────────────────────────╯
+
+────────────────────────────────────────────────────────────────────────────────
+  1
+~                                                                                                           ╭─────────────────╮
+~                                                                                                           │ <C-W> ctrl_regs │
+~                                                                                                           ╰─────────────────╯
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~                                                                                       ╭────────── axi4lite_slave ───────────╮
+~                                                                                       │name      identifier       ctrl_regs │
+~                                                                                       │registers integer 1..256   4         │
+~                                                                                       │prefix    string           s_axi     │
+~                                                                                       ╰─────────────────────────────────────╯
 
 ────────────────────────────────────────────────────────────────────────────────
   1
@@ -1156,11 +1156,11 @@
 ~
 ~
 ~
-~                                                                                          ╭───────── axi4lite_slave ─────────╮
-~                                                                                          │name identifier        ctrl_regs  │
-~                                                                                          │registers integer 1..256   4      │
-~                                                                                          │prefix string      s_axi          │
-~                                                                                          ╰──────────────────────────────────╯
+~                                                                                       ╭────────── axi4lite_slave ───────────╮
+~                                                                                       │name      identifier       ctrl_regs │
+~                                                                                       │registers integer 1..256   4         │
+~                                                                                       │prefix    string           s_axi     │
+~                                                                                       ╰─────────────────────────────────────╯
 
 ────────────────────────────────────────────────────────────────────────────────
   1
@@ -1213,11 +1213,11 @@
 ~
 ~
 ~
-~                                                                                          ╭───────── axi4lite_slave ─────────╮
-~                                                                                          │name identifier        ctrl_regs  │
-~                                                                                          │registers integer 1..256          │
-~                                                                                          │prefix string      s_axi          │
-~                                                                                          ╰──────────────────────────────────╯
+~                                                                                       ╭────────── axi4lite_slave ───────────╮
+~                                                                                       │name      identifier       ctrl_regs │
+~                                                                                       │registers integer 1..256             │
+~                                                                                       │prefix    string           s_axi     │
+~                                                                                       ╰─────────────────────────────────────╯
 
 ────────────────────────────────────────────────────────────────────────────────
   1
@@ -1270,11 +1270,11 @@
 ~
 ~
 ~
-~                                                                                          ╭───────── axi4lite_slave ─────────╮
-~                                                                                          │name identifier        ctrl_regs  │
-~                                                                                          │registers integer 1..256   8      │
-~                                                                                          │prefix string      s_axi          │
-~                                                                                          ╰──────────────────────────────────╯
+~                                                                                       ╭────────── axi4lite_slave ───────────╮
+~                                                                                       │name      identifier       ctrl_regs │
+~                                                                                       │registers integer 1..256   8         │
+~                                                                                       │prefix    string           s_axi     │
+~                                                                                       ╰─────────────────────────────────────╯
 
 ────────────────────────────────────────────────────────────────────────────────
   1
@@ -1327,11 +1327,11 @@
 ~
 ~
 ~
-~                                                                                          ╭───────── axi4lite_slave ─────────╮
-~                                                                                          │name identifier        ctrl_regs  │
-~                                                                                          │registers integer 1..256   8      │
-~                                                                                          │prefix string      s_axi          │
-~                                                                                          ╰──────────────────────────────────╯
+~                                                                                       ╭────────── axi4lite_slave ───────────╮
+~                                                                                       │name      identifier       ctrl_regs │
+~                                                                                       │registers integer 1..256   8         │
+~                                                                                       │prefix    string           s_axi     │
+~                                                                                       ╰─────────────────────────────────────╯
 
 ────────────────────────────────────────────────────────────────────────────────
   1 library ieee;
@@ -1562,33 +1562,6 @@
  55
 
 ────────────────────────────────────────────────────────────────────────────────
-  1 library ieee;
-  2   use ieee.std_logic_1164.all;
-  3   use ieee.numeric_std.all;
-  4
-  5 entity ctrl_regs is
-  6   generic (
-  7     G_REGISTERS : positive := 8;
-  8     G_ADDR_WIDTH : positive := 5
-  9   );
- 10   port (
- 11     clk           : in  std_logic;
- 12     rst_n         : in  std_logic;
- 13     s_axi_awaddr  : in  std_logic_vector(G_ADDR_WIDTH - 1 downto 0);
- 14     s_axi_awvalid : in  std_logic;
- 15     s_axi_awready : out std_logic;
- 16     s_axi_wdata   : in  std_logic_vector(31 downto 0);
- 17     s_axi_wstrb   : in  std_logic_vector(3 downto 0);
- 18     s_axi_wvalid  : in  std_logic;
- 19     s_axi_wready  : out std_logic;
- 20     s_axi_bresp   : out std_logic_vector(1 downto 0);
- 21     s_axi_bvalid  : out std_logic;
- 22     s_axi_bready  : in  std_logic;
- 23     s_axi_araddr  : in  std_logic_vector(G_ADDR_WIDTH - 1 downto 0);
- 24     s_axi_arvalid : in  std_logic;
- 25     s_axi_arready : out std_logic;
- 26     s_axi_rdata   : out std_logic_vector(31 downto 0);
- 27     s_axi_rresp   : out std_logic_vector(1 downto 0);
  28     s_axi_rvalid  : out std_logic;
  29     s_axi_rready  : in  std_logic
  30   );
@@ -1617,6 +1590,33 @@
  53
  54 begin
  55
+ 56   wr_index <= to_integer(unsigned(s_axi_awaddr(G_ADDR_WIDTH - 1 downto 2)));
+ 57   rd_index <= to_integer(unsigned(s_axi_araddr(G_ADDR_WIDTH - 1 downto 2)));
+ 58
+ 59   p_write : process (clk, rst_n) is
+ 60   begin
+ 61     if rst_n = '0' then
+ 62       s_axi_awready_r <= '0';
+ 63       s_axi_wready_r <= '0';
+ 64       s_axi_bvalid_r <= '0';
+ 65       s_axi_bresp_r
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ────────────────────────────────────────────────────────────────────────────────
  28     s_axi_rvalid  : out std_logic;

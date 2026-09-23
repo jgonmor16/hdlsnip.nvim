@@ -634,15 +634,15 @@
 ~
 ~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
 ~                                                                │ 1  apb_regs                 10 ports  src/apb.vhd          │
-~                                                                │ 2  fifo_sync                8 ports  src/buffer.vhd        │
-~                                                                │ 3  cfg_cross                9 ports  src/cfg_cross.vhd     │
-~                                                                │ 4  cdc_handshake            9 ports  src/cross.vhd         │
+~                                                                │ 2  fifo_sync                 8 ports  src/buffer.vhd       │
+~                                                                │ 3  cfg_cross                 9 ports  src/cfg_cross.vhd    │
+~                                                                │ 4  cdc_handshake             9 ports  src/cross.vhd        │
 ~                                                                │ 5  ctrl_regs                10 ports  src/ctrl_regs.vhd    │
-~                                                                │ 6  irq_sync                 4 ports  src/irq_sync.vhd      │
-~                                                                │ 7  line_buffer              6 ports  src/line_buffer.vhd   │
-~                                                                │ 8  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 6  irq_sync                  4 ports  src/irq_sync.vhd     │
+~                                                                │ 7  line_buffer               6 ports  src/line_buffer.vhd  │
+~                                                                │ 8  ram_dp                    6 ports  src/memory.vhd       │
 ~                                                                │ 9  axi_regs                 19 ports  src/regs.vhd         │
-~                                                                │10  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                │10  rx_fifo                   8 ports  src/rx_fifo.vhd      │
 ~                                                                ╰────────────────────────────────────────────────────────────╯
 ~                                                                ╭────────────────────────────────────────────────────────────╮
 ~                                                                │                                                            │
@@ -691,15 +691,15 @@
 ~
 ~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
 ~                                                                │ 1  apb_regs                 10 ports  src/apb.vhd          │
-~                                                                │ 2  fifo_sync                8 ports  src/buffer.vhd        │
-~                                                                │ 3  cfg_cross                9 ports  src/cfg_cross.vhd     │
-~                                                                │ 4  cdc_handshake            9 ports  src/cross.vhd         │
+~                                                                │ 2  fifo_sync                 8 ports  src/buffer.vhd       │
+~                                                                │ 3  cfg_cross                 9 ports  src/cfg_cross.vhd    │
+~                                                                │ 4  cdc_handshake             9 ports  src/cross.vhd        │
 ~                                                                │ 5  ctrl_regs                10 ports  src/ctrl_regs.vhd    │
-~                                                                │ 6  irq_sync                 4 ports  src/irq_sync.vhd      │
-~                                                                │ 7  line_buffer              6 ports  src/line_buffer.vhd   │
-~                                                                │ 8  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 6  irq_sync                  4 ports  src/irq_sync.vhd     │
+~                                                                │ 7  line_buffer               6 ports  src/line_buffer.vhd  │
+~                                                                │ 8  ram_dp                    6 ports  src/memory.vhd       │
 ~                                                                │ 9  axi_regs                 19 ports  src/regs.vhd         │
-~                                                                │10  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                │10  rx_fifo                   8 ports  src/rx_fifo.vhd      │
 ~                                                                ╰────────────────────────────────────────────────────────────╯
 ~                                                                ╭────────────────────────────────────────────────────────────╮
 ~                                                                │                                                            │
@@ -749,8 +749,8 @@
 ~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
 ~                                                                │11  status_regs              19 ports  src/status_regs.vhd  │
 ~                                                                │12  axis_skid                10 ports  src/stream.vhd       │
-~                                                                │13  bit_sync                 4 ports  src/sync.vhd          │
-~                                                                │14  tx_fifo                  8 ports  src/tx_fifo.vhd       │
+~                                                                │13  bit_sync                  4 ports  src/sync.vhd         │
+~                                                                │14  tx_fifo                   8 ports  src/tx_fifo.vhd      │
 ~                                                                │                                                            │
 ~                                                                │                                                            │
 ~                                                                │                                                            │
@@ -806,8 +806,8 @@
 ~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
 ~                                                                │11  status_regs              19 ports  src/status_regs.vhd  │
 ~                                                                │12  axis_skid                10 ports  src/stream.vhd       │
-~                                                                │13  bit_sync                 4 ports  src/sync.vhd          │
-~                                                                │14  tx_fifo                  8 ports  src/tx_fifo.vhd       │
+~                                                                │13  bit_sync                  4 ports  src/sync.vhd         │
+~                                                                │14  tx_fifo                   8 ports  src/tx_fifo.vhd      │
 ~                                                                │                                                            │
 ~                                                                │                                                            │
 ~                                                                │                                                            │
@@ -862,15 +862,15 @@
 ~
 ~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
 ~                                                                │ 1  apb_regs                 10 ports  src/apb.vhd          │
-~                                                                │ 2  fifo_sync                8 ports  src/buffer.vhd        │
-~                                                                │ 3  cfg_cross                9 ports  src/cfg_cross.vhd     │
-~                                                                │ 4  cdc_handshake            9 ports  src/cross.vhd         │
+~                                                                │ 2  fifo_sync                 8 ports  src/buffer.vhd       │
+~                                                                │ 3  cfg_cross                 9 ports  src/cfg_cross.vhd    │
+~                                                                │ 4  cdc_handshake             9 ports  src/cross.vhd        │
 ~                                                                │ 5  ctrl_regs                10 ports  src/ctrl_regs.vhd    │
-~                                                                │ 6  irq_sync                 4 ports  src/irq_sync.vhd      │
-~                                                                │ 7  line_buffer              6 ports  src/line_buffer.vhd   │
-~                                                                │ 8  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 6  irq_sync                  4 ports  src/irq_sync.vhd     │
+~                                                                │ 7  line_buffer               6 ports  src/line_buffer.vhd  │
+~                                                                │ 8  ram_dp                    6 ports  src/memory.vhd       │
 ~                                                                │ 9  axi_regs                 19 ports  src/regs.vhd         │
-~                                                                │10  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                │10  rx_fifo                   8 ports  src/rx_fifo.vhd      │
 ~                                                                ╰────────────────────────────────────────────────────────────╯
 ~                                                                ╭────────────────────────────────────────────────────────────╮
 ~                                                                │                                                            │
@@ -919,15 +919,15 @@
 ~
 ~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
 ~                                                                │ 1  apb_regs                 10 ports  src/apb.vhd          │
-~                                                                │ 2  fifo_sync                8 ports  src/buffer.vhd        │
-~                                                                │ 3  cfg_cross                9 ports  src/cfg_cross.vhd     │
-~                                                                │ 4  cdc_handshake            9 ports  src/cross.vhd         │
+~                                                                │ 2  fifo_sync                 8 ports  src/buffer.vhd       │
+~                                                                │ 3  cfg_cross                 9 ports  src/cfg_cross.vhd    │
+~                                                                │ 4  cdc_handshake             9 ports  src/cross.vhd        │
 ~                                                                │ 5  ctrl_regs                10 ports  src/ctrl_regs.vhd    │
-~                                                                │ 6  irq_sync                 4 ports  src/irq_sync.vhd      │
-~                                                                │ 7  line_buffer              6 ports  src/line_buffer.vhd   │
-~                                                                │ 8  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 6  irq_sync                  4 ports  src/irq_sync.vhd     │
+~                                                                │ 7  line_buffer               6 ports  src/line_buffer.vhd  │
+~                                                                │ 8  ram_dp                    6 ports  src/memory.vhd       │
 ~                                                                │ 9  axi_regs                 19 ports  src/regs.vhd         │
-~                                                                │10  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                │10  rx_fifo                   8 ports  src/rx_fifo.vhd      │
 ~                                                                ╰────────────────────────────────────────────────────────────╯
 ~                                                                ╭────────────────────────────────────────────────────────────╮
 ~                                                                │                                                            │
@@ -976,15 +976,15 @@
 ~
 ~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
 ~                                                                │ 1  apb_regs                 10 ports  src/apb.vhd          │
-~                                                                │ 2  fifo_sync                8 ports  src/buffer.vhd        │
-~                                                                │ 3  cfg_cross                9 ports  src/cfg_cross.vhd     │
-~                                                                │ 4  cdc_handshake            9 ports  src/cross.vhd         │
+~                                                                │ 2  fifo_sync                 8 ports  src/buffer.vhd       │
+~                                                                │ 3  cfg_cross                 9 ports  src/cfg_cross.vhd    │
+~                                                                │ 4  cdc_handshake             9 ports  src/cross.vhd        │
 ~                                                                │ 5  ctrl_regs                10 ports  src/ctrl_regs.vhd    │
-~                                                                │ 6  irq_sync                 4 ports  src/irq_sync.vhd      │
-~                                                                │ 7  line_buffer              6 ports  src/line_buffer.vhd   │
-~                                                                │ 8  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 6  irq_sync                  4 ports  src/irq_sync.vhd     │
+~                                                                │ 7  line_buffer               6 ports  src/line_buffer.vhd  │
+~                                                                │ 8  ram_dp                    6 ports  src/memory.vhd       │
 ~                                                                │ 9  axi_regs                 19 ports  src/regs.vhd         │
-~                                                                │10  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                │10  rx_fifo                   8 ports  src/rx_fifo.vhd      │
 ~                                                                ╰────────────────────────────────────────────────────────────╯
 ~                                                                ╭────────────────────────────────────────────────────────────╮
 ~                                                                │                                                            │
@@ -1033,15 +1033,15 @@
 ~
 ~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
 ~                                                                │ 1  apb_regs                 10 ports  src/apb.vhd          │
-~                                                                │ 2  fifo_sync                8 ports  src/buffer.vhd        │
-~                                                                │ 3  cfg_cross                9 ports  src/cfg_cross.vhd     │
-~                                                                │ 4  cdc_handshake            9 ports  src/cross.vhd         │
+~                                                                │ 2  fifo_sync                 8 ports  src/buffer.vhd       │
+~                                                                │ 3  cfg_cross                 9 ports  src/cfg_cross.vhd    │
+~                                                                │ 4  cdc_handshake             9 ports  src/cross.vhd        │
 ~                                                                │ 5  ctrl_regs                10 ports  src/ctrl_regs.vhd    │
-~                                                                │ 6  irq_sync                 4 ports  src/irq_sync.vhd      │
-~                                                                │ 7  line_buffer              6 ports  src/line_buffer.vhd   │
-~                                                                │ 8  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 6  irq_sync                  4 ports  src/irq_sync.vhd     │
+~                                                                │ 7  line_buffer               6 ports  src/line_buffer.vhd  │
+~                                                                │ 8  ram_dp                    6 ports  src/memory.vhd       │
 ~                                                                │ 9  axi_regs                 19 ports  src/regs.vhd         │
-~                                                                │10  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                │10  rx_fifo                   8 ports  src/rx_fifo.vhd      │
 ~                                                                ╰────────────────────────────────────────────────────────────╯
 ~                                                                ╭────────────────────────────────────────────────────────────╮
 ~                                                                │                                                            │
@@ -1090,15 +1090,15 @@
 ~
 ~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
 ~                                                                │ 1  apb_regs                 10 ports  src/apb.vhd          │
-~                                                                │ 2  fifo_sync                8 ports  src/buffer.vhd        │
-~                                                                │ 3  cfg_cross                9 ports  src/cfg_cross.vhd     │
-~                                                                │ 4  cdc_handshake            9 ports  src/cross.vhd         │
+~                                                                │ 2  fifo_sync                 8 ports  src/buffer.vhd       │
+~                                                                │ 3  cfg_cross                 9 ports  src/cfg_cross.vhd    │
+~                                                                │ 4  cdc_handshake             9 ports  src/cross.vhd        │
 ~                                                                │ 5  ctrl_regs                10 ports  src/ctrl_regs.vhd    │
-~                                                                │ 6  irq_sync                 4 ports  src/irq_sync.vhd      │
-~                                                                │ 7  line_buffer              6 ports  src/line_buffer.vhd   │
-~                                                                │ 8  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 6  irq_sync                  4 ports  src/irq_sync.vhd     │
+~                                                                │ 7  line_buffer               6 ports  src/line_buffer.vhd  │
+~                                                                │ 8  ram_dp                    6 ports  src/memory.vhd       │
 ~                                                                │ 9  axi_regs                 19 ports  src/regs.vhd         │
-~                                                                │10  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                │10  rx_fifo                   8 ports  src/rx_fifo.vhd      │
 ~                                                                ╰────────────────────────────────────────────────────────────╯
 ~                                                                ╭────────────────────────────────────────────────────────────╮
 ~                                                                │                                                            │
@@ -1147,15 +1147,15 @@
 ~
 ~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
 ~                                                                │ 1  apb_regs                 10 ports  src/apb.vhd          │
-~                                                                │ 2  fifo_sync                8 ports  src/buffer.vhd        │
-~                                                                │ 3  cfg_cross                9 ports  src/cfg_cross.vhd     │
-~                                                                │ 4  cdc_handshake            9 ports  src/cross.vhd         │
+~                                                                │ 2  fifo_sync                 8 ports  src/buffer.vhd       │
+~                                                                │ 3  cfg_cross                 9 ports  src/cfg_cross.vhd    │
+~                                                                │ 4  cdc_handshake             9 ports  src/cross.vhd        │
 ~                                                                │ 5  ctrl_regs                10 ports  src/ctrl_regs.vhd    │
-~                                                                │ 6  irq_sync                 4 ports  src/irq_sync.vhd      │
-~                                                                │ 7  line_buffer              6 ports  src/line_buffer.vhd   │
-~                                                                │ 8  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 6  irq_sync                  4 ports  src/irq_sync.vhd     │
+~                                                                │ 7  line_buffer               6 ports  src/line_buffer.vhd  │
+~                                                                │ 8  ram_dp                    6 ports  src/memory.vhd       │
 ~                                                                │ 9  axi_regs                 19 ports  src/regs.vhd         │
-~                                                                │10  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                │10  rx_fifo                   8 ports  src/rx_fifo.vhd      │
 ~                                                                ╰────────────────────────────────────────────────────────────╯
 ~                                                                ╭────────────────────────────────────────────────────────────╮
 ~                                                                │                                                            │
@@ -1204,15 +1204,15 @@
 ~
 ~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
 ~                                                                │ 1  apb_regs                 10 ports  src/apb.vhd          │
-~                                                                │ 2  fifo_sync                8 ports  src/buffer.vhd        │
-~                                                                │ 3  cfg_cross                9 ports  src/cfg_cross.vhd     │
-~                                                                │ 4  cdc_handshake            9 ports  src/cross.vhd         │
+~                                                                │ 2  fifo_sync                 8 ports  src/buffer.vhd       │
+~                                                                │ 3  cfg_cross                 9 ports  src/cfg_cross.vhd    │
+~                                                                │ 4  cdc_handshake             9 ports  src/cross.vhd        │
 ~                                                                │ 5  ctrl_regs                10 ports  src/ctrl_regs.vhd    │
-~                                                                │ 6  irq_sync                 4 ports  src/irq_sync.vhd      │
-~                                                                │ 7  line_buffer              6 ports  src/line_buffer.vhd   │
-~                                                                │ 8  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 6  irq_sync                  4 ports  src/irq_sync.vhd     │
+~                                                                │ 7  line_buffer               6 ports  src/line_buffer.vhd  │
+~                                                                │ 8  ram_dp                    6 ports  src/memory.vhd       │
 ~                                                                │ 9  axi_regs                 19 ports  src/regs.vhd         │
-~                                                                │10  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                │10  rx_fifo                   8 ports  src/rx_fifo.vhd      │
 ~                                                                ╰────────────────────────────────────────────────────────────╯
 ~                                                                ╭────────────────────────────────────────────────────────────╮
 ~                                                                │                                                            │
@@ -1261,15 +1261,15 @@
 ~
 ~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
 ~                                                                │ 1  apb_regs                 10 ports  src/apb.vhd          │
-~                                                                │ 2  fifo_sync                8 ports  src/buffer.vhd        │
-~                                                                │ 3  cfg_cross                9 ports  src/cfg_cross.vhd     │
-~                                                                │ 4  cdc_handshake            9 ports  src/cross.vhd         │
+~                                                                │ 2  fifo_sync                 8 ports  src/buffer.vhd       │
+~                                                                │ 3  cfg_cross                 9 ports  src/cfg_cross.vhd    │
+~                                                                │ 4  cdc_handshake             9 ports  src/cross.vhd        │
 ~                                                                │ 5  ctrl_regs                10 ports  src/ctrl_regs.vhd    │
-~                                                                │ 6  irq_sync                 4 ports  src/irq_sync.vhd      │
-~                                                                │ 7  line_buffer              6 ports  src/line_buffer.vhd   │
-~                                                                │ 8  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 6  irq_sync                  4 ports  src/irq_sync.vhd     │
+~                                                                │ 7  line_buffer               6 ports  src/line_buffer.vhd  │
+~                                                                │ 8  ram_dp                    6 ports  src/memory.vhd       │
 ~                                                                │ 9  axi_regs                 19 ports  src/regs.vhd         │
-~                                                                │10  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                │10  rx_fifo                   8 ports  src/rx_fifo.vhd      │
 ~                                                                ╰────────────────────────────────────────────────────────────╯
 ~                                                                ╭────────────────────────────────────────────────────────────╮
 ~                                                                │                                                            │
@@ -1318,15 +1318,15 @@
 ~
 ~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
 ~                                                                │ 1  apb_regs                 10 ports  src/apb.vhd          │
-~                                                                │ 2  fifo_sync                8 ports  src/buffer.vhd        │
-~                                                                │ 3  cfg_cross                9 ports  src/cfg_cross.vhd     │
-~                                                                │ 4  cdc_handshake            9 ports  src/cross.vhd         │
+~                                                                │ 2  fifo_sync                 8 ports  src/buffer.vhd       │
+~                                                                │ 3  cfg_cross                 9 ports  src/cfg_cross.vhd    │
+~                                                                │ 4  cdc_handshake             9 ports  src/cross.vhd        │
 ~                                                                │ 5  ctrl_regs                10 ports  src/ctrl_regs.vhd    │
-~                                                                │ 6  irq_sync                 4 ports  src/irq_sync.vhd      │
-~                                                                │ 7  line_buffer              6 ports  src/line_buffer.vhd   │
-~                                                                │ 8  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 6  irq_sync                  4 ports  src/irq_sync.vhd     │
+~                                                                │ 7  line_buffer               6 ports  src/line_buffer.vhd  │
+~                                                                │ 8  ram_dp                    6 ports  src/memory.vhd       │
 ~                                                                │ 9  axi_regs                 19 ports  src/regs.vhd         │
-~                                                                │10  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                │10  rx_fifo                   8 ports  src/rx_fifo.vhd      │
 ~                                                                ╰────────────────────────────────────────────────────────────╯
 ~                                                                ╭────────────────────────────────────────────────────────────╮
 ~                                                                │                                                            │
@@ -1375,72 +1375,15 @@
 ~
 ~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
 ~                                                                │ 1  apb_regs                 10 ports  src/apb.vhd          │
-~                                                                │ 2  fifo_sync                8 ports  src/buffer.vhd        │
-~                                                                │ 3  cfg_cross                9 ports  src/cfg_cross.vhd     │
-~                                                                │ 4  cdc_handshake            9 ports  src/cross.vhd         │
+~                                                                │ 2  fifo_sync                 8 ports  src/buffer.vhd       │
+~                                                                │ 3  cfg_cross                 9 ports  src/cfg_cross.vhd    │
+~                                                                │ 4  cdc_handshake             9 ports  src/cross.vhd        │
 ~                                                                │ 5  ctrl_regs                10 ports  src/ctrl_regs.vhd    │
-~                                                                │ 6  irq_sync                 4 ports  src/irq_sync.vhd      │
-~                                                                │ 7  line_buffer              6 ports  src/line_buffer.vhd   │
-~                                                                │ 8  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 6  irq_sync                  4 ports  src/irq_sync.vhd     │
+~                                                                │ 7  line_buffer               6 ports  src/line_buffer.vhd  │
+~                                                                │ 8  ram_dp                    6 ports  src/memory.vhd       │
 ~                                                                │ 9  axi_regs                 19 ports  src/regs.vhd         │
-~                                                                │10  rx_fifo                  8 ports  src/rx_fifo.vhd       │
-~                                                                ╰────────────────────────────────────────────────────────────╯
-~                                                                ╭────────────────────────────────────────────────────────────╮
-~                                                                │                                                            │
-~                                                                ╰────────────────────────────────────────────────────────────╯
-~
-:HdlSnipInstantiate!
-────────────────────────────────────────────────────────────────────────────────
-  1 library ieee;
-  2   use ieee.std_logic_1164.all;                                                                  ╭─────────────────────────╮
-  3   use ieee.numeric_std.all;                                                                     │ <C-K> <C-K> <C-K> <C-K> │
-  4                                                                                                 ╰─────────────────────────╯
-  5 entity top is
-  6   port (
-  7     clk   : in std_logic;
-  8     rst_n : in std_logic
-  9   );
- 10 end entity top;
- 11
- 12 architecture rtl of top is
- 13
- 14 begin
- 15
- 16 end architecture rtl;
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
-~                                                                │ 1  apb_regs                 10 ports  src/apb.vhd          │
-~                                                                │ 2  fifo_sync                8 ports  src/buffer.vhd        │
-~                                                                │ 3  cfg_cross                9 ports  src/cfg_cross.vhd     │
-~                                                                │ 4  cdc_handshake            9 ports  src/cross.vhd         │
-~                                                                │ 5  ctrl_regs                10 ports  src/ctrl_regs.vhd    │
-~                                                                │ 6  irq_sync                 4 ports  src/irq_sync.vhd      │
-~                                                                │ 7  line_buffer              6 ports  src/line_buffer.vhd   │
-~                                                                │ 8  ram_dp                   6 ports  src/memory.vhd        │
-~                                                                │ 9  axi_regs                 19 ports  src/regs.vhd         │
-~                                                                │10  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                │10  rx_fifo                   8 ports  src/rx_fifo.vhd      │
 ~                                                                ╰────────────────────────────────────────────────────────────╯
 ~                                                                ╭────────────────────────────────────────────────────────────╮
 ~                                                                │                                                            │
@@ -1489,15 +1432,15 @@
 ~
 ~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
 ~                                                                │ 1  apb_regs                 10 ports  src/apb.vhd          │
-~                                                                │ 2  fifo_sync                8 ports  src/buffer.vhd        │
-~                                                                │ 3  cfg_cross                9 ports  src/cfg_cross.vhd     │
-~                                                                │ 4  cdc_handshake            9 ports  src/cross.vhd         │
+~                                                                │ 2  fifo_sync                 8 ports  src/buffer.vhd       │
+~                                                                │ 3  cfg_cross                 9 ports  src/cfg_cross.vhd    │
+~                                                                │ 4  cdc_handshake             9 ports  src/cross.vhd        │
 ~                                                                │ 5  ctrl_regs                10 ports  src/ctrl_regs.vhd    │
-~                                                                │ 6  irq_sync                 4 ports  src/irq_sync.vhd      │
-~                                                                │ 7  line_buffer              6 ports  src/line_buffer.vhd   │
-~                                                                │ 8  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 6  irq_sync                  4 ports  src/irq_sync.vhd     │
+~                                                                │ 7  line_buffer               6 ports  src/line_buffer.vhd  │
+~                                                                │ 8  ram_dp                    6 ports  src/memory.vhd       │
 ~                                                                │ 9  axi_regs                 19 ports  src/regs.vhd         │
-~                                                                │10  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                │10  rx_fifo                   8 ports  src/rx_fifo.vhd      │
 ~                                                                ╰────────────────────────────────────────────────────────────╯
 ~                                                                ╭────────────────────────────────────────────────────────────╮
 ~                                                                │                                                            │
@@ -1546,15 +1489,15 @@
 ~
 ~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
 ~                                                                │ 1  apb_regs                 10 ports  src/apb.vhd          │
-~                                                                │ 2  fifo_sync                8 ports  src/buffer.vhd        │
-~                                                                │ 3  cfg_cross                9 ports  src/cfg_cross.vhd     │
-~                                                                │ 4  cdc_handshake            9 ports  src/cross.vhd         │
+~                                                                │ 2  fifo_sync                 8 ports  src/buffer.vhd       │
+~                                                                │ 3  cfg_cross                 9 ports  src/cfg_cross.vhd    │
+~                                                                │ 4  cdc_handshake             9 ports  src/cross.vhd        │
 ~                                                                │ 5  ctrl_regs                10 ports  src/ctrl_regs.vhd    │
-~                                                                │ 6  irq_sync                 4 ports  src/irq_sync.vhd      │
-~                                                                │ 7  line_buffer              6 ports  src/line_buffer.vhd   │
-~                                                                │ 8  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 6  irq_sync                  4 ports  src/irq_sync.vhd     │
+~                                                                │ 7  line_buffer               6 ports  src/line_buffer.vhd  │
+~                                                                │ 8  ram_dp                    6 ports  src/memory.vhd       │
 ~                                                                │ 9  axi_regs                 19 ports  src/regs.vhd         │
-~                                                                │10  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                │10  rx_fifo                   8 ports  src/rx_fifo.vhd      │
 ~                                                                ╰────────────────────────────────────────────────────────────╯
 ~                                                                ╭────────────────────────────────────────────────────────────╮
 ~                                                                │                                                            │
@@ -1603,15 +1546,15 @@
 ~
 ~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
 ~                                                                │ 1  apb_regs                 10 ports  src/apb.vhd          │
-~                                                                │ 2  fifo_sync                8 ports  src/buffer.vhd        │
-~                                                                │ 3  cfg_cross                9 ports  src/cfg_cross.vhd     │
-~                                                                │ 4  cdc_handshake            9 ports  src/cross.vhd         │
+~                                                                │ 2  fifo_sync                 8 ports  src/buffer.vhd       │
+~                                                                │ 3  cfg_cross                 9 ports  src/cfg_cross.vhd    │
+~                                                                │ 4  cdc_handshake             9 ports  src/cross.vhd        │
 ~                                                                │ 5  ctrl_regs                10 ports  src/ctrl_regs.vhd    │
-~                                                                │ 6  irq_sync                 4 ports  src/irq_sync.vhd      │
-~                                                                │ 7  line_buffer              6 ports  src/line_buffer.vhd   │
-~                                                                │ 8  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 6  irq_sync                  4 ports  src/irq_sync.vhd     │
+~                                                                │ 7  line_buffer               6 ports  src/line_buffer.vhd  │
+~                                                                │ 8  ram_dp                    6 ports  src/memory.vhd       │
 ~                                                                │ 9  axi_regs                 19 ports  src/regs.vhd         │
-~                                                                │10  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                │10  rx_fifo                   8 ports  src/rx_fifo.vhd      │
 ~                                                                ╰────────────────────────────────────────────────────────────╯
 ~                                                                ╭────────────────────────────────────────────────────────────╮
 ~                                                                │                                                            │
@@ -1660,15 +1603,72 @@
 ~
 ~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
 ~                                                                │ 1  apb_regs                 10 ports  src/apb.vhd          │
-~                                                                │ 2  fifo_sync                8 ports  src/buffer.vhd        │
-~                                                                │ 3  cfg_cross                9 ports  src/cfg_cross.vhd     │
-~                                                                │ 4  cdc_handshake            9 ports  src/cross.vhd         │
+~                                                                │ 2  fifo_sync                 8 ports  src/buffer.vhd       │
+~                                                                │ 3  cfg_cross                 9 ports  src/cfg_cross.vhd    │
+~                                                                │ 4  cdc_handshake             9 ports  src/cross.vhd        │
 ~                                                                │ 5  ctrl_regs                10 ports  src/ctrl_regs.vhd    │
-~                                                                │ 6  irq_sync                 4 ports  src/irq_sync.vhd      │
-~                                                                │ 7  line_buffer              6 ports  src/line_buffer.vhd   │
-~                                                                │ 8  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 6  irq_sync                  4 ports  src/irq_sync.vhd     │
+~                                                                │ 7  line_buffer               6 ports  src/line_buffer.vhd  │
+~                                                                │ 8  ram_dp                    6 ports  src/memory.vhd       │
 ~                                                                │ 9  axi_regs                 19 ports  src/regs.vhd         │
-~                                                                │10  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                │10  rx_fifo                   8 ports  src/rx_fifo.vhd      │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~                                                                ╭────────────────────────────────────────────────────────────╮
+~                                                                │                                                            │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~
+:HdlSnipInstantiate!
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;                                                            ╭───────────────────────────────╮
+  3   use ieee.numeric_std.all;                                                               │ <C-K> <C-K> <C-K> <C-K> <C-K> │
+  4                                                                                           ╰───────────────────────────────╯
+  5 entity top is
+  6   port (
+  7     clk   : in std_logic;
+  8     rst_n : in std_logic
+  9   );
+ 10 end entity top;
+ 11
+ 12 architecture rtl of top is
+ 13
+ 14 begin
+ 15
+ 16 end architecture rtl;
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
+~                                                                │ 1  apb_regs                 10 ports  src/apb.vhd          │
+~                                                                │ 2  fifo_sync                 8 ports  src/buffer.vhd       │
+~                                                                │ 3  cfg_cross                 9 ports  src/cfg_cross.vhd    │
+~                                                                │ 4  cdc_handshake             9 ports  src/cross.vhd        │
+~                                                                │ 5  ctrl_regs                10 ports  src/ctrl_regs.vhd    │
+~                                                                │ 6  irq_sync                  4 ports  src/irq_sync.vhd     │
+~                                                                │ 7  line_buffer               6 ports  src/line_buffer.vhd  │
+~                                                                │ 8  ram_dp                    6 ports  src/memory.vhd       │
+~                                                                │ 9  axi_regs                 19 ports  src/regs.vhd         │
+~                                                                │10  rx_fifo                   8 ports  src/rx_fifo.vhd      │
 ~                                                                ╰────────────────────────────────────────────────────────────╯
 ~                                                                ╭────────────────────────────────────────────────────────────╮
 ~                                                                │                                                            │
@@ -1717,15 +1717,15 @@
 ~
 ~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
 ~                                                                │ 1  apb_regs                 10 ports  src/apb.vhd          │
-~                                                                │ 2  fifo_sync                8 ports  src/buffer.vhd        │
-~                                                                │ 3  cfg_cross                9 ports  src/cfg_cross.vhd     │
-~                                                                │ 4  cdc_handshake            9 ports  src/cross.vhd         │
+~                                                                │ 2  fifo_sync                 8 ports  src/buffer.vhd       │
+~                                                                │ 3  cfg_cross                 9 ports  src/cfg_cross.vhd    │
+~                                                                │ 4  cdc_handshake             9 ports  src/cross.vhd        │
 ~                                                                │ 5  ctrl_regs                10 ports  src/ctrl_regs.vhd    │
-~                                                                │ 6  irq_sync                 4 ports  src/irq_sync.vhd      │
-~                                                                │ 7  line_buffer              6 ports  src/line_buffer.vhd   │
-~                                                                │ 8  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 6  irq_sync                  4 ports  src/irq_sync.vhd     │
+~                                                                │ 7  line_buffer               6 ports  src/line_buffer.vhd  │
+~                                                                │ 8  ram_dp                    6 ports  src/memory.vhd       │
 ~                                                                │ 9  axi_regs                 19 ports  src/regs.vhd         │
-~                                                                │10  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                │10  rx_fifo                   8 ports  src/rx_fifo.vhd      │
 ~                                                                ╰────────────────────────────────────────────────────────────╯
 ~                                                                ╭────────────────────────────────────────────────────────────╮
 ~                                                                │                                                            │
@@ -2116,15 +2116,15 @@
 ~
 ~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
 ~                                                                │ 1  apb_regs                 10 ports  src/apb.vhd          │
-~                                                                │ 2  fifo_sync                8 ports  src/buffer.vhd        │
-~                                                                │ 3  cfg_cross                9 ports  src/cfg_cross.vhd     │
-~                                                                │ 4  cdc_handshake            9 ports  src/cross.vhd         │
+~                                                                │ 2  fifo_sync                 8 ports  src/buffer.vhd       │
+~                                                                │ 3  cfg_cross                 9 ports  src/cfg_cross.vhd    │
+~                                                                │ 4  cdc_handshake             9 ports  src/cross.vhd        │
 ~                                                                │ 5  ctrl_regs                10 ports  src/ctrl_regs.vhd    │
-~                                                                │ 6  irq_sync                 4 ports  src/irq_sync.vhd      │
-~                                                                │ 7  line_buffer              6 ports  src/line_buffer.vhd   │
-~                                                                │ 8  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 6  irq_sync                  4 ports  src/irq_sync.vhd     │
+~                                                                │ 7  line_buffer               6 ports  src/line_buffer.vhd  │
+~                                                                │ 8  ram_dp                    6 ports  src/memory.vhd       │
 ~                                                                │ 9  axi_regs                 19 ports  src/regs.vhd         │
-~                                                                │10  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                │10  rx_fifo                   8 ports  src/rx_fifo.vhd      │
 ~                                                                ╰────────────────────────────────────────────────────────────╯
 ~                                                                ╭────────────────────────────────────────────────────────────╮
 ~                                                                │                                                            │
@@ -2173,15 +2173,15 @@
 ~
 ~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
 ~                                                                │ 1  apb_regs                 10 ports  src/apb.vhd          │
-~                                                                │ 2  fifo_sync                8 ports  src/buffer.vhd        │
-~                                                                │ 3  cfg_cross                9 ports  src/cfg_cross.vhd     │
-~                                                                │ 4  cdc_handshake            9 ports  src/cross.vhd         │
+~                                                                │ 2  fifo_sync                 8 ports  src/buffer.vhd       │
+~                                                                │ 3  cfg_cross                 9 ports  src/cfg_cross.vhd    │
+~                                                                │ 4  cdc_handshake             9 ports  src/cross.vhd        │
 ~                                                                │ 5  ctrl_regs                10 ports  src/ctrl_regs.vhd    │
-~                                                                │ 6  irq_sync                 4 ports  src/irq_sync.vhd      │
-~                                                                │ 7  line_buffer              6 ports  src/line_buffer.vhd   │
-~                                                                │ 8  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 6  irq_sync                  4 ports  src/irq_sync.vhd     │
+~                                                                │ 7  line_buffer               6 ports  src/line_buffer.vhd  │
+~                                                                │ 8  ram_dp                    6 ports  src/memory.vhd       │
 ~                                                                │ 9  axi_regs                 19 ports  src/regs.vhd         │
-~                                                                │10  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                │10  rx_fifo                   8 ports  src/rx_fifo.vhd      │
 ~                                                                ╰────────────────────────────────────────────────────────────╯
 ~                                                                ╭────────────────────────────────────────────────────────────╮
 ~                                                                │                                                            │
@@ -2236,9 +2236,9 @@
 ~
 ~
 ~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
-~                                                                │ 1  fifo_sync                8 ports  src/buffer.vhd        │
-~                                                                │ 2  rx_fifo                  8 ports  src/rx_fifo.vhd       │
-~                                                                │ 3  tx_fifo                  8 ports  src/tx_fifo.vhd       │
+~                                                                │ 1  fifo_sync                 8 ports  src/buffer.vhd       │
+~                                                                │ 2  rx_fifo                   8 ports  src/rx_fifo.vhd      │
+~                                                                │ 3  tx_fifo                   8 ports  src/tx_fifo.vhd      │
 ~                                                                ╰────────────────────────────────────────────────────────────╯
 ~                                                                ╭────────────────────────────────────────────────────────────╮
 ~                                                                │fifo                                                        │
@@ -2293,66 +2293,9 @@
 ~
 ~
 ~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
-~                                                                │ 1  fifo_sync                8 ports  src/buffer.vhd        │
-~                                                                │ 2  rx_fifo                  8 ports  src/rx_fifo.vhd       │
-~                                                                │ 3  tx_fifo                  8 ports  src/tx_fifo.vhd       │
-~                                                                ╰────────────────────────────────────────────────────────────╯
-~                                                                ╭────────────────────────────────────────────────────────────╮
-~                                                                │fifo                                                        │
-~                                                                ╰────────────────────────────────────────────────────────────╯
-~
-:HdlSnipInstantiate!
-────────────────────────────────────────────────────────────────────────────────
-  1 library ieee;
-  2   use ieee.std_logic_1164.all;
-  3   use ieee.numeric_std.all;
-  4
-  5 entity top is
-  6   port (
-  7     clk   : in std_logic;
-  8     rst_n : in std_logic
-  9   );
- 10 end entity top;
- 11
- 12 architecture rtl of top is
- 13
- 14   signal clk   : std_logic;
- 15   signal rst_n : std_logic;
- 16   signal d     : std_logic;
- 17   signal q     : std_logic;
- 18
- 19 begin
- 20
- 21   irq_sync_inst : entity work.irq_sync
- 22     generic map (
- 23       G_STAGES => 3,
- 24       G_INIT   => '0'
- 25     )
- 26     port map (
- 27       clk   => clk,
- 28       rst_n => rst_n,
- 29       d_i   => d,
- 30       q_o   => q
- 31     );
- 32
- 33 end architecture rtl;
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
-~                                                                │ 1  fifo_sync                8 ports  src/buffer.vhd        │
-~                                                                │ 2  rx_fifo                  8 ports  src/rx_fifo.vhd       │
-~                                                                │ 3  tx_fifo                  8 ports  src/tx_fifo.vhd       │
+~                                                                │ 1  fifo_sync                 8 ports  src/buffer.vhd       │
+~                                                                │ 2  rx_fifo                   8 ports  src/rx_fifo.vhd      │
+~                                                                │ 3  tx_fifo                   8 ports  src/tx_fifo.vhd      │
 ~                                                                ╰────────────────────────────────────────────────────────────╯
 ~                                                                ╭────────────────────────────────────────────────────────────╮
 ~                                                                │fifo                                                        │
@@ -2407,9 +2350,66 @@
 ~
 ~
 ~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
-~                                                                │ 1  fifo_sync                8 ports  src/buffer.vhd        │
-~                                                                │ 2  rx_fifo                  8 ports  src/rx_fifo.vhd       │
-~                                                                │ 3  tx_fifo                  8 ports  src/tx_fifo.vhd       │
+~                                                                │ 1  fifo_sync                 8 ports  src/buffer.vhd       │
+~                                                                │ 2  rx_fifo                   8 ports  src/rx_fifo.vhd      │
+~                                                                │ 3  tx_fifo                   8 ports  src/tx_fifo.vhd      │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~                                                                ╭────────────────────────────────────────────────────────────╮
+~                                                                │fifo                                                        │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~
+:HdlSnipInstantiate!
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;                                                                                    ╭───────╮
+  3   use ieee.numeric_std.all;                                                                                       │ <C-K> │
+  4                                                                                                                   ╰───────╯
+  5 entity top is
+  6   port (
+  7     clk   : in std_logic;
+  8     rst_n : in std_logic
+  9   );
+ 10 end entity top;
+ 11
+ 12 architecture rtl of top is
+ 13
+ 14   signal clk   : std_logic;
+ 15   signal rst_n : std_logic;
+ 16   signal d     : std_logic;
+ 17   signal q     : std_logic;
+ 18
+ 19 begin
+ 20
+ 21   irq_sync_inst : entity work.irq_sync
+ 22     generic map (
+ 23       G_STAGES => 3,
+ 24       G_INIT   => '0'
+ 25     )
+ 26     port map (
+ 27       clk   => clk,
+ 28       rst_n => rst_n,
+ 29       d_i   => d,
+ 30       q_o   => q
+ 31     );
+ 32
+ 33 end architecture rtl;
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~                                                                ╭───────────────────── hdlsnip: entity ──────────────────────╮
+~                                                                │ 1  fifo_sync                 8 ports  src/buffer.vhd       │
+~                                                                │ 2  rx_fifo                   8 ports  src/rx_fifo.vhd      │
+~                                                                │ 3  tx_fifo                   8 ports  src/tx_fifo.vhd      │
 ~                                                                ╰────────────────────────────────────────────────────────────╯
 ~                                                                ╭────────────────────────────────────────────────────────────╮
 ~                                                                │fifo                                                        │

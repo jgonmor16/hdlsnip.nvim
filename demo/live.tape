@@ -43,6 +43,11 @@ Sleep 1200ms
 
 Ctrl+K
 Sleep 600ms
+# A value the design cannot take: the dialog says so, and leaves the block
+# alone until it is corrected.
+Ctrl+W
+Type "9"
+Sleep 1500ms
 Ctrl+W
 Type "6"
 Sleep 2200ms

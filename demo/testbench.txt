@@ -635,12 +635,12 @@
 ~                                                                ╭────────────────── hdlsnip: testbench for ──────────────────╮
 ~                                                                │ 1  fifo_async               10 ports  src/afifo.vhd        │
 ~                                                                │ 2  apb_regs                 10 ports  src/apb.vhd          │
-~                                                                │ 3  avmm_regs                9 ports  src/avalon.vhd        │
-~                                                                │ 4  fifo_sync                8 ports  src/buffer.vhd        │
-~                                                                │ 5  cdc_handshake            9 ports  src/cross.vhd         │
-~                                                                │ 6  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 3  avmm_regs                 9 ports  src/avalon.vhd       │
+~                                                                │ 4  fifo_sync                 8 ports  src/buffer.vhd       │
+~                                                                │ 5  cdc_handshake             9 ports  src/cross.vhd        │
+~                                                                │ 6  ram_dp                    6 ports  src/memory.vhd       │
 ~                                                                │ 7  axi_regs                 19 ports  src/regs.vhd         │
-~                                                                │ 8  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                │ 8  rx_fifo                   8 ports  src/rx_fifo.vhd      │
 ~                                                                │ 9  status_regs              19 ports  src/status_regs.vhd  │
 ~                                                                │10  axis_skid                10 ports  src/stream.vhd       │
 ~                                                                ╰────────────────────────────────────────────────────────────╯
@@ -692,12 +692,12 @@
 ~                                                                ╭────────────────── hdlsnip: testbench for ──────────────────╮
 ~                                                                │ 1  fifo_async               10 ports  src/afifo.vhd        │
 ~                                                                │ 2  apb_regs                 10 ports  src/apb.vhd          │
-~                                                                │ 3  avmm_regs                9 ports  src/avalon.vhd        │
-~                                                                │ 4  fifo_sync                8 ports  src/buffer.vhd        │
-~                                                                │ 5  cdc_handshake            9 ports  src/cross.vhd         │
-~                                                                │ 6  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 3  avmm_regs                 9 ports  src/avalon.vhd       │
+~                                                                │ 4  fifo_sync                 8 ports  src/buffer.vhd       │
+~                                                                │ 5  cdc_handshake             9 ports  src/cross.vhd        │
+~                                                                │ 6  ram_dp                    6 ports  src/memory.vhd       │
 ~                                                                │ 7  axi_regs                 19 ports  src/regs.vhd         │
-~                                                                │ 8  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                │ 8  rx_fifo                   8 ports  src/rx_fifo.vhd      │
 ~                                                                │ 9  status_regs              19 ports  src/status_regs.vhd  │
 ~                                                                │10  axis_skid                10 ports  src/stream.vhd       │
 ~                                                                ╰────────────────────────────────────────────────────────────╯
@@ -708,9 +708,9 @@
 :HdlSnipTestbench
 ────────────────────────────────────────────────────────────────────────────────
   1
-~
-~
-~
+~                                                                                                                     ╭───────╮
+~                                                                                                                     │ <C-D> │
+~                                                                                                                     ╰───────╯
 ~
 ~
 ~
@@ -747,7 +747,7 @@
 ~
 ~
 ~                                                                ╭────────────────── hdlsnip: testbench for ──────────────────╮
-~                                                                │11  bit_sync                 4 ports  src/sync.vhd          │
+~                                                                │11  bit_sync                  4 ports  src/sync.vhd         │
 ~                                                                │12  wb_regs                  11 ports  src/wishbone.vhd     │
 ~                                                                │                                                            │
 ~                                                                │                                                            │
@@ -804,7 +804,7 @@
 ~
 ~
 ~                                                                ╭────────────────── hdlsnip: testbench for ──────────────────╮
-~                                                                │11  bit_sync                 4 ports  src/sync.vhd          │
+~                                                                │11  bit_sync                  4 ports  src/sync.vhd         │
 ~                                                                │12  wb_regs                  11 ports  src/wishbone.vhd     │
 ~                                                                │                                                            │
 ~                                                                │                                                            │
@@ -863,12 +863,12 @@
 ~                                                                ╭────────────────── hdlsnip: testbench for ──────────────────╮
 ~                                                                │ 1  fifo_async               10 ports  src/afifo.vhd        │
 ~                                                                │ 2  apb_regs                 10 ports  src/apb.vhd          │
-~                                                                │ 3  avmm_regs                9 ports  src/avalon.vhd        │
-~                                                                │ 4  fifo_sync                8 ports  src/buffer.vhd        │
-~                                                                │ 5  cdc_handshake            9 ports  src/cross.vhd         │
-~                                                                │ 6  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 3  avmm_regs                 9 ports  src/avalon.vhd       │
+~                                                                │ 4  fifo_sync                 8 ports  src/buffer.vhd       │
+~                                                                │ 5  cdc_handshake             9 ports  src/cross.vhd        │
+~                                                                │ 6  ram_dp                    6 ports  src/memory.vhd       │
 ~                                                                │ 7  axi_regs                 19 ports  src/regs.vhd         │
-~                                                                │ 8  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                │ 8  rx_fifo                   8 ports  src/rx_fifo.vhd      │
 ~                                                                │ 9  status_regs              19 ports  src/status_regs.vhd  │
 ~                                                                │10  axis_skid                10 ports  src/stream.vhd       │
 ~                                                                ╰────────────────────────────────────────────────────────────╯
@@ -920,69 +920,12 @@
 ~                                                                ╭────────────────── hdlsnip: testbench for ──────────────────╮
 ~                                                                │ 1  fifo_async               10 ports  src/afifo.vhd        │
 ~                                                                │ 2  apb_regs                 10 ports  src/apb.vhd          │
-~                                                                │ 3  avmm_regs                9 ports  src/avalon.vhd        │
-~                                                                │ 4  fifo_sync                8 ports  src/buffer.vhd        │
-~                                                                │ 5  cdc_handshake            9 ports  src/cross.vhd         │
-~                                                                │ 6  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 3  avmm_regs                 9 ports  src/avalon.vhd       │
+~                                                                │ 4  fifo_sync                 8 ports  src/buffer.vhd       │
+~                                                                │ 5  cdc_handshake             9 ports  src/cross.vhd        │
+~                                                                │ 6  ram_dp                    6 ports  src/memory.vhd       │
 ~                                                                │ 7  axi_regs                 19 ports  src/regs.vhd         │
-~                                                                │ 8  rx_fifo                  8 ports  src/rx_fifo.vhd       │
-~                                                                │ 9  status_regs              19 ports  src/status_regs.vhd  │
-~                                                                │10  axis_skid                10 ports  src/stream.vhd       │
-~                                                                ╰────────────────────────────────────────────────────────────╯
-~                                                                ╭────────────────────────────────────────────────────────────╮
-~                                                                │                                                            │
-~                                                                ╰────────────────────────────────────────────────────────────╯
-~
-:HdlSnipTestbench
-────────────────────────────────────────────────────────────────────────────────
-  1
-~                                                                                                                     ╭───────╮
-~                                                                                                                     │ <C-K> │
-~                                                                                                                     ╰───────╯
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~                                                                ╭────────────────── hdlsnip: testbench for ──────────────────╮
-~                                                                │ 1  fifo_async               10 ports  src/afifo.vhd        │
-~                                                                │ 2  apb_regs                 10 ports  src/apb.vhd          │
-~                                                                │ 3  avmm_regs                9 ports  src/avalon.vhd        │
-~                                                                │ 4  fifo_sync                8 ports  src/buffer.vhd        │
-~                                                                │ 5  cdc_handshake            9 ports  src/cross.vhd         │
-~                                                                │ 6  ram_dp                   6 ports  src/memory.vhd        │
-~                                                                │ 7  axi_regs                 19 ports  src/regs.vhd         │
-~                                                                │ 8  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                │ 8  rx_fifo                   8 ports  src/rx_fifo.vhd      │
 ~                                                                │ 9  status_regs              19 ports  src/status_regs.vhd  │
 ~                                                                │10  axis_skid                10 ports  src/stream.vhd       │
 ~                                                                ╰────────────────────────────────────────────────────────────╯
@@ -1034,12 +977,69 @@
 ~                                                                ╭────────────────── hdlsnip: testbench for ──────────────────╮
 ~                                                                │ 1  fifo_async               10 ports  src/afifo.vhd        │
 ~                                                                │ 2  apb_regs                 10 ports  src/apb.vhd          │
-~                                                                │ 3  avmm_regs                9 ports  src/avalon.vhd        │
-~                                                                │ 4  fifo_sync                8 ports  src/buffer.vhd        │
-~                                                                │ 5  cdc_handshake            9 ports  src/cross.vhd         │
-~                                                                │ 6  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 3  avmm_regs                 9 ports  src/avalon.vhd       │
+~                                                                │ 4  fifo_sync                 8 ports  src/buffer.vhd       │
+~                                                                │ 5  cdc_handshake             9 ports  src/cross.vhd        │
+~                                                                │ 6  ram_dp                    6 ports  src/memory.vhd       │
 ~                                                                │ 7  axi_regs                 19 ports  src/regs.vhd         │
-~                                                                │ 8  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                │ 8  rx_fifo                   8 ports  src/rx_fifo.vhd      │
+~                                                                │ 9  status_regs              19 ports  src/status_regs.vhd  │
+~                                                                │10  axis_skid                10 ports  src/stream.vhd       │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~                                                                ╭────────────────────────────────────────────────────────────╮
+~                                                                │                                                            │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~
+:HdlSnipTestbench
+────────────────────────────────────────────────────────────────────────────────
+  1
+~                                                                                                                     ╭───────╮
+~                                                                                                                     │ <C-K> │
+~                                                                                                                     ╰───────╯
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~                                                                ╭────────────────── hdlsnip: testbench for ──────────────────╮
+~                                                                │ 1  fifo_async               10 ports  src/afifo.vhd        │
+~                                                                │ 2  apb_regs                 10 ports  src/apb.vhd          │
+~                                                                │ 3  avmm_regs                 9 ports  src/avalon.vhd       │
+~                                                                │ 4  fifo_sync                 8 ports  src/buffer.vhd       │
+~                                                                │ 5  cdc_handshake             9 ports  src/cross.vhd        │
+~                                                                │ 6  ram_dp                    6 ports  src/memory.vhd       │
+~                                                                │ 7  axi_regs                 19 ports  src/regs.vhd         │
+~                                                                │ 8  rx_fifo                   8 ports  src/rx_fifo.vhd      │
 ~                                                                │ 9  status_regs              19 ports  src/status_regs.vhd  │
 ~                                                                │10  axis_skid                10 ports  src/stream.vhd       │
 ~                                                                ╰────────────────────────────────────────────────────────────╯
@@ -1091,12 +1091,12 @@
 ~                                                                ╭────────────────── hdlsnip: testbench for ──────────────────╮
 ~                                                                │ 1  fifo_async               10 ports  src/afifo.vhd        │
 ~                                                                │ 2  apb_regs                 10 ports  src/apb.vhd          │
-~                                                                │ 3  avmm_regs                9 ports  src/avalon.vhd        │
-~                                                                │ 4  fifo_sync                8 ports  src/buffer.vhd        │
-~                                                                │ 5  cdc_handshake            9 ports  src/cross.vhd         │
-~                                                                │ 6  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 3  avmm_regs                 9 ports  src/avalon.vhd       │
+~                                                                │ 4  fifo_sync                 8 ports  src/buffer.vhd       │
+~                                                                │ 5  cdc_handshake             9 ports  src/cross.vhd        │
+~                                                                │ 6  ram_dp                    6 ports  src/memory.vhd       │
 ~                                                                │ 7  axi_regs                 19 ports  src/regs.vhd         │
-~                                                                │ 8  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                │ 8  rx_fifo                   8 ports  src/rx_fifo.vhd      │
 ~                                                                │ 9  status_regs              19 ports  src/status_regs.vhd  │
 ~                                                                │10  axis_skid                10 ports  src/stream.vhd       │
 ~                                                                ╰────────────────────────────────────────────────────────────╯
@@ -1148,12 +1148,69 @@
 ~                                                                ╭────────────────── hdlsnip: testbench for ──────────────────╮
 ~                                                                │ 1  fifo_async               10 ports  src/afifo.vhd        │
 ~                                                                │ 2  apb_regs                 10 ports  src/apb.vhd          │
-~                                                                │ 3  avmm_regs                9 ports  src/avalon.vhd        │
-~                                                                │ 4  fifo_sync                8 ports  src/buffer.vhd        │
-~                                                                │ 5  cdc_handshake            9 ports  src/cross.vhd         │
-~                                                                │ 6  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 3  avmm_regs                 9 ports  src/avalon.vhd       │
+~                                                                │ 4  fifo_sync                 8 ports  src/buffer.vhd       │
+~                                                                │ 5  cdc_handshake             9 ports  src/cross.vhd        │
+~                                                                │ 6  ram_dp                    6 ports  src/memory.vhd       │
 ~                                                                │ 7  axi_regs                 19 ports  src/regs.vhd         │
-~                                                                │ 8  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                │ 8  rx_fifo                   8 ports  src/rx_fifo.vhd      │
+~                                                                │ 9  status_regs              19 ports  src/status_regs.vhd  │
+~                                                                │10  axis_skid                10 ports  src/stream.vhd       │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~                                                                ╭────────────────────────────────────────────────────────────╮
+~                                                                │                                                            │
+~                                                                ╰────────────────────────────────────────────────────────────╯
+~
+:HdlSnipTestbench
+────────────────────────────────────────────────────────────────────────────────
+  1
+~                                                                                                               ╭─────────────╮
+~                                                                                                               │ <C-K> <C-K> │
+~                                                                                                               ╰─────────────╯
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~                                                                ╭────────────────── hdlsnip: testbench for ──────────────────╮
+~                                                                │ 1  fifo_async               10 ports  src/afifo.vhd        │
+~                                                                │ 2  apb_regs                 10 ports  src/apb.vhd          │
+~                                                                │ 3  avmm_regs                 9 ports  src/avalon.vhd       │
+~                                                                │ 4  fifo_sync                 8 ports  src/buffer.vhd       │
+~                                                                │ 5  cdc_handshake             9 ports  src/cross.vhd        │
+~                                                                │ 6  ram_dp                    6 ports  src/memory.vhd       │
+~                                                                │ 7  axi_regs                 19 ports  src/regs.vhd         │
+~                                                                │ 8  rx_fifo                   8 ports  src/rx_fifo.vhd      │
 ~                                                                │ 9  status_regs              19 ports  src/status_regs.vhd  │
 ~                                                                │10  axis_skid                10 ports  src/stream.vhd       │
 ~                                                                ╰────────────────────────────────────────────────────────────╯
@@ -1205,69 +1262,12 @@
 ~                                                                ╭────────────────── hdlsnip: testbench for ──────────────────╮
 ~                                                                │ 1  fifo_async               10 ports  src/afifo.vhd        │
 ~                                                                │ 2  apb_regs                 10 ports  src/apb.vhd          │
-~                                                                │ 3  avmm_regs                9 ports  src/avalon.vhd        │
-~                                                                │ 4  fifo_sync                8 ports  src/buffer.vhd        │
-~                                                                │ 5  cdc_handshake            9 ports  src/cross.vhd         │
-~                                                                │ 6  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 3  avmm_regs                 9 ports  src/avalon.vhd       │
+~                                                                │ 4  fifo_sync                 8 ports  src/buffer.vhd       │
+~                                                                │ 5  cdc_handshake             9 ports  src/cross.vhd        │
+~                                                                │ 6  ram_dp                    6 ports  src/memory.vhd       │
 ~                                                                │ 7  axi_regs                 19 ports  src/regs.vhd         │
-~                                                                │ 8  rx_fifo                  8 ports  src/rx_fifo.vhd       │
-~                                                                │ 9  status_regs              19 ports  src/status_regs.vhd  │
-~                                                                │10  axis_skid                10 ports  src/stream.vhd       │
-~                                                                ╰────────────────────────────────────────────────────────────╯
-~                                                                ╭────────────────────────────────────────────────────────────╮
-~                                                                │                                                            │
-~                                                                ╰────────────────────────────────────────────────────────────╯
-~
-:HdlSnipTestbench
-────────────────────────────────────────────────────────────────────────────────
-  1
-~                                                                                                         ╭───────────────────╮
-~                                                                                                         │ <C-K> <C-K> <C-K> │
-~                                                                                                         ╰───────────────────╯
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~                                                                ╭────────────────── hdlsnip: testbench for ──────────────────╮
-~                                                                │ 1  fifo_async               10 ports  src/afifo.vhd        │
-~                                                                │ 2  apb_regs                 10 ports  src/apb.vhd          │
-~                                                                │ 3  avmm_regs                9 ports  src/avalon.vhd        │
-~                                                                │ 4  fifo_sync                8 ports  src/buffer.vhd        │
-~                                                                │ 5  cdc_handshake            9 ports  src/cross.vhd         │
-~                                                                │ 6  ram_dp                   6 ports  src/memory.vhd        │
-~                                                                │ 7  axi_regs                 19 ports  src/regs.vhd         │
-~                                                                │ 8  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                │ 8  rx_fifo                   8 ports  src/rx_fifo.vhd      │
 ~                                                                │ 9  status_regs              19 ports  src/status_regs.vhd  │
 ~                                                                │10  axis_skid                10 ports  src/stream.vhd       │
 ~                                                                ╰────────────────────────────────────────────────────────────╯
@@ -1319,12 +1319,12 @@
 ~                                                                ╭────────────────── hdlsnip: testbench for ──────────────────╮
 ~                                                                │ 1  fifo_async               10 ports  src/afifo.vhd        │
 ~                                                                │ 2  apb_regs                 10 ports  src/apb.vhd          │
-~                                                                │ 3  avmm_regs                9 ports  src/avalon.vhd        │
-~                                                                │ 4  fifo_sync                8 ports  src/buffer.vhd        │
-~                                                                │ 5  cdc_handshake            9 ports  src/cross.vhd         │
-~                                                                │ 6  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 3  avmm_regs                 9 ports  src/avalon.vhd       │
+~                                                                │ 4  fifo_sync                 8 ports  src/buffer.vhd       │
+~                                                                │ 5  cdc_handshake             9 ports  src/cross.vhd        │
+~                                                                │ 6  ram_dp                    6 ports  src/memory.vhd       │
 ~                                                                │ 7  axi_regs                 19 ports  src/regs.vhd         │
-~                                                                │ 8  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                │ 8  rx_fifo                   8 ports  src/rx_fifo.vhd      │
 ~                                                                │ 9  status_regs              19 ports  src/status_regs.vhd  │
 ~                                                                │10  axis_skid                10 ports  src/stream.vhd       │
 ~                                                                ╰────────────────────────────────────────────────────────────╯
@@ -1376,12 +1376,12 @@
 ~                                                                ╭────────────────── hdlsnip: testbench for ──────────────────╮
 ~                                                                │ 1  fifo_async               10 ports  src/afifo.vhd        │
 ~                                                                │ 2  apb_regs                 10 ports  src/apb.vhd          │
-~                                                                │ 3  avmm_regs                9 ports  src/avalon.vhd        │
-~                                                                │ 4  fifo_sync                8 ports  src/buffer.vhd        │
-~                                                                │ 5  cdc_handshake            9 ports  src/cross.vhd         │
-~                                                                │ 6  ram_dp                   6 ports  src/memory.vhd        │
+~                                                                │ 3  avmm_regs                 9 ports  src/avalon.vhd       │
+~                                                                │ 4  fifo_sync                 8 ports  src/buffer.vhd       │
+~                                                                │ 5  cdc_handshake             9 ports  src/cross.vhd        │
+~                                                                │ 6  ram_dp                    6 ports  src/memory.vhd       │
 ~                                                                │ 7  axi_regs                 19 ports  src/regs.vhd         │
-~                                                                │ 8  rx_fifo                  8 ports  src/rx_fifo.vhd       │
+~                                                                │ 8  rx_fifo                   8 ports  src/rx_fifo.vhd      │
 ~                                                                │ 9  status_regs              19 ports  src/status_regs.vhd  │
 ~                                                                │10  axis_skid                10 ports  src/stream.vhd       │
 ~                                                                ╰────────────────────────────────────────────────────────────╯
