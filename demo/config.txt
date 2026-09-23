@@ -849,9 +849,9 @@
 
 ────────────────────────────────────────────────────────────────────────────────
   1 library ieee;
-  2   use ieee.std_logic_1164.all;                                          ╭───────────────────────╮
-  3   use ieee.numeric_std.all;                                             │ <CR> <Esc> o <CR> prc │
-  4                                                                         ╰───────────────────────╯
+  2   use ieee.std_logic_1164.all;                                         ╭────────────────────────╮
+  3   use ieee.numeric_std.all;                                            │ <Esc> o <CR> prc <C-K> │
+  4                                                                        ╰────────────────────────╯
   5 entity fifo is
   6   port (
   7     clk   : in  std_logic;
@@ -864,7 +864,7 @@
  14 begin
  15
  16
- 17   prc Interface Clocked process with the configured reset  (asks for parameters)
+ 17
  18 end architecture rtl;
 ~
 ~
@@ -884,9 +884,9 @@
 ~
 ~
 ~
-~
-~
-~
+~                                                                ╭──────────── process ─────────────╮
+~                                                                │label identifier   main           │
+~                                                                ╰──────────────────────────────────╯
 
 ────────────────────────────────────────────────────────────────────────────────
   1 library ieee;
@@ -1669,9 +1669,9 @@
 
 ────────────────────────────────────────────────────────────────────────────────
   1 library ieee;
-  2   use ieee.std_logic_1164.all;
-  3   use ieee.numeric_std.all;
-  4
+  2   use ieee.std_logic_1164.all;                                                          ╭───────╮
+  3   use ieee.numeric_std.all;                                                             │ <C-W> │
+  4                                                                                         ╰───────╯
   5 entity fifo is
   6   port (
   7     clk   : in  std_logic;

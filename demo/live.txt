@@ -523,7 +523,7 @@
 ~
 ~
 ~                                                                ╭──────────── bit_sync ────────────╮
-~                                                                │name identifier     bit_sync      │
+~                                                                │name   identifier     bit_sync    │
 ~                                                                │stages integer 2..8   2           │
 ~                                                                ╰──────────────────────────────────╯
 :HdlSnip bit_sync
@@ -563,7 +563,7 @@
 ~
 ~
 ~                                                                ╭──────────── bit_sync ────────────╮
-~                                                                │name identifier     bit_sync      │
+~                                                                │name   identifier     bit_sync    │
 ~                                                                │stages integer 2..8   2           │
 ~                                                                ╰──────────────────────────────────╯
 :HdlSnip bit_sync
@@ -603,7 +603,7 @@
 ~
 ~
 ~                                                                ╭──────────── bit_sync ────────────╮
-~                                                                │name identifier                   │
+~                                                                │name   identifier                 │
 ~                                                                │stages integer 2..8   2           │
 ~                                                                ╰──────────────────────────────────╯
 :HdlSnip bit_sync
@@ -643,7 +643,7 @@
 ~
 ~
 ~                                                                ╭──────────── bit_sync ────────────╮
-~                                                                │name identifier     flag_sync     │
+~                                                                │name   identifier     flag_sync   │
 ~                                                                │stages integer 2..8   2           │
 ~                                                                ╰──────────────────────────────────╯
 :HdlSnip bit_sync
@@ -683,7 +683,7 @@
 ~
 ~
 ~                                                                ╭──────────── bit_sync ────────────╮
-~                                                                │name identifier     flag_sync     │
+~                                                                │name   identifier     flag_sync   │
 ~                                                                │stages integer 2..8   2           │
 ~                                                                ╰──────────────────────────────────╯
 :HdlSnip bit_sync
@@ -1043,7 +1043,7 @@
  33     severity failure;
  34
  35   p_sync : process (clk, rst_n) is                           ╭──────────── bit_sync ────────────╮
- 36   begin                                                      │name identifier     flag_sync     │
+ 36   begin                                                      │name   identifier     flag_sync   │
  37     if rst_n = '0' then                                      │stages integer 2..8   2           │
  38       sync_r <= (others => G_INIT);                          ╰──────────────────────────────────╯
 :HdlSnipEdit
@@ -1083,7 +1083,7 @@
  33     severity failure;
  34
  35   p_sync : process (clk, rst_n) is                           ╭──────────── bit_sync ────────────╮
- 36   begin                                                      │name identifier     flag_sync     │
+ 36   begin                                                      │name   identifier     flag_sync   │
  37     if rst_n = '0' then                                      │stages integer 2..8   2           │
  38       sync_r <= (others => G_INIT);                          ╰──────────────────────────────────╯
 :HdlSnipEdit
@@ -1123,7 +1123,7 @@
  33     severity failure;
  34
  35   p_sync : process (clk, rst_n) is                           ╭──────────── bit_sync ────────────╮
- 36   begin                                                      │name identifier     flag_sync     │
+ 36   begin                                                      │name   identifier     flag_sync   │
  37     if rst_n = '0' then                                      │stages integer 2..8   2           │
  38       sync_r <= (others => G_INIT);                          ╰──────────────────────────────────╯
 :HdlSnipEdit
@@ -1163,15 +1163,15 @@
  33     severity failure;
  34
  35   p_sync : process (clk, rst_n) is                           ╭──────────── bit_sync ────────────╮
- 36   begin                                                      │name identifier     flag_sync     │
+ 36   begin                                                      │name   identifier     flag_sync   │
  37     if rst_n = '0' then                                      │stages integer 2..8   2           │
  38       sync_r <= (others => G_INIT);                          ╰──────────────────────────────────╯
 :HdlSnipEdit
 ────────────────────────────────────────────────────────────────────────────────
   1 library ieee;
-  2   use ieee.std_logic_1164.all;                                                          ╭───────╮
-  3                                                                                         │ <C-K> │
-  4 -- Single-bit synchroniser.                                                             ╰───────╯
+  2   use ieee.std_logic_1164.all;                                                    ╭─────────────╮
+  3                                                                                   │ <C-K> <C-W> │
+  4 -- Single-bit synchroniser.                                                       ╰─────────────╯
   5 --
   6 -- Valid for one bit at a time. A bus, or several bits that must
   7 -- stay mutually consistent, needs a handshake or a gray coded
@@ -1203,14 +1203,14 @@
  33     severity failure;
  34
  35   p_sync : process (clk, rst_n) is                           ╭──────────── bit_sync ────────────╮
- 36   begin                                                      │name identifier     flag_sync     │
+ 36   begin                                                      │name   identifier     flag_sync   │
  37     if rst_n = '0' then                                      │stages integer 2..8               │
  38       sync_r <= (others => G_INIT);                          ╰──────────────────────────────────╯
 :HdlSnipEdit
 ────────────────────────────────────────────────────────────────────────────────
   1 library ieee;
   2   use ieee.std_logic_1164.all;                                                  ╭───────────────╮
-  3                                                                                 │ <C-K> <C-W> 6 │
+  3                                                                                 │ <C-K> <C-W> 9 │
   4 -- Single-bit synchroniser.                                                     ╰───────────────╯
   5 --
   6 -- Valid for one bit at a time. A bus, or several bits that must
@@ -1243,7 +1243,127 @@
  33     severity failure;
  34
  35   p_sync : process (clk, rst_n) is                           ╭──────────── bit_sync ────────────╮
- 36   begin                                                      │name identifier     flag_sync     │
+ 36   begin                                                      │name   identifier     flag_sync   │
+ 37     if rst_n = '0' then                                      │stages integer 2..8   9           │
+ 38       sync_r <= (others => G_INIT);                          ╰──────────────────────────────────╯
+:HdlSnipEdit
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;
+  3
+  4 -- Single-bit synchroniser.
+  5 --
+  6 -- Valid for one bit at a time. A bus, or several bits that must
+  7 -- stay mutually consistent, needs a handshake or a gray coded
+  8 -- pointer instead: each bit here settles independently.
+  9 --
+ 10 -- Constrain the source register with set_max_delay -datapath_only
+ 11 -- so the crossing is not timed as a normal path.
+ 12 entity flag_sync is
+ 13   generic (
+ 14     G_STAGES : positive := 2;
+ 15     G_INIT   : std_logic := '0'
+ 16   );
+ 17   port (
+ 18     clk   : in  std_logic;
+ 19     rst_n : in  std_logic;
+ 20     d_i   : in  std_logic;
+ 21     q_o   : out std_logic
+ 22   );
+ 23 end entity flag_sync;
+ 24
+ 25 architecture rtl of flag_sync is
+ 26
+ 27   signal sync_r : std_logic_vector(G_STAGES - 1 downto 0) := (others => G_INIT);
+ 28
+ 29 begin
+ 30
+ 31   assert G_STAGES >= 2
+ 32     report "flag_sync: needs at least two stages"            ╭──────────────────────────────────╮
+ 33     severity failure;                                        │stages: must be <= 8              │
+ 34                                                              ╰──────────────────────────────────╯
+ 35   p_sync : process (clk, rst_n) is                           ╭──────────── bit_sync ────────────╮
+ 36   begin                                                      │name   identifier     flag_sync   │
+ 37     if rst_n = '0' then                                      │stages integer 2..8   9           │
+ 38       sync_r <= (others => G_INIT);                          ╰──────────────────────────────────╯
+:HdlSnipEdit
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;                                                          ╭───────╮
+  3                                                                                         │ <C-W> │
+  4 -- Single-bit synchroniser.                                                             ╰───────╯
+  5 --
+  6 -- Valid for one bit at a time. A bus, or several bits that must
+  7 -- stay mutually consistent, needs a handshake or a gray coded
+  8 -- pointer instead: each bit here settles independently.
+  9 --
+ 10 -- Constrain the source register with set_max_delay -datapath_only
+ 11 -- so the crossing is not timed as a normal path.
+ 12 entity flag_sync is
+ 13   generic (
+ 14     G_STAGES : positive := 2;
+ 15     G_INIT   : std_logic := '0'
+ 16   );
+ 17   port (
+ 18     clk   : in  std_logic;
+ 19     rst_n : in  std_logic;
+ 20     d_i   : in  std_logic;
+ 21     q_o   : out std_logic
+ 22   );
+ 23 end entity flag_sync;
+ 24
+ 25 architecture rtl of flag_sync is
+ 26
+ 27   signal sync_r : std_logic_vector(G_STAGES - 1 downto 0) := (others => G_INIT);
+ 28
+ 29 begin
+ 30
+ 31   assert G_STAGES >= 2
+ 32     report "flag_sync: needs at least two stages"            ╭──────────────────────────────────╮
+ 33     severity failure;                                        │stages: must be <= 8              │
+ 34                                                              ╰──────────────────────────────────╯
+ 35   p_sync : process (clk, rst_n) is                           ╭──────────── bit_sync ────────────╮
+ 36   begin                                                      │name   identifier     flag_sync   │
+ 37     if rst_n = '0' then                                      │stages integer 2..8               │
+ 38       sync_r <= (others => G_INIT);                          ╰──────────────────────────────────╯
+:HdlSnipEdit
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;                                                        ╭─────────╮
+  3                                                                                       │ <C-W> 6 │
+  4 -- Single-bit synchroniser.                                                           ╰─────────╯
+  5 --
+  6 -- Valid for one bit at a time. A bus, or several bits that must
+  7 -- stay mutually consistent, needs a handshake or a gray coded
+  8 -- pointer instead: each bit here settles independently.
+  9 --
+ 10 -- Constrain the source register with set_max_delay -datapath_only
+ 11 -- so the crossing is not timed as a normal path.
+ 12 entity flag_sync is
+ 13   generic (
+ 14     G_STAGES : positive := 2;
+ 15     G_INIT   : std_logic := '0'
+ 16   );
+ 17   port (
+ 18     clk   : in  std_logic;
+ 19     rst_n : in  std_logic;
+ 20     d_i   : in  std_logic;
+ 21     q_o   : out std_logic
+ 22   );
+ 23 end entity flag_sync;
+ 24
+ 25 architecture rtl of flag_sync is
+ 26
+ 27   signal sync_r : std_logic_vector(G_STAGES - 1 downto 0) := (others => G_INIT);
+ 28
+ 29 begin
+ 30
+ 31   assert G_STAGES >= 2
+ 32     report "flag_sync: needs at least two stages"            ╭──────────────────────────────────╮
+ 33     severity failure;                                        │stages: must be <= 8              │
+ 34                                                              ╰──────────────────────────────────╯
+ 35   p_sync : process (clk, rst_n) is                           ╭──────────── bit_sync ────────────╮
+ 36   begin                                                      │name   identifier     flag_sync   │
  37     if rst_n = '0' then                                      │stages integer 2..8   6           │
  38       sync_r <= (others => G_INIT);                          ╰──────────────────────────────────╯
 :HdlSnipEdit
@@ -1283,47 +1403,7 @@
  33     severity failure;
  34
  35   p_sync : process (clk, rst_n) is                           ╭──────────── bit_sync ────────────╮
- 36   begin                                                      │name identifier     flag_sync     │
- 37     if rst_n = '0' then                                      │stages integer 2..8   6           │
- 38       sync_r <= (others => G_INIT);                          ╰──────────────────────────────────╯
-:HdlSnipEdit
-────────────────────────────────────────────────────────────────────────────────
-  1 library ieee;
-  2   use ieee.std_logic_1164.all;
-  3
-  4 -- Single-bit synchroniser.
-  5 --
-  6 -- Valid for one bit at a time. A bus, or several bits that must
-  7 -- stay mutually consistent, needs a handshake or a gray coded
-  8 -- pointer instead: each bit here settles independently.
-  9 --
- 10 -- Constrain the source register with set_max_delay -datapath_only
- 11 -- so the crossing is not timed as a normal path.
- 12 entity flag_sync is
- 13   generic (
- 14     G_STAGES : positive := 6;
- 15     G_INIT   : std_logic := '0'
- 16   );
- 17   port (
- 18     clk   : in  std_logic;
- 19     rst_n : in  std_logic;
- 20     d_i   : in  std_logic;
- 21     q_o   : out std_logic
- 22   );
- 23 end entity flag_sync;
- 24
- 25 architecture rtl of flag_sync is
- 26
- 27   signal sync_r : std_logic_vector(G_STAGES - 1 downto 0) := (others => G_INIT);
- 28
- 29 begin
- 30
- 31   assert G_STAGES >= 2
- 32     report "flag_sync: needs at least two stages"
- 33     severity failure;
- 34
- 35   p_sync : process (clk, rst_n) is                           ╭──────────── bit_sync ────────────╮
- 36   begin                                                      │name identifier     flag_sync     │
+ 36   begin                                                      │name   identifier     flag_sync   │
  37     if rst_n = '0' then                                      │stages integer 2..8   6           │
  38       sync_r <= (others => G_INIT);                          ╰──────────────────────────────────╯
 :HdlSnipEdit
@@ -1363,7 +1443,47 @@
  33     severity failure;
  34
  35   p_sync : process (clk, rst_n) is                           ╭──────────── bit_sync ────────────╮
- 36   begin                                                      │name identifier     flag_sync     │
+ 36   begin                                                      │name   identifier     flag_sync   │
+ 37     if rst_n = '0' then                                      │stages integer 2..8   6           │
+ 38       sync_r <= (others => G_INIT);                          ╰──────────────────────────────────╯
+:HdlSnipEdit
+────────────────────────────────────────────────────────────────────────────────
+  1 library ieee;
+  2   use ieee.std_logic_1164.all;                                                           ╭──────╮
+  3                                                                                          │ <NL> │
+  4 -- Single-bit synchroniser.                                                              ╰──────╯
+  5 --
+  6 -- Valid for one bit at a time. A bus, or several bits that must
+  7 -- stay mutually consistent, needs a handshake or a gray coded
+  8 -- pointer instead: each bit here settles independently.
+  9 --
+ 10 -- Constrain the source register with set_max_delay -datapath_only
+ 11 -- so the crossing is not timed as a normal path.
+ 12 entity flag_sync is
+ 13   generic (
+ 14     G_STAGES : positive := 6;
+ 15     G_INIT   : std_logic := '0'
+ 16   );
+ 17   port (
+ 18     clk   : in  std_logic;
+ 19     rst_n : in  std_logic;
+ 20     d_i   : in  std_logic;
+ 21     q_o   : out std_logic
+ 22   );
+ 23 end entity flag_sync;
+ 24
+ 25 architecture rtl of flag_sync is
+ 26
+ 27   signal sync_r : std_logic_vector(G_STAGES - 1 downto 0) := (others => G_INIT);
+ 28
+ 29 begin
+ 30
+ 31   assert G_STAGES >= 2
+ 32     report "flag_sync: needs at least two stages"
+ 33     severity failure;
+ 34
+ 35   p_sync : process (clk, rst_n) is                           ╭──────────── bit_sync ────────────╮
+ 36   begin                                                      │name   identifier     flag_sync   │
  37     if rst_n = '0' then                                      │stages integer 2..8   6           │
  38       sync_r <= (others => G_INIT);                          ╰──────────────────────────────────╯
 :HdlSnipEdit
@@ -1403,7 +1523,7 @@
  33     severity failure;
  34
  35   p_sync : process (clk, rst_n) is                           ╭──────────── bit_sync ────────────╮
- 36   begin                                                      │name identifier                   │
+ 36   begin                                                      │name   identifier                 │
  37     if rst_n = '0' then                                      │stages integer 2..8   6           │
  38       sync_r <= (others => G_INIT);                          ╰──────────────────────────────────╯
 :HdlSnipEdit
@@ -1443,7 +1563,7 @@
  33     severity failure;
  34
  35   p_sync : process (clk, rst_n) is                           ╭──────────── bit_sync ────────────╮
- 36   begin                                                      │name identifier     cmd_sync      │
+ 36   begin                                                      │name   identifier     cmd_sync    │
  37     if rst_n = '0' then                                      │stages integer 2..8   6           │
  38       sync_r <= (others => G_INIT);                          ╰──────────────────────────────────╯
 :HdlSnipEdit
@@ -1483,7 +1603,7 @@
  33     severity failure;
  34
  35   p_sync : process (clk, rst_n) is                           ╭──────────── bit_sync ────────────╮
- 36   begin                                                      │name identifier     cmd_sync      │
+ 36   begin                                                      │name   identifier     cmd_sync    │
  37     if rst_n = '0' then                                      │stages integer 2..8   6           │
  38       sync_r <= (others => G_INIT);                          ╰──────────────────────────────────╯
 :HdlSnipEdit

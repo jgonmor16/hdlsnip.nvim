@@ -103,11 +103,27 @@ Sleep 100ms
 Type ":HdlSnip bit_sync" Enter
 Sleep 400ms
 Ctrl+U
-Type "smoke_sync" Enter
+Type "smoke_sync"
 Sleep 300ms
+Ctrl+K
+Sleep 100ms
 Ctrl+U
 Type "3" Enter
 Sleep 600ms
+
+# --- a value the parameter refuses ------------------------------------------
+Escape
+Sleep 100ms
+Type ":HdlSnip bit_sync" Enter
+Sleep 400ms
+Ctrl+K
+Ctrl+U
+Type "9" Enter
+Sleep 800ms
+Escape
+Sleep 200ms
+Escape
+Sleep 200ms
 
 # --- mixed template: declarations above begin, statements below -------------
 Escape
