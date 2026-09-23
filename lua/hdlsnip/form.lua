@@ -59,6 +59,40 @@ function M.lines(params, values)
   return lines, width
 end
 
+--- The dialog's inner width, and where the value column starts.
+---
+--- Separate from `M.open` so the arithmetic can be checked without a window.
+--- `prefix` is the width of the inline virtual text on each row: columns the
+--- buffer line knows nothing about. Sizing from the buffer line alone wraps
+--- the longest row, which breaks the border and costs a parameter its place.
+---@param params table[]
+---@param lines string[]
+---@param title string?
+---@return table `{ width, prefix, label_width, hint_width }`
+function M.geometry(params, lines, title)
+  local label_width, hint_width = 0, 0
+  for _, param in ipairs(params or {}) do
+    label_width = math.max(label_width, #param.name)
+    hint_width = math.max(hint_width, #M.hint(param))
+  end
+  -- Just the hint for now: the name is still buffer text, already counted in
+  -- #line. It becomes `label_width + hint_width + 4` once the name moves into
+  -- the virtual text too.
+  local prefix = hint_width + 2
+
+  local width = 0
+  for _, line in ipairs(lines or {}) do
+    width = math.max(width, prefix + #line)
+  end
+
+  return {
+    width = math.max(width + 2, #(title or "") + 6, 34),
+    prefix = prefix,
+    label_width = label_width,
+    hint_width = hint_width,
+  }
+end
+
 --- What a field accepts, shown beside it.
 ---@param param table
 ---@return string
@@ -111,21 +145,18 @@ function M.open(opts)
     names[param.name] = true
   end
 
-  local lines, label_width = M.lines(params, opts.values)
+  local lines = M.lines(params, opts.values)
   local buf = vim.api.nvim_create_buf(false, true)
   vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
   vim.bo[buf].buftype = "nofile"
   vim.bo[buf].bufhidden = "wipe"
   vim.bo[buf].filetype = "hdlsnip-form"
 
-  local width = 0
-  for _, line in ipairs(lines) do
-    width = math.max(width, #line)
-  end
-  for _, param in ipairs(params) do
-    width = math.max(width, label_width + 2 + #M.hint(param) + 2)
-  end
-  width = math.max(width + 2, #(opts.title or "") + 6, 34)
+  local geometry = M.geometry(params, lines, opts.title)
+  local hint_width = geometry.hint_width
+  -- The clamp stays here rather than inside M.geometry: the screen is not
+  -- something the arithmetic should have to know about to be testable.
+  local width = math.min(geometry.width, vim.o.columns - 4)
 
   local win = vim.api.nvim_open_win(buf, true, {
     -- Bottom right rather than over the code: watching the buffer change is
@@ -144,6 +175,9 @@ function M.open(opts)
     title_pos = "center",
   })
   vim.wo[win].cursorline = true
+  -- Backstop for a value still too long once the width is clamped: scrolling
+  -- keeps the border intact, wrapping does not.
+  vim.wo[win].wrap = false
 
   local origin = opts.origin_win
   open_form = { win = win, buf = buf }
@@ -178,8 +212,10 @@ function M.open(opts)
     local window = {
       relative = "editor",
       anchor = "SE",
-      -- Above the dialog, so it stays on screen whatever the dialog's height.
-      row = vim.o.lines - 2 - #lines,
+      -- Clear of the dialog's own top border. With anchor "SE" the dialog
+      -- ends at `vim.o.lines - 1` and is #lines tall plus two border rows, so
+      -- anything below this covers its title.
+      row = vim.o.lines - 1 - #lines - 2,
       col = vim.o.columns - 2,
       width = error_width,
       height = #errors,
@@ -205,11 +241,6 @@ function M.open(opts)
       timer:stop()
       timer:close()
     end
-  end
-
-  local hint_width = 0
-  for _, param in ipairs(params) do
-    hint_width = math.max(hint_width, #M.hint(param))
   end
 
   --- Hints sit immediately after the name, as inline virtual text: at the end

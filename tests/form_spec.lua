@@ -48,6 +48,36 @@ describe("form.lines", function()
   end)
 end)
 
+describe("form.geometry", function()
+  it("leaves room for the virtual text the buffer line does not hold", function()
+    -- The axi4lite_slave case, which wrapped at the old fixed 34.
+    local params = {
+      { name = "name", type = "identifier" },
+      { name = "registers", type = "integer", min = 1, max = 256 },
+      { name = "prefix", type = "string" },
+    }
+    local lines = form.lines(params, {
+      name = "axi_regs",
+      registers = 4,
+      prefix = "s_axi",
+    })
+    local geometry = form.geometry(params, lines, "axi4lite_slave")
+
+    local longest = 0
+    for _, line in ipairs(lines) do
+      longest = math.max(longest, #line)
+    end
+
+    assert.is_true(geometry.prefix > 0)
+    assert.is_true(geometry.width >= geometry.prefix + longest)
+  end)
+
+  it("never goes below the minimum", function()
+    local params = { { name = "n", type = "integer" } }
+    assert.are.equal(34, form.geometry(params, form.lines(params, { n = 1 }), "x").width)
+  end)
+end)
+
 describe("form.hint", function()
   it("lists the choices", function()
     assert.are.equal(
