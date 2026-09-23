@@ -1,30 +1,31 @@
 local form = require("hdlsnip.form")
 
 describe("form.parse", function()
-  local names = { label = true, width = true }
+  local params = {
+    { name = "label", type = "identifier" },
+    { name = "width", type = "integer" },
+  }
 
-  it("reads a value after the name", function()
-    local values = form.parse({ "label  main", "width  8" }, names)
+  it("takes one value per line, in parameter order", function()
+    local values = form.parse({ "main", "8" }, params)
     assert.are.same({ label = "main", width = "8" }, values)
   end)
 
   it("keeps spaces inside a value", function()
-    local values = form.parse({ "label  idle, run, done" }, { label = true })
+    local values = form.parse({ "idle, run, done" }, { params[1] })
     assert.are.equal("idle, run, done", values.label)
   end)
 
-  it("trims trailing whitespace", function()
-    assert.are.equal("main", form.parse({ "label  main   " }, names).label)
+  it("trims surrounding whitespace", function()
+    assert.are.equal("main", form.parse({ "  main   " }, params).label)
   end)
 
-  it("reports a name that is not a parameter", function()
-    local values, unknown = form.parse({ "lable  main" }, names)
-    assert.are.same({}, values)
-    assert.are.same({ "lable" }, unknown)
-  end)
-
-  it("ignores a line with no value separator", function()
-    assert.are.same({}, form.parse({ "label" }, names))
+  -- Guarded against in `collect`, which refuses a buffer whose line count no
+  -- longer matches the parameters. Pinned here so the function itself stays
+  -- total rather than returning a shifted table.
+  it("gives a missing line an empty value", function()
+    local values = form.parse({ "main" }, params)
+    assert.are.same({ label = "main", width = "" }, values)
   end)
 end)
 
@@ -34,17 +35,17 @@ describe("form.lines", function()
     { name = "width", type = "integer", default = 8, desc = "d" },
   }
 
-  it("aligns the names into a column", function()
-    local lines, width = form.lines(params, { label = "main", width = 8 })
-    assert.are.equal(5, width)
-    assert.are.equal("label  main", lines[1])
-    assert.are.equal("width  8", lines[2])
+  it("holds the values and nothing else", function()
+    local lines = form.lines(params, { label = "main", width = 8 })
+    assert.are.same({ "main", "8" }, lines)
   end)
 
   it("round trips through parse", function()
     local lines = form.lines(params, { label = "wr_ptr", width = 32 })
-    local values = form.parse(lines, { label = true, width = true })
-    assert.are.same({ label = "wr_ptr", width = "32" }, values)
+    assert.are.same(
+      { label = "wr_ptr", width = "32" },
+      form.parse(lines, params)
+    )
   end)
 end)
 

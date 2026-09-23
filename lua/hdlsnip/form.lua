@@ -5,8 +5,9 @@
 --- generated code is what keeps this simple -- there is no cursor to preserve
 --- in a block being replaced, and no per-parameter region to track.
 ---
---- Each line is `name` then the value. Only the value is meant to change;
---- a name that stops matching a parameter is reported rather than guessed at.
+--- Each line holds one parameter's value and nothing else. The name and the
+--- hint beside it are virtual text, so there is no label to delete by
+--- accident: `<C-u>` on a field clears the field, not the parameter it names.
 local edit = require("hdlsnip.edit")
 local template = require("hdlsnip.template")
 local config = require("hdlsnip.config")
@@ -18,45 +19,31 @@ local NAMESPACE = vim.api.nvim_create_namespace("hdlsnip.form")
 
 local open_form = nil
 
---- Parse form lines back into raw values, keyed by parameter name.
+--- Read the form's lines back as raw values, keyed by parameter name.
+---
+--- By position: line N is parameter N, because the buffer holds the values
+--- and nothing else.
 ---@param lines string[]
----@param names table<string, true>
+---@param params table[]
 ---@return table values
----@return string[] unknown
-function M.parse(lines, names)
-  local values, unknown = {}, {}
-  for _, line in ipairs(lines) do
-    local name, value = line:match("^%s*([%w_]+)%s%s+(.-)%s*$")
-    if name then
-      if names[name] then
-        values[name] = value
-      else
-        unknown[#unknown + 1] = name
-      end
-    end
+function M.parse(lines, params)
+  local values = {}
+  for index, param in ipairs(params or {}) do
+    values[param.name] = vim.trim(lines[index] or "")
   end
-  return values, unknown
+  return values
 end
 
---- The form's contents for a set of parameters and values.
+--- The form's contents: one value per line, in parameter order.
 ---@param params table[]
 ---@param values table
 ---@return string[] lines
----@return integer label_width
 function M.lines(params, values)
-  local width = 0
-  for _, param in ipairs(params or {}) do
-    width = math.max(width, #param.name)
-  end
-
   local lines = {}
   for index, param in ipairs(params or {}) do
-    lines[index] = ("%-" .. width .. "s  %s"):format(
-      param.name,
-      tostring(values[param.name])
-    )
+    lines[index] = tostring(values[param.name])
   end
-  return lines, width
+  return lines
 end
 
 --- The dialog's inner width, and where the value column starts.
@@ -75,10 +62,9 @@ function M.geometry(params, lines, title)
     label_width = math.max(label_width, #param.name)
     hint_width = math.max(hint_width, #M.hint(param))
   end
-  -- Just the hint for now: the name is still buffer text, already counted in
-  -- #line. It becomes `label_width + hint_width + 4` once the name moves into
-  -- the virtual text too.
-  local prefix = hint_width + 2
+  -- Name, a space, the hint, then the gap before the value: all of it
+  -- virtual text, and none of it in the buffer line.
+  local prefix = label_width + hint_width + 4
 
   local width = 0
   for _, line in ipairs(lines or {}) do
@@ -140,11 +126,6 @@ function M.open(opts)
     return false
   end
 
-  local names = {}
-  for _, param in ipairs(params) do
-    names[param.name] = true
-  end
-
   local lines = M.lines(params, opts.values)
   local buf = vim.api.nvim_create_buf(false, true)
   vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
@@ -153,7 +134,7 @@ function M.open(opts)
   vim.bo[buf].filetype = "hdlsnip-form"
 
   local geometry = M.geometry(params, lines, opts.title)
-  local hint_width = geometry.hint_width
+  local label_width, hint_width = geometry.label_width, geometry.hint_width
   -- The clamp stays here rather than inside M.geometry: the screen is not
   -- something the arithmetic should have to know about to be testable.
   local width = math.min(geometry.width, vim.o.columns - 4)
@@ -243,16 +224,19 @@ function M.open(opts)
     end
   end
 
-  --- Hints sit immediately after the name, as inline virtual text: at the end
-  --- of the line they would slide along as the value is typed.
+  --- Name and hint are inline virtual text at the head of the line, so the
+  --- buffer holds only what the user is meant to change. Left gravity keeps
+  --- them put when the value is edited from column zero.
   local function decorate()
     vim.api.nvim_buf_clear_namespace(buf, NAMESPACE, 0, -1)
     for index, param in ipairs(params) do
-      vim.api.nvim_buf_set_extmark(buf, NAMESPACE, index - 1, #param.name, {
+      vim.api.nvim_buf_set_extmark(buf, NAMESPACE, index - 1, 0, {
         virt_text = {
-          { (" %-" .. hint_width .. "s "):format(M.hint(param)), "Comment" },
+          { ("%-" .. label_width .. "s "):format(param.name), "Identifier" },
+          { ("%-" .. hint_width .. "s   "):format(M.hint(param)), "Comment" },
         },
         virt_text_pos = "inline",
+        right_gravity = false,
       })
     end
   end
@@ -260,12 +244,14 @@ function M.open(opts)
   --- Coerce the form's contents. Returns nil and the reasons when a value
   --- does not validate, which is normal while one is being typed.
   local function collect()
-    local raw, unknown =
-      M.parse(vim.api.nvim_buf_get_lines(buf, 0, -1, false), names)
-    if #unknown > 0 then
-      return nil, { ("%q is not a parameter"):format(unknown[1]) }
+    local buffer_lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+    -- Deleting a whole line would shift every value onto the wrong
+    -- parameter, which is worse than any wrong value. Fail loudly instead.
+    if #buffer_lines ~= #params then
+      return nil, { "a field was added or removed; press Esc and reopen" }
     end
 
+    local raw = M.parse(buffer_lines, params)
     local values, errors = {}, {}
     for _, param in ipairs(params) do
       local value, err = template.coerce(param, raw[param.name], opts.cfg)
