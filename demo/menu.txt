@@ -481,11 +481,11 @@
 
 ────────────────────────────────────────────────────────────────────────────────
   1 a
-~   apb  Interface APB slave with a register file  (asks for parameters)                       ╭────╮
-~   axil Interface AXI4-Lite slave with a register file  (asks for parameters)                 │ ia │
-~   axis Interface AXI-Stream register slice with backpressure  (asks for parameters)          ╰────╯
-~
-~
+~   afifo Interface Asynchronous FIFO with gray-coded pointers  (asks for parameters)          ╭────╮
+~   apb   Interface APB slave with a register file  (asks for parameters)                      │ ia │
+~   avmm  Interface Avalon-MM slave with a register file  (asks for parameters)                ╰────╯
+~   axil  Interface AXI4-Lite slave with a register file  (asks for parameters)
+~   axis  Interface AXI-Stream register slice with backpressure  (asks for parameters)
 ~
 ~
 ~
@@ -512,11 +512,11 @@
 
 ────────────────────────────────────────────────────────────────────────────────
   1 a
-~   apb  Interface APB slave with a register file  (asks for parameters)                       ╭────╮
-~   axil Interface AXI4-Lite slave with a register file  (asks for parameters)                 │ ia │
-~   axis Interface AXI-Stream register slice with backpressure  (asks for parameters)          ╰────╯
-~
-~
+~   afifo Interface Asynchronous FIFO with gray-coded pointers  (asks for parameters)          ╭────╮
+~   apb   Interface APB slave with a register file  (asks for parameters)                      │ ia │
+~   avmm  Interface Avalon-MM slave with a register file  (asks for parameters)                ╰────╯
+~   axil  Interface AXI4-Lite slave with a register file  (asks for parameters)
+~   axis  Interface AXI-Stream register slice with backpressure  (asks for parameters)
 ~
 ~
 ~
@@ -821,13 +821,13 @@
 ~
 
 ────────────────────────────────────────────────────────────────────────────────
-  1 library ieee;
-  2   use ieee.std_logic_1164.all;                                                    ╭─────────────╮
-  3                                                                                   │ <C-N> <C-Y> │
-  4 package my_pkg is                                                                 ╰─────────────╯
-  5
-  6 end package my_pkg;
+  1 pkg
+~   pkg Snippet Package declaration library ieee;                                           ╭───────╮
+~                                     use ieee.std_logic_1164.all;                          │ <C-N> │
+~                                                                                           ╰───────╯
+~                                   package my_pkg is
 ~
+~                                   end package my_pkg;
 ~
 ~
 ~

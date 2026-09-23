@@ -109,6 +109,29 @@ function M.entities(bufnr)
   return out
 end
 
+--- How an entity reads in the picker.
+---
+--- Both columns are sized from the list rather than fixed. A bare `%d` steps
+--- the path column one place left for every single-digit port count, and a
+--- fixed name column breaks the moment an entity is wider than it.
+---@param choices table[]
+---@return fun(choice: table): string
+local function format_choice(choices)
+  local name_width, digits = 24, 1
+  for _, choice in ipairs(choices) do
+    name_width = math.max(name_width, #choice.name)
+    digits = math.max(digits, #tostring(#choice.entity.ports))
+  end
+
+  return function(choice)
+    return ("%-" .. name_width .. "s %" .. digits .. "d ports  %s"):format(
+      choice.name,
+      #choice.entity.ports,
+      vim.fn.fnamemodify(choice.path, ":.")
+    )
+  end
+end
+
 --- Render an entity as an instantiation, optionally with its signals.
 ---@param parsed table
 ---@param cfg table
@@ -168,13 +191,7 @@ function M.instantiate(name, opts)
 
   ui.choose(choices, {
     prompt = "hdlsnip: entity",
-    format_item = function(choice)
-      return ("%-24s %d ports  %s"):format(
-        choice.name,
-        #choice.entity.ports,
-        vim.fn.fnamemodify(choice.path, ":.")
-      )
-    end,
+    format_item = format_choice(choices),
     kind = "hdlsnip.entity",
   }, function(choice)
     if choice then
@@ -250,13 +267,7 @@ function M.testbench(name, opts)
 
   ui.choose(choices, {
     prompt = "hdlsnip: testbench for",
-    format_item = function(choice)
-      return ("%-24s %d ports  %s"):format(
-        choice.name,
-        #choice.entity.ports,
-        vim.fn.fnamemodify(choice.path, ":.")
-      )
-    end,
+    format_item = format_choice(choices),
     kind = "hdlsnip.entity",
   }, function(choice)
     if choice then
