@@ -38,6 +38,45 @@ local TRIGGER_CHARACTERS = (function()
   return chars
 end)()
 
+--- Most lines of a template the documentation popup shows.
+---
+--- The popup opens beside the menu, in whatever room is left. A full FIFO
+--- or bus slave runs past a hundred lines, which leaves a narrow strip of
+--- wrapped VHDL over the buffer rather than something readable at a glance.
+M.PREVIEW_LINES = 15
+
+--- The part of a rendered template worth previewing.
+---
+--- Starts at the first line of code, skipping the context clause, blank
+--- lines and the header comment: they are the same in every template and
+--- would otherwise use up most of the lines on offer. Capped at
+--- `PREVIEW_LINES`, with a closing comment saying how much was left out.
+---@param text string rendered VHDL
+---@return string
+function M.preview(text)
+  local lines = render.lines(text)
+  local first = 1
+  for index, line in ipairs(lines) do
+    local code = vim.trim(line):lower()
+    if
+      code ~= ""
+      and not code:match("^%-%-")
+      and not code:match("^library%s")
+      and not code:match("^use%s")
+    then
+      first = index
+      break
+    end
+  end
+
+  local shown = vim.list_slice(lines, first, first + M.PREVIEW_LINES - 1)
+  local hidden = #lines - (first - 1) - #shown
+  if hidden > 0 then
+    shown[#shown + 1] = ("-- ... %d more lines"):format(hidden)
+  end
+  return table.concat(shown, "\n")
+end
+
 --- Completion items for the configuration in effect for a buffer.
 ---
 --- Rendered per request rather than cached, because `.hdlsnip.lua` makes the
@@ -55,7 +94,7 @@ function M.items(cfg)
       local documentation = preview
           and {
             kind = "markdown",
-            value = ("```vhdl\n%s\n```"):format(preview),
+            value = ("```vhdl\n%s\n```"):format(M.preview(preview)),
           }
         or nil
 
@@ -67,9 +106,10 @@ function M.items(cfg)
           filterText = tpl.trig,
           -- Not a snippet: nothing is inserted and a dialog opens instead.
           -- Frontends draw an icon from the kind, so the two behave
-          -- differently and should look different.
+          -- differently and should look different. The kind is the only
+          -- mark: a suffix on the detail widened every row of the menu.
           kind = vim.lsp.protocol.CompletionItemKind.Interface,
-          detail = tpl.desc .. "  (asks for parameters)",
+          detail = tpl.desc,
           insertText = "",
           insertTextFormat = 1,
           documentation = documentation,
@@ -108,6 +148,42 @@ local function buffer_of(params)
   return vim.uri_to_bufnr(uri)
 end
 
+--- Byte column of a UTF-16 position, on either side of the 0.11 change to
+--- `vim.str_byteindex`.
+---@param line string
+---@param character integer
+---@return integer
+local function byte_col(line, character)
+  if vim.fn.has("nvim-0.11") == 1 then
+    return vim.str_byteindex(line, "utf-16", character, false)
+  end
+  return vim.str_byteindex(line, character, true)
+end
+
+--- The word before the position a completion request was made at.
+---
+--- Triggers are words, so a request with nothing typed -- after whitespace,
+--- on an empty line -- cannot be asking for a template. Answering it with
+--- every template floods the menu whenever anything asks: 'autocomplete'
+--- with "o" in 'complete', or a reply that lands after insert mode was
+--- entered again somewhere else on the line.
+---@param bufnr integer
+---@param position table LSP position, UTF-16 columns
+---@return string? word nil when there is none
+function M.word_before(bufnr, position)
+  local line = vim.api.nvim_buf_get_lines(
+    bufnr,
+    position.line,
+    position.line + 1,
+    false
+  )[1]
+  if not line then
+    return nil
+  end
+  local ok, col = pcall(byte_col, line, position.character)
+  return line:sub(1, ok and col or #line):match("[%w_]+$")
+end
+
 --- Build the in-process client. Passed to `vim.lsp.start()` as `cmd`.
 ---@param dispatchers table
 ---@return table
@@ -136,8 +212,12 @@ function M.server(dispatchers)
       })
     elseif method == "textDocument/completion" then
       local bufnr = buffer_of(params)
-      local ok, cfg = pcall(config.get, bufnr)
-      reply(M.items(ok and cfg or config.get()))
+      if params.position and not M.word_before(bufnr, params.position) then
+        reply({})
+      else
+        local ok, cfg = pcall(config.get, bufnr)
+        reply(M.items(ok and cfg or config.get()))
+      end
     elseif method == "shutdown" then
       reply(nil)
     else
