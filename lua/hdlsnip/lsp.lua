@@ -38,6 +38,45 @@ local TRIGGER_CHARACTERS = (function()
   return chars
 end)()
 
+--- Most lines of a template the documentation popup shows.
+---
+--- The popup opens beside the menu, in whatever room is left. A full FIFO
+--- or bus slave runs past a hundred lines, which leaves a narrow strip of
+--- wrapped VHDL over the buffer rather than something readable at a glance.
+M.PREVIEW_LINES = 15
+
+--- The part of a rendered template worth previewing.
+---
+--- Starts at the first line of code, skipping the context clause, blank
+--- lines and the header comment: they are the same in every template and
+--- would otherwise use up most of the lines on offer. Capped at
+--- `PREVIEW_LINES`, with a closing comment saying how much was left out.
+---@param text string rendered VHDL
+---@return string
+function M.preview(text)
+  local lines = render.lines(text)
+  local first = 1
+  for index, line in ipairs(lines) do
+    local code = vim.trim(line):lower()
+    if
+      code ~= ""
+      and not code:match("^%-%-")
+      and not code:match("^library%s")
+      and not code:match("^use%s")
+    then
+      first = index
+      break
+    end
+  end
+
+  local shown = vim.list_slice(lines, first, first + M.PREVIEW_LINES - 1)
+  local hidden = #lines - (first - 1) - #shown
+  if hidden > 0 then
+    shown[#shown + 1] = ("-- ... %d more lines"):format(hidden)
+  end
+  return table.concat(shown, "\n")
+end
+
 --- Completion items for the configuration in effect for a buffer.
 ---
 --- Rendered per request rather than cached, because `.hdlsnip.lua` makes the
@@ -55,7 +94,7 @@ function M.items(cfg)
       local documentation = preview
           and {
             kind = "markdown",
-            value = ("```vhdl\n%s\n```"):format(preview),
+            value = ("```vhdl\n%s\n```"):format(M.preview(preview)),
           }
         or nil
 
@@ -67,9 +106,10 @@ function M.items(cfg)
           filterText = tpl.trig,
           -- Not a snippet: nothing is inserted and a dialog opens instead.
           -- Frontends draw an icon from the kind, so the two behave
-          -- differently and should look different.
+          -- differently and should look different. The kind is the only
+          -- mark: a suffix on the detail widened every row of the menu.
           kind = vim.lsp.protocol.CompletionItemKind.Interface,
-          detail = tpl.desc .. "  (asks for parameters)",
+          detail = tpl.desc,
           insertText = "",
           insertTextFormat = 1,
           documentation = documentation,
