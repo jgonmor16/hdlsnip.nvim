@@ -82,14 +82,23 @@ end
 --- Rendered per request rather than cached, because `.hdlsnip.lua` makes the
 --- configuration per project: the same template completes differently in two
 --- buffers.
+---
+--- With `prefix`, only the templates whose trigger starts with it. A client
+--- filters the reply against the line as it is when the reply lands, not as
+--- it was when it asked: with a slower server on the same buffer, `sig` then
+--- ` :` typed quickly leaves nothing to filter by, and every template shown
+--- would stay. Filtering against the word the request was made at means
+--- such a reply carries nothing that does not match what was typed.
 ---@param cfg table
+---@param prefix string? the word before the cursor
 ---@return table[]
-function M.items(cfg)
+function M.items(cfg, prefix)
   local kind = vim.lsp.protocol.CompletionItemKind.Snippet
   local items = {}
+  prefix = prefix and prefix:lower()
 
   for _, tpl in ipairs(registry.list({ lang = "vhdl" })) do
-    if tpl.trig then
+    if tpl.trig and (not prefix or vim.startswith(tpl.trig, prefix)) then
       local preview = render.values(tpl, {}, cfg)
       local documentation = preview
           and {
@@ -212,11 +221,12 @@ function M.server(dispatchers)
       })
     elseif method == "textDocument/completion" then
       local bufnr = buffer_of(params)
-      if params.position and not M.word_before(bufnr, params.position) then
+      local word = params.position and M.word_before(bufnr, params.position)
+      if params.position and not word then
         reply({})
       else
         local ok, cfg = pcall(config.get, bufnr)
-        reply(M.items(ok and cfg or config.get()))
+        reply(M.items(ok and cfg or config.get(), word))
       end
     elseif method == "shutdown" then
       reply(nil)
