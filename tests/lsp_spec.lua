@@ -82,6 +82,24 @@ describe("lsp.items", function()
     assert.are.equal("package", item.data.template)
   end)
 
+  it("offers only the triggers that start with the prefix", function()
+    local items = lsp.items(cfg({}), "ax")
+    assert.is_true(#items > 0)
+    for _, item in ipairs(items) do
+      assert.matches("^ax", item.label)
+    end
+    assert.is_not_nil(by_label(items, "axil"))
+    assert.is_nil(by_label(items, "afifo"))
+  end)
+
+  it("matches the prefix whatever its case", function()
+    assert.is_not_nil(by_label(lsp.items(cfg({}), "AX"), "axil"))
+  end)
+
+  it("offers nothing for a word no trigger starts with", function()
+    assert.are.same({}, lsp.items(cfg({}), "sig"))
+  end)
+
   it("keeps every preview within the cap", function()
     -- Two fences around the code, and one line saying what was cut.
     local most = lsp.PREVIEW_LINES + 3
@@ -184,6 +202,19 @@ describe("lsp.server", function()
 
   it("offers templates once a word is typed", function()
     assert.is_not_nil(by_label(complete_at("  ax", 4), "axil"))
+  end)
+
+  it("offers nothing for a word no trigger starts with", function()
+    -- The reply to this request may land after `sig` became `sig :`, where
+    -- the client has no word left to filter by and would show all of it.
+    assert.are.same({}, complete_at("  sig", 5))
+  end)
+
+  it("offers only the templates the word could still become", function()
+    local items = complete_at("  ax", 4)
+    for _, item in ipairs(items) do
+      assert.matches("^ax", item.label)
+    end
   end)
 
   it("reads the word before the cursor, not the whole line", function()
