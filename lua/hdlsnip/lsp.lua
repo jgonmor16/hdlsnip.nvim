@@ -108,6 +108,42 @@ local function buffer_of(params)
   return vim.uri_to_bufnr(uri)
 end
 
+--- Byte column of a UTF-16 position, on either side of the 0.11 change to
+--- `vim.str_byteindex`.
+---@param line string
+---@param character integer
+---@return integer
+local function byte_col(line, character)
+  if vim.fn.has("nvim-0.11") == 1 then
+    return vim.str_byteindex(line, "utf-16", character, false)
+  end
+  return vim.str_byteindex(line, character, true)
+end
+
+--- The word before the position a completion request was made at.
+---
+--- Triggers are words, so a request with nothing typed -- after whitespace,
+--- on an empty line -- cannot be asking for a template. Answering it with
+--- every template floods the menu whenever anything asks: 'autocomplete'
+--- with "o" in 'complete', or a reply that lands after insert mode was
+--- entered again somewhere else on the line.
+---@param bufnr integer
+---@param position table LSP position, UTF-16 columns
+---@return string? word nil when there is none
+function M.word_before(bufnr, position)
+  local line = vim.api.nvim_buf_get_lines(
+    bufnr,
+    position.line,
+    position.line + 1,
+    false
+  )[1]
+  if not line then
+    return nil
+  end
+  local ok, col = pcall(byte_col, line, position.character)
+  return line:sub(1, ok and col or #line):match("[%w_]+$")
+end
+
 --- Build the in-process client. Passed to `vim.lsp.start()` as `cmd`.
 ---@param dispatchers table
 ---@return table
@@ -136,8 +172,12 @@ function M.server(dispatchers)
       })
     elseif method == "textDocument/completion" then
       local bufnr = buffer_of(params)
-      local ok, cfg = pcall(config.get, bufnr)
-      reply(M.items(ok and cfg or config.get()))
+      if params.position and not M.word_before(bufnr, params.position) then
+        reply({})
+      else
+        local ok, cfg = pcall(config.get, bufnr)
+        reply(M.items(ok and cfg or config.get()))
+      end
     elseif method == "shutdown" then
       reply(nil)
     else
