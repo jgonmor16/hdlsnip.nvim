@@ -112,6 +112,33 @@ describe("lsp.server", function()
     assert.is_not_nil(by_label(items, "pkg"))
   end)
 
+  --- Ask for completions at a column of a one-line VHDL buffer.
+  local function complete_at(line, character)
+    local bufnr = vim.api.nvim_create_buf(false, true)
+    vim.api.nvim_buf_set_name(bufnr, vim.fn.tempname() .. ".vhd")
+    vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, { line })
+    return request("textDocument/completion", {
+      textDocument = { uri = vim.uri_from_bufnr(bufnr) },
+      position = { line = 0, character = character },
+    })
+  end
+
+  it("offers nothing after whitespace", function()
+    assert.are.same({}, complete_at("  wr_clk   : in std_logic;", 11))
+  end)
+
+  it("offers nothing on an empty line", function()
+    assert.are.same({}, complete_at("", 0))
+  end)
+
+  it("offers templates once a word is typed", function()
+    assert.is_not_nil(by_label(complete_at("  ax", 4), "axil"))
+  end)
+
+  it("reads the word before the cursor, not the whole line", function()
+    assert.is_not_nil(by_label(complete_at("pkg  -- note", 3), "pkg"))
+  end)
+
   it("answers shutdown", function()
     assert.is_nil(request("shutdown", {}))
   end)
